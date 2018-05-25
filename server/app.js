@@ -1,3 +1,4 @@
+const logger = require('./logger');
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -33,13 +34,16 @@ app.use(function(err, req, res, next) {
 });
 
 const mongoose = require('mongoose');
-// mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
 
 const config = require('./config');
-console.log("config:", config);
+logger.debug("config:", config);
 mongoose.connect(config.mongoURL, (error) => {
    if (error) {
-      console.error(`Could not connect to Mongo at ${config.mongoURL}`);
+      logger.error(`Could not connect to Mongo at ${config.mongoURL}`);
+   }
+   else {
+      logger.info(`Connected to Mongo at ${config.mongoURL}`);
    }
 });
 

@@ -1,0 +1,1 @@
+// add a mongoose schema for our user
