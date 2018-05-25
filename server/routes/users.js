@@ -1,7 +1,6 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-/* GET users listing. */
 router.get('/', function(req, res, next) {
    res.json([
       {
@@ -11,6 +10,10 @@ router.get('/', function(req, res, next) {
       {
          id: 2,
          name: "two"
+      },
+      {
+         id: 3,
+         name: "three"
       }
    ]);
 });

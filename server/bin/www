@@ -1,26 +1,24 @@
 #!/usr/bin/env node
 
-/**
- * Module dependencies.
- */
-console.log("starting server");
+console.log("starting server");  //KAI: instead use 'debug'
 
-var app = require('../app');
-var debug = require('debug')('colormatchserver:server');
-var http = require('http');
+const app = require('../app');
+const debug = require('debug')('colormatchserver:server');
+const http = require('http');
+const config = require('../config');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(config.port);
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+const server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
