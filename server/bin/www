@@ -29,7 +29,7 @@ function normalizePort(val) {
     return port;
   }
 
-  return false;
+  throw "invalid port number " + val;
 }
 
 // HTTP error handler
