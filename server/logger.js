@@ -31,4 +31,8 @@ const logger = new winston.Logger({
    exitOnError: false
 });
 
+logger.stream = {
+   write: (msg, encoding) => { logger.info(msg); }
+};
+
 module.exports = logger;
