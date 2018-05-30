@@ -12,15 +12,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+app.use('/', require('./routes/index'));
+app.use('/users', require('./routes/users'));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/test', require('./test/test'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-   logger.debug("request " + req);
+   logger.warn('404-ing request', req.url);
 
    next(createError(404));
 });
@@ -37,6 +36,7 @@ app.use(function(err, req, res, next) {
   res.send(err);
 });
 
+// set up DB connection //////////////////////////////////////////////
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
