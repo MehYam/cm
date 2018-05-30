@@ -15,6 +15,7 @@ app.use(cookieParser());
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 
+app.use('/test', require('./test/secure'));
 app.use('/test', require('./test/test'));
 
 // catch 404 and forward to error handler
