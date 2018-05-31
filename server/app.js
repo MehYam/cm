@@ -5,7 +5,6 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 
 const app = express();
-
 app.use(require('morgan')('short', { stream: logger.stream }));
 
 app.use(express.json());
@@ -15,10 +14,46 @@ app.use(cookieParser());
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 
-app.use('/test', require('./test/secure'));
-app.use('/test', require('./test/test'));
+// some useful Express experimentation
+//app.use('/test', require('./test/secure'));
+//app.use('/test', require('./test/test'));
 
-// catch 404 and forward to error handler
+// set up DB connection //////////////////////////////////////////////
+const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+
+const config = require('./config');
+logger.debug("config:", config);
+
+mongoose.connect(config.mongoURL, (error) => {
+   if (error) {
+      logger.error(`Could not connect to Mongo at ${config.mongoURL}`);
+   }
+   else {
+      logger.info(`Connected to Mongo at ${config.mongoURL}`);
+   }
+});
+
+require('./models/user');
+require('./models/game');
+
+// authentication /////////////////////////////////////////////////////
+const passport = require('passport');
+app.use(passport.initialize());
+
+//passport.use('local-signup', require(...));
+//passport.use('local-login', require(...));
+
+app.use('/auth', require('./routes/auth/register'));
+app.use('/auth', require('./routes/auth/login'));
+// routes requiring authentication
+//app.use('/api', require('./auth/protectedRoot'));
+
+//app.use('/logout', require('./auth/logout'));
+
+
+
+// error handlers /////////////////////////////////////////////////////
 app.use(function(req, res, next) {
    logger.warn('404-ing request', req.url);
 
@@ -35,21 +70,6 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.send(err);
-});
-
-// set up DB connection //////////////////////////////////////////////
-const mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
-
-const config = require('./config');
-logger.debug("config:", config);
-mongoose.connect(config.mongoURL, (error) => {
-   if (error) {
-      logger.error(`Could not connect to Mongo at ${config.mongoURL}`);
-   }
-   else {
-      logger.info(`Connected to Mongo at ${config.mongoURL}`);
-   }
 });
 
 module.exports = app;
