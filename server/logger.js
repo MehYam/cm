@@ -18,6 +18,7 @@ const options = {
       level: 'debug',
       timestamp: formattedTimestamp,
       handleExceptions: true,
+      humanReadableUnhandledException: true,      
       json: false,
       colorize: true
    }

@@ -12,7 +12,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/', require('./routes/index'));
-app.use('/users', require('./routes/users'));
 
 // some useful Express experimentation
 //app.use('/test', require('./test/secure'));
@@ -41,15 +40,17 @@ require('./models/game');
 const passport = require('passport');
 app.use(passport.initialize());
 
-//passport.use('local-signup', require(...));
-//passport.use('local-login', require(...));
 
+passport.use('local-signup', require('./passport/passportRegisterStrategy'));
 app.use('/auth', require('./routes/auth/register'));
+
+passport.use('local-login', require('./passport/passportLoginStrategy'));
 app.use('/auth', require('./routes/auth/login'));
-// routes requiring authentication
-//app.use('/api', require('./auth/protectedRoot'));
 
 //app.use('/logout', require('./auth/logout'));
+
+// routes requiring authentication
+//app.use('/api', require('./auth/protectedRoot'));
 
 
 

@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const logger = require('logger');
+const logger = require('../logger');
 
 const userSchema = new mongoose.Schema({
    name: {type: String, required: true, index: { unique: true}},
