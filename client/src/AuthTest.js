@@ -78,16 +78,16 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 const Public = () => <h3>Public</h3>;
 const Protected = () => <h3>Protected</h3>;
 
+const testuser = {name:'user4', password:'user4'};
 class Login extends React.Component {
   state = {
-    redirectToReferrer: false
+    redirectToReferrer: false,
+    user: 'user3',
+    password: 'user3'
   };
 
   register() {
-    axios.post('/auth/register', {
-      name: 'test2',
-      password: 'test2'
-    })
+    axios.post('/auth/register', testuser)
     .then((res) => {
       console.log('/auth/register response', res);
     })
@@ -96,10 +96,7 @@ class Login extends React.Component {
     })
   }
   login() {
-    axios.post('/auth/login', {
-      name: 'test2',
-      password: 'test2'
-    })
+    axios.post('/auth/login', testuser)
     .then((res) => {
       console.log('/auth/login response', res);
     })

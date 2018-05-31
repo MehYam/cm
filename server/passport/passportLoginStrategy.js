@@ -37,9 +37,9 @@ module.exports = new PassportLocalStrategy({
       // found the user, check the password
       return user.comparePassword(userData.password, (passwordErr, isMatch) => {
 
-         if (err) {
-            logger.error('user.comparePassword failure', err);
-            return done(err);
+         if (passwordErr) {
+            logger.error('user.comparePassword failure', passwordErr);
+            return done(passwordErr);
          }
          if (!isMatch) {
             logger.error('user.comparePassword not a match');

@@ -1,7 +1,7 @@
 // adapted from https://github.com/shouheiyamauchi/react-passport-example/blob/master/server/models/user.js
 
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const logger = require('../logger');
 
 const userSchema = new mongoose.Schema({
@@ -10,15 +10,16 @@ const userSchema = new mongoose.Schema({
    created: {type: Date, default: Date.now, required: true}
 });
 
-userSchema.methods.comparePassword = (password, callback) => {
-   bcrypt.compare(password, this.password, callback);
+userSchema.methods.comparePassword = function comparePassword_this(password, callback) {
+   logger.info("bcrypt.compare", this.password, password);
+   return bcrypt.compare(password, this.password, callback);
 };
 
 // pre-save hook to encrypt the password
 userSchema.pre('save', function(next) {
 
    const user = this;
-   logger.info('saving user', user.name);
+   logger.info('registering user', user.name);
 
    if (!user.isModified('password')) { 
       return next(); 
