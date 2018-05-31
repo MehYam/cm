@@ -15,6 +15,9 @@ module.exports = new PassportLocalStrategy({
    session: false,
    passReqToCallback: true
 }, (req, name, password, done) => {
+
+   logger.info('passportLoginStrategy for', name);
+
    const userData = {
       name: name.trim(),
       password: password.trim()
@@ -39,6 +42,7 @@ module.exports = new PassportLocalStrategy({
             return done(err);
          }
          if (!isMatch) {
+            logger.error('user.comparePassword not a match');
             return done(failedLoginError());
          }
 

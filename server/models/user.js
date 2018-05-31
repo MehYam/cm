@@ -15,7 +15,7 @@ userSchema.methods.comparePassword = (password, callback) => {
 };
 
 // pre-save hook to encrypt the password
-userSchema.pre('save', (next) => {
+userSchema.pre('save', function(next) {
 
    const user = this;
    logger.info('saving user', user.name);
@@ -25,7 +25,7 @@ userSchema.pre('save', (next) => {
    }
 
    logger.info('hashing and salting');
-   return bcrypt.getSalt((saltError, salt) => {
+   return bcrypt.genSalt((saltError, salt) => {
       if (saltError) 
       {
          logger.error('getSalt error', saltError);

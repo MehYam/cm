@@ -1,8 +1,9 @@
-const logger = require('./logger');
-const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const logger = require('./logger');
+const createError = require('http-errors');
 
 const app = express();
 app.use(require('morgan')('short', { stream: logger.stream }));
@@ -10,6 +11,7 @@ app.use(require('morgan')('short', { stream: logger.stream }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false}));//KAI: do we need this?
 
 app.use('/', require('./routes/index'));
 
@@ -40,19 +42,16 @@ require('./models/game');
 const passport = require('passport');
 app.use(passport.initialize());
 
-
 passport.use('local-signup', require('./passport/passportRegisterStrategy'));
-app.use('/auth', require('./routes/auth/register'));
+passport.use('local-signin', require('./passport/passportLoginStrategy'));
 
-passport.use('local-login', require('./passport/passportLoginStrategy'));
+app.use('/auth', require('./routes/auth/register'));
 app.use('/auth', require('./routes/auth/login'));
 
 //app.use('/logout', require('./auth/logout'));
 
 // routes requiring authentication
 //app.use('/api', require('./auth/protectedRoot'));
-
-
 
 // error handlers /////////////////////////////////////////////////////
 app.use(function(req, res, next) {

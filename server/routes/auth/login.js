@@ -7,7 +7,9 @@ router.post('/login', (req, res, next) => {
 
    logger.info('processing login attempt');
 
-   return passport.authenticate('local-login', (err, token, userData) => {
+   return passport.authenticate('local-signin', (err, token, userData) => {
+      logger.info('passport.authenticate local-signin');
+
       if (err) {
          logger.warn('login failure', err);
          if (err.name === 'IncorrectCredentialsError') {
@@ -28,7 +30,7 @@ router.post('/login', (req, res, next) => {
          message: 'login successful',
          user: userData
       });
-   });
+   })(req, res, next);
 });
 
 module.exports = router;
