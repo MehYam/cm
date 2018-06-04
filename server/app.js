@@ -51,7 +51,11 @@ app.use('/auth', require('./routes/auth/login'));
 //app.use('/logout', require('./auth/logout'));
 
 // routes requiring authentication
-//app.use('/api', require('./auth/protectedRoot'));
+app.use('/api', require('./routes/auth/gatekeeper'));
+app.get('/api/:call', (req, res) => {
+
+   logger.info(`test call at ${req.params.call} succeeded`);
+});
 
 // error handlers /////////////////////////////////////////////////////
 app.use(function(req, res, next) {

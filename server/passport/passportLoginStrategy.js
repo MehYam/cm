@@ -50,6 +50,9 @@ module.exports = new PassportLocalStrategy({
          const token = jwt.sign(payload, config.jwtSecret);
          const data = { name: user.name };
 
+         //KAI: token's not showing up in the client's response header for some reason.  Hack it into the response body for now
+         data.token = token;
+
          return done(null, token, data);
       });
    });
