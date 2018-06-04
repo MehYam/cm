@@ -1,8 +1,8 @@
 import React from "react";
-import auth from './auth';
+import auth from '../auth/auth';
 import axios from 'axios';
 
-class Login extends React.Component {
+class AuthTest extends React.Component {
   constructor(props) {
     super(props);
 
@@ -80,4 +80,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default AuthTest;
