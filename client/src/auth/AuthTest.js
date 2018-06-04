@@ -43,7 +43,13 @@ class Login extends React.Component {
     // })
   }
   accessStuff = (event) => {
-    axios.get('/api/someCall')
+    axios(
+      {
+        method: 'GET',
+        headers: { 'Authorization': auth.token },
+        url: '/api/someCall',
+        data: this.state
+      })
     .then((res) => {
       console.log('/api response', res);
     })

@@ -54,7 +54,9 @@ app.use('/auth', require('./routes/auth/login'));
 app.use('/api', require('./routes/auth/gatekeeper'));
 app.get('/api/:call', (req, res) => {
 
-   logger.info(`test call at ${req.params.call} succeeded`);
+   const response = `test call at ${req.params.call} succeeded`;
+   logger.info(response);
+   res.send(response)
 });
 
 // error handlers /////////////////////////////////////////////////////

@@ -3,8 +3,6 @@ import axios from 'axios';
 const tokenKey = 'apiToken';
 class auth {
    static set token(t) {
-      axios.defaults.headers.common['Authorization'] = auth.token;
-
       localStorage.setItem(tokenKey, t);
    }
    static get token() {
