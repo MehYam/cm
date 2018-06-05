@@ -9,7 +9,7 @@ class Title extends Component {
       return (
         <div className="CenteredPane">
           <h1>Welcome to Color Match</h1>
-          <Link to='/home'><button>Begin</button></Link>
+          <Link to='/home/mygames'><button>Begin</button></Link>
         </div>
       );
     }
