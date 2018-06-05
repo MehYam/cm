@@ -6,6 +6,7 @@ class NavBar extends Component {
       return (
          <nav className="NavBar">
             <ul>
+               <li><Link to="/">X</Link></li>
                <li><Link to="/home/mygames">My Games</Link></li>
                <li><Link to="/home/leaderboard">Leaderboard</Link></li>
                <li><Link to="/home/voting">Voting</Link></li>
