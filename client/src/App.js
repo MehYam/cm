@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
-import './App.css';
+
+import './index.css';
+import Home from './Home';
 
 class Title extends Component {
   render() {
@@ -11,14 +13,6 @@ class Title extends Component {
         </div>
       );
     }
-}
-
-class Home extends Component {
-  render() {
-    return (
-      <div className="CenteredPane"><h1>Home</h1></div>
-    );
-  }
 }
 
 class App extends Component {
