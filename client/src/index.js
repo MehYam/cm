@@ -1,11 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import './index.css';
 
-import App from './boilerplate/App';
-import AuthTest from './test/AuthTest';
+import App from './App';
 import registerServiceWorker from './boilerplate/registerServiceWorker';
 
-ReactDOM.render(<AuthTest/>, document.getElementById('root'));
+ReactDOM.render(
+   <BrowserRouter>
+      <App/>
+   </BrowserRouter>, 
+   document.getElementById('root')
+);
+
 registerServiceWorker();
