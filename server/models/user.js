@@ -7,7 +7,16 @@ const logger = require('../logger');
 const userSchema = new mongoose.Schema({
    name: {type: String, required: true, index: { unique: true}},
    password: {type: String, required: true},
-   created: {type: Date, default: Date.now, required: true}
+   created: {type: Date, default: Date.now, required: true},
+
+   isAdmin: {type: Boolean, default: false},
+   isGuest: {type: Boolean, default: false},
+   isBot: {type: Boolean, default: false},
+   lastLoggedIn: {type: Date, default: Date.now},
+
+   //KAI: should we just query to get these whenever we need them?
+   votesPlaced: {type: Number, default: 0},
+   votesReceived: {type: Number, default: 0}
 });
 
 userSchema.methods.comparePassword = function comparePassword_this(password, callback) {

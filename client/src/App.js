@@ -1,19 +1,9 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import './index.css';
 import Home from './Home';
-
-class Title extends Component {
-  render() {
-      return (
-        <div className="CenteredPane">
-          <h1>Welcome to Color Match</h1>
-          <Link to='/home/mygames'><button>Begin</button></Link>
-        </div>
-      );
-    }
-}
+import Title from './views/Title';
 
 class App extends Component {
   render() {
