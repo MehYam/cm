@@ -4,9 +4,9 @@ const sampleLoginState = {
    isAdmin: false
 };
 
-export const login = (username, isGuest, isAdmin) => ({
+export const login = (name, isGuest, isAdmin) => ({
    type: 'LOGIN',
-   loginState: {username, isGuest, isAdmin}
+   loginState: {name, isGuest, isAdmin}
 });
 
 export const logout = () => ({
