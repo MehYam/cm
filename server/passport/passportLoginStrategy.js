@@ -48,9 +48,9 @@ module.exports = new PassportLocalStrategy({
 
          const payload = { sub: user._id };
          const token = jwt.sign(payload, config.jwtSecret);
-         const data = { name: user.name };
+         const data = { name: user.name, isAdmin: false, isGuest: false };
 
-         //KAI: token's not showing up in the client's response header for some reason.  Hack it into the response body for now
+         //KAI: token's not showing up in the client's response header for axios reasons.  Hack it into the response body for now
          data.token = token;
 
          return done(null, token, data);

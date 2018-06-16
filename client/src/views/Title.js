@@ -6,7 +6,7 @@ class Title extends Component {
       return (
         <div className="CenteredPane">
           <h1>Welcome to Color Match</h1>
-          <Link to='/home/mygames'><button>Begin</button></Link>
+          <Link to='/home/mygames'><button>My Games</button></Link>
           <hr/>
           <a href="/">Been here before, login</a><br/>
           <a href="/">Login as Guest</a><br/>
