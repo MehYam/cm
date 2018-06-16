@@ -8,7 +8,7 @@ import Leaderboard from './views/Leaderboard';
 import MyGames from './views/MyGames';
 import Voting from './views/Voting';
 
-import './index.css';
+import './Home.css';
 
 class Home extends Component {
   render() {

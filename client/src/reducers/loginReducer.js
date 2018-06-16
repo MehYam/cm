@@ -5,17 +5,19 @@ import {
    LOGOUT
 } from '../actions/loginActions';
 
-const initialUserState = {
-   name: null,
-   isGuest: false,
-   isAdmin: false,
-   token: null
-};
 const initialState = {
    user: null,
    pending: false,
    error: null
 };
+// state.user has the format:
+//
+// const initialUserState = {
+//    name: null,
+//    isGuest: false,
+//    isAdmin: false,
+//    token: null
+// };
 
 export default function loginReducer(state = initialState, action) {
    //KAI: look up the look up technique to eliminate these switch statements
