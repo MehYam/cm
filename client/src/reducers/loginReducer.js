@@ -5,14 +5,14 @@ import {
    LOGOUT
 } from '../actions/loginActions';
 
-//KAI: there's got to be something better
 const initialUserState = {
    name: null,
    isGuest: false,
-   isAdmin: false
+   isAdmin: false,
+   token: null
 };
 const initialState = {
-   user: { ...initialUserState },
+   user: null,
    pending: false,
    error: null
 };
@@ -27,10 +27,11 @@ export default function loginReducer(state = initialState, action) {
             error: null
          };
       case LOGIN_SUCCESS:
+         console.log('LOGIN_SUCCESS user', action.payload.user);
          return {
             ...state,
             loading: false,
-            login: action.payload.user,
+            user: action.payload.user,
             error: null
          };
       case LOGIN_ERROR:
