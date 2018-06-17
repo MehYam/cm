@@ -1,3 +1,4 @@
+import auth from '../auth/auth';
 import {
    LOGIN_BEGIN,
    LOGIN_SUCCESS,
@@ -5,11 +6,6 @@ import {
    LOGOUT
 } from '../actions/loginActions';
 
-const initialState = {
-   user: null,
-   pending: false,
-   error: null
-};
 // state.user has the format:
 //
 // const initialUserState = {
@@ -19,7 +15,29 @@ const initialState = {
 //    token: null
 // };
 
-export default function loginReducer(state = initialState, action) {
+function getInitialState() {
+   const savedUser = auth.user;
+   const login = savedUser ? savedUser : 
+   {
+      name: null,
+      isGuest: false,
+      isAdmin: false,
+      token: null
+   };
+
+   return {
+      user: login,
+      pending: false,
+      error: null
+   };
+}
+
+export default function loginReducer(state = null, action) {
+
+   if (!state) {
+      state = getInitialState();
+   }
+
    //KAI: look up the look up technique to eliminate these switch statements
    switch(action.type) {
       case LOGIN_BEGIN:
@@ -43,9 +61,7 @@ export default function loginReducer(state = initialState, action) {
             error: action.payload.error
          };
       case LOGOUT:
-         return {
-            ...initialState
-         }
+         return getInitialState();
       default:
          return state;
    }

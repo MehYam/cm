@@ -12,13 +12,14 @@ export function requestLogin(name, password) {
          console.log('/auth/login response', res);
          console.log('user+token', res.data.user);
 
-         auth.token = res.data.user.token;  //KAI: duplication.  Should this all be in the store?
-         console.log('logged in:', auth.loggedIn);
+         auth.user = res.data.user;
 
          dispatch(loginSuccess(res.data.user));
       })
       .catch((error) => {
          console.log('/auth/login error', error);
+
+         auth.clear();
 
          dispatch(loginError(error.message));
       })
@@ -28,7 +29,7 @@ export function requestLogin(name, password) {
 
 export function requestLogout() {
    return dispatch => {
-      auth.logout();
+      auth.clear();
       dispatch(logout());
    }
 }
@@ -38,10 +39,11 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const LOGOUT = 'LOGOUT';
 
-export const loginBegin = (name, password) => ({ type: LOGIN_BEGIN, payload: {name, password} });
+// these are not exported, as they are wrapped by the request* thunk methods above
+const loginBegin = (name, password) => ({ type: LOGIN_BEGIN, payload: {name, password} });
 
-export const loginSuccess = (user) => ({ type: LOGIN_SUCCESS, payload: {user} });
+const loginSuccess = (user) => ({ type: LOGIN_SUCCESS, payload: {user} });
 
-export const loginError = error => ({ type: LOGIN_ERROR, payload: {error} });
+const loginError = error => ({ type: LOGIN_ERROR, payload: {error} });
 
-export const logout = () => ({ type: LOGOUT });
+const logout = () => ({ type: LOGOUT });
