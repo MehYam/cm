@@ -6,15 +6,8 @@ import {
    LOGOUT
 } from '../actions/loginActions';
 
-// state.user has the format:
-//
-// const initialUserState = {
-//    name: null,
-//    isGuest: false,
-//    isAdmin: false,
-//    token: null
-// };
-
+// load the initial user state out of our persistent authorization store.  There's nothing about Redux that says this is bad,
+// but people resort to libraries to take care of this.
 function getInitialState() {
    const savedUser = auth.user;
    const login = savedUser ? savedUser : 

@@ -13,8 +13,9 @@ const ConnectedAuthTestRedux = ({ login, requestLogin, requestLogout }) => {
          <Link to='/'><button>To Title</button></Link>
          <h3>logged in name: { loginName }</h3>
          <h3>logged in token: { loginToken }</h3>
-         <button onClick={() => requestLogin('user5', 'user5')}>test login</button>
-         <button onClick={() => requestLogout()}>test logout</button>
+         <button onClick={() => requestLogin('user5', 'user5')}>login</button>
+         <br/>
+         <button onClick={() => requestLogout()}>logout</button>
       </div>
    );
 };

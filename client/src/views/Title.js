@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Login from '../auth/Login';
 
 class Title extends Component {
   render() {
@@ -6,6 +7,7 @@ class Title extends Component {
         <div className="CenteredPane">
           <h1>Welcome to Color Match</h1>
           <hr/>
+          <Login/>
         </div>
       );
     }
