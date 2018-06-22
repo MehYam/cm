@@ -5,9 +5,6 @@ import { observer } from 'mobx-react';
 import rootStore from '../stores/rootStore';
 
 const AuthTestMobx = observer(class AuthTestMobx extends Component {
-   constructor() {
-      super();
-   }
    render() {
       const user = rootStore.loginStore.user;
       const name = user ? user.name : '---';

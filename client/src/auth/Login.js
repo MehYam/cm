@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { observer } from 'mobx-react';
+import rootStore from '../stores/rootStore';
 
-import { requestLogin } from '../stores/loginStore';
-
-class Login extends Component {
+const Login = observer(class Login extends Component {
    constructor() {
       super();
 
@@ -14,7 +14,6 @@ class Login extends Component {
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
    }
-
    handleChange(event) {
       const newState = {};
       newState[event.target.id] = event.target.value;
@@ -23,7 +22,7 @@ class Login extends Component {
    handleSubmit(event) {
       event.preventDefault();
 
-      this.props.requestLogin(this.state.name, this.state.password);
+      rootStore.loginStore.requestLogin(this.state.name, this.state.password);
    }
    render() {
       return (
@@ -49,6 +48,6 @@ class Login extends Component {
          </form>
       );
    }
-}
+});
 
 export default Login;
