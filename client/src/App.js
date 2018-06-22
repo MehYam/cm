@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import './index.css';
 import Home from './Home';
 import Title from './views/Title';
-import AuthTestRedux from './test/AuthTestRedux';
+import AuthTest from './test/AuthTestMobx';
 
 const App = () => {
 
@@ -12,7 +12,7 @@ const App = () => {
       <div>
          <Route path='/' component={Title}/>
          <Route path='/home' component={Home}/>
-         <Route path='/authtest' component={AuthTestRedux}/>
+         <Route path='/authtest' component={AuthTest}/>
       </div>
    );
 };

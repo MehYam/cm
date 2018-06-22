@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { requestLogin } from '../actions/loginActions';
+import { requestLogin } from '../stores/loginStore';
 
-const mapDispatchToProps = dispatch => {
-   return {
-      requestLogin: (name, password) => dispatch(requestLogin(name, password))
-   };
-};
-
-class ConnectedLoginForm extends Component {
+class Login extends Component {
    constructor() {
       super();
 
@@ -57,7 +51,5 @@ class ConnectedLoginForm extends Component {
       );
    }
 }
-
-const Login = connect(null, mapDispatchToProps)(ConnectedLoginForm);
 
 export default Login;
