@@ -7,6 +7,9 @@ class LoginStore {
    user = null;
    lastError = null;
    
+   constructor() {
+      this.user = auth.user;
+   }
    requestLogin(name, password) {
       axios.post('/auth/login', { name, password })
       .then((res) => {
