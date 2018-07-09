@@ -6,9 +6,10 @@ const Login = observer(class Login extends Component {
    constructor() {
       super();
 
+      const uname = rootStore.loginStore.user ? rootStore.loginStore.user.name : 'user5';
       this.state = {
-         name: 'user5',
-         password: 'user5'
+         name: uname,
+         password: uname  //KAI: bad and obviously wrong but we're still testing
       };
 
       this.handleChange = this.handleChange.bind(this);

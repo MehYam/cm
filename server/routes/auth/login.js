@@ -5,7 +5,7 @@ const router = new express.Router();
 
 router.post('/login', (req, res, next) => {
 
-   logger.info('processing login attempt');
+   logger.info('processing login attempt', req);
 
    return passport.authenticate('local-signin', (err, token, userData) => {
       logger.info('passport.authenticate local-signin');

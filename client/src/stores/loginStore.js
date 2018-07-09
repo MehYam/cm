@@ -28,6 +28,25 @@ class LoginStore {
          this.lastError = error;
       })
    }
+   requestRegistration(name, password) {
+      auth.clear();
+      this.user = null;
+      this.lastError = null;
+
+      axios.post('/auth/register', {name, password})
+      .then((res) => {
+         console.log('/auth/register response', res);
+
+         this.requestLogin(name, password);
+      })
+      .catch((error) => {
+         console.log('/auth/register error', error);
+
+         auth.clear();
+         this.user = null;
+         this.lastError = error;
+      })
+   }
 }
 
 decorate(LoginStore, {

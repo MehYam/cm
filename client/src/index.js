@@ -7,10 +7,13 @@ import App from './App';
 
 import auth from './auth/auth';
 
+import rootStore from './stores/rootStore';
+
 ///// TEST CODE - export these for testing from the console
 function testHooks() {
    console.warn('test hooks enabled');
    window.auth = auth;
+   window.rootStore = rootStore;
 }
 testHooks();
 ///// end test code
