@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-import { observer } from 'mobx-react';
 import rootStore from '../stores/rootStore';
 
-const Login = observer(class Login extends Component {
+class Login extends Component {
    constructor() {
       super();
 
-      const uname = rootStore.loginStore.user ? rootStore.loginStore.user.name : 'user5';
       this.state = {
-         name: uname,
-         password: uname  //KAI: bad and obviously wrong but we're still testing
+         name: '',
+         password: ''
       };
 
       this.handleChange = this.handleChange.bind(this);
@@ -49,6 +47,6 @@ const Login = observer(class Login extends Component {
          </form>
       );
    }
-});
+};
 
 export default Login;

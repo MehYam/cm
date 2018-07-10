@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import rootStore from '../stores/rootStore';
 
-const Register = observer(class Register extends Component {
+class Register extends Component {
    constructor() {
       super();
 
@@ -75,6 +75,6 @@ const Register = observer(class Register extends Component {
          </form>
       );
    }
-});
+};
 
 export default Register;

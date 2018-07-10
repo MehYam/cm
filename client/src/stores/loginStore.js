@@ -1,7 +1,7 @@
 import axios from 'axios';
 import auth from '../auth/auth';
 
-import { observable, decorate } from 'mobx';
+import { decorate, computed, observable } from 'mobx';
 
 class LoginStore {
    user = null;
@@ -9,6 +9,14 @@ class LoginStore {
    
    constructor() {
       this.user = auth.user;
+   }
+   get loggedIn() {
+      return this.user !== null;
+   }
+   logout() {
+      auth.clear();
+      this.user = null;
+      this.lastError = null;
    }
    requestLogin(name, password) {
       axios.post('/auth/login', { name, password })
@@ -23,15 +31,11 @@ class LoginStore {
       .catch((error) => {
          console.log('/auth/login error', error);
 
-         auth.clear();
-         this.user = null;
-         this.lastError = error;
+         this.logout();
       })
    }
    requestRegistration(name, password) {
-      auth.clear();
-      this.user = null;
-      this.lastError = null;
+      this.logout();
 
       axios.post('/auth/register', {name, password})
       .then((res) => {
@@ -51,7 +55,8 @@ class LoginStore {
 
 decorate(LoginStore, {
    user: observable,
-   lastError: observable
+   lastError: observable,
+   loggedIn: computed
 });
 
 
