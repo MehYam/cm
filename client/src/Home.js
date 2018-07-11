@@ -10,6 +10,10 @@ import Voting from './views/Voting';
 
 import './Home.css';
 
+const Default = () => {
+  return <div><h2>Choose an option on the left</h2><i>KAI: one should probably just be default</i></div>;
+}
+
 class Home extends Component {
   render() {
     return (
@@ -17,11 +21,11 @@ class Home extends Component {
          <Header/>
          <NavBar/>
          <div className="CenteredPane">
-            <h1>Home</h1>
             <Switch>
-               <Route path="/home/leaderboard" component={Leaderboard}/>
-               <Route path="/home/mygames" component={MyGames}/>
-               <Route path="/home/voting" component={Voting}/>
+              <Route path="/home" exact component={Default}/>
+              <Route path="/home/leaderboard" component={Leaderboard}/>
+              <Route path="/home/mygames" component={MyGames}/>
+              <Route path="/home/voting" component={Voting}/>
             </Switch>
          </div>
       </div>
