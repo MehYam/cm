@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import rootStore from '../stores/rootStore';
 
-
-const Default = () => {
-   return (
-      <div>
-         <button>Start New Game</button>
-         <h2>Existing games:</h2>
-         <i>KAI: need to mark games where it's your turn</i><br/>
-         <i>KAI: need option to abandon games</i>
-      </div>);
+class Default extends React.Component {
+   startGame() {
+      rootStore.gameStore.createGame();
+   }
+   render() {
+      return (
+         <div>
+            <button onClick={this.startGame}>Start New Game</button>
+            <h2>Existing games:</h2>
+            <i>KAI: need to mark games where it's your turn</i><br/>
+            <i>KAI: need option to abandon games</i>
+         </div>
+      );
+   }
 }
 const Game = () => {
    return (

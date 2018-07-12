@@ -52,9 +52,11 @@ app.use('/auth', require('./routes/auth/login'));
 
 // routes requiring authentication
 app.use('/api', require('./routes/auth/gatekeeper'));
+app.use('/api', require('./routes/api/createGame'));
+// app.use('/api/getGames', require('./routes/api/getGames'));
 app.get('/api/:call', (req, res) => {
 
-   const response = `test call at ${req.params.call} succeeded`;
+   const response = `empty call at ${req.params.call} succeeded`;
    logger.info(response);
    res.send(response)
 });

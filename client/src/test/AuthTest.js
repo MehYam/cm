@@ -24,15 +24,18 @@ class AuthTest extends React.Component {
       console.log('/auth/login response', res);
       console.log('user+token', res.data.user);
 
-      auth.token = res.data.user.token;
+      auth.user = res.data.user;
       console.log('logged in:', auth.loggedIn);
     })
     .catch((error) => {
       console.log('/auth/login error', error);
     })
   };
+  isLoggedIn = (event) => {
+    console.log('logged in user:', auth.user);
+  }
   logout = (event) => {
-    auth.logout();
+    auth.clear();
     console.log('logged in:', auth.loggedIn);
     // axios.get('/auth/logout')
     // .then((res) => {
@@ -46,7 +49,7 @@ class AuthTest extends React.Component {
     axios(
       {
         method: 'GET',
-        headers: { 'Authorization': auth.token },
+        headers: { 'Authorization': auth.user.token },
         url: '/api/someCall',
         data: this.state
       })
@@ -71,6 +74,7 @@ class AuthTest extends React.Component {
         <input type='password' value={this.state.password} onChange={this.handlePasswordChange}/>
         <button onClick={this.register}>Register</button>
         <button onClick={this.login}>Log in</button>
+        <button onClick={this.isLoggedIn}>Logged In?</button>
         <br/>
         <button onClick={this.logout}>Log out</button>
         <button onClick={this.accessStuff}>Access Stuff</button>
