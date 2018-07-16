@@ -35,8 +35,7 @@ mongoose.connect(config.mongoURL, (error) => {
    }
 });
 
-require('./models/user');
-require('./models/game');
+require('./models/all');
 
 // authentication /////////////////////////////////////////////////////
 const passport = require('passport');

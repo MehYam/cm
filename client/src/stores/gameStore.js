@@ -8,7 +8,9 @@ class GameStore {
             method: 'POST',
             headers: { Authorization: auth.user.token },
             url: '/api/createGame',
-            data: {}
+            data: {
+               user: '5b10474ef20ae727305b8226'
+            }
          }
       )
       .then((res) => {
