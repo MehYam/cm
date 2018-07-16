@@ -20,6 +20,22 @@ class GameStore {
          console.error('/createGame error', error);
       });
    }
+
+   getGames() {
+      axios(
+         {
+            method: 'POST',
+            headers: { Authorization: auth.user.token },
+            url: '/api/getGames'
+         }
+      )
+      .then((res) => {
+         console.log('/getGames response', res);
+      })
+      .catch((error) => {
+         console.error('/getGames error', error);
+      })
+   }
 };
 
 export default GameStore;

@@ -6,11 +6,15 @@ class Default extends React.Component {
    startGame() {
       rootStore.gameStore.createGame();
    }
+   getGames() {
+      rootStore.gameStore.getGames();
+   }
    render() {
       return (
          <div>
             <button onClick={this.startGame}>Start New Game</button>
             <h2>Existing games:</h2>
+            <button onClick={this.getGames}>Get My Games</button><br/>
             <i>KAI: need to mark games where it's your turn</i><br/>
             <i>KAI: need option to abandon games</i>
          </div>
