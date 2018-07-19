@@ -7,7 +7,7 @@ import NavBar from './NavBar';
 import Leaderboard from './views/Leaderboard';
 import MyGames from './views/MyGames';
 import Voting from './views/Voting';
-import TestGameBoard from './views/TestGameBoard';
+import TestGameBoard from './test/TestGameBoard';
 
 import './Home.css';
 

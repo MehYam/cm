@@ -4,3 +4,27 @@ body {
   font: 14px "Century Gothic", Futura, sans-serif;
 }
 
+.clear {
+  clear: both;
+}
+.centerParent {
+  display: inline-block;
+  text-align: center;
+}
+.centerChild {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tile2 {
+  background: #fff;
+  border: 1px dotted #cccccc;
+  float: left;
+  padding: 0;
+  text-align: center;
+}
+
+div.tile2:hover {
+  border: 1px solid #ffffff;
+}
