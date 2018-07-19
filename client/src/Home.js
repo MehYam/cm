@@ -7,6 +7,7 @@ import NavBar from './NavBar';
 import Leaderboard from './views/Leaderboard';
 import MyGames from './views/MyGames';
 import Voting from './views/Voting';
+import TestGameBoard from './views/TestGameBoard';
 
 import './Home.css';
 
@@ -26,6 +27,7 @@ class Home extends Component {
               <Route path="/home/leaderboard" component={Leaderboard}/>
               <Route path="/home/mygames" component={MyGames}/>
               <Route path="/home/voting" component={Voting}/>
+              <Route path="/home/testboard" component={TestGameBoard}/>
             </Switch>
          </div>
       </div>

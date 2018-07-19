@@ -10,26 +10,12 @@ router.post('/getGames', (req, res, next) => {
 
    logger.info('getGames');
 
-   // all games
-   // Game.find({}, (findErr, results) => {
-
-   //    logger.info('elemMatch returns');
-   //    if (findErr || !results) {
-   //       logger.error('elemMatch error in getGames', findErr);
-   //       return res.status(401).end();
-   //    }
-   //    res.json({
-   //       games: results
-   //    });
-   // });
-
-   // find all games for this user
-   // {players: { $elemMatch: { user: ObjectId("5b10474ef20ae727305b8226") } } }
+   // {players: { $elemMatch: { user: ObjectId(...) } } }
 
    logger.warn('testing getGames with a hard-coded ID');
    Game.find().elemMatch('players', {'user': req.user._id}).exec((findErr, games) => {
 
-      logger.info('elemMatch returns');
+      logger.info('elemMatch returns', games && games.length);
       if (findErr || !games) {
          logger.error('elemMatch error in getGames', findErr);
          return res.status(401).end();
@@ -57,8 +43,6 @@ router.post('/getGames', (req, res, next) => {
          users.forEach((user) => {
             idsToNames[user._id] = user.name;
          });
-
-         console.log(idsToNames);
 
          res.json({ games });
       });
