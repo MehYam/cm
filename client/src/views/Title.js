@@ -42,7 +42,7 @@ class Logout extends Component {
 const TitleObserver = observer(class Title extends Component {
   render() {
       return (
-        <div className="CenteredPane">
+        <div>
           <h1>Welcome to Color Match</h1>
           <hr/>
             <Route exact path='/' component={rootStore.loginStore.loggedIn ? SignedInLinks : SignedOutLinks}/>

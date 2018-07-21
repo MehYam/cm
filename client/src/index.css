@@ -1,7 +1,42 @@
-body {
-  margin: 20px;
-  padding: 0;
+html, body {
+  height: 100%;
   font: 14px "Century Gothic", Futura, sans-serif;
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+
+  background-color: #7777ff;
+  padding: 2px;
+}
+.menubar {
+  background-color: #33ff33;
+  padding: 2px;
+}
+.bottom {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+
+  background-color: #cccccc;
+  padding: 2px;
+}
+.sideNav {
+  background-color: #ff7777;
+  padding: 2px;
+}
+.sideNav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.clientArea {
+  flex-grow: 1;
+  background-color: #8888ff;
+  padding: 2px;
 }
 
 .clear {
@@ -10,13 +45,21 @@ body {
 .centerParent {
   display: inline-block;
   text-align: center;
+  width:100%;
 }
 .centerChild {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
-
+.centerChild_test {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width:100px;
+  height:100px;
+  background-color: yellow;
+}
 .tile2 {
   background: #fff;
   border: 1px dotted #cccccc;

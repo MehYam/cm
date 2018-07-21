@@ -11,7 +11,7 @@ const App = () => {
 
    return (
       <div>
-         <Route path='/' component={Title}/>
+         <Route exact path='/' component={Title}/>
          <Route path='/home' component={Home}/>
          <Route path='/authtest' component={AuthTest}/>
       </div>

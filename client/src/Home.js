@@ -9,8 +9,6 @@ import MyGames from './views/MyGames';
 import Voting from './views/Voting';
 import TestGameBoard from './test/TestGameBoard';
 
-import './Home.css';
-
 const Default = () => {
   return <div><h2>Choose an option on the left</h2><i>KAI: one should probably just be default</i></div>;
 }
@@ -18,10 +16,11 @@ const Default = () => {
 class Home extends Component {
   render() {
     return (
-      <div>
-         <Header/>
-         <NavBar/>
-         <div className="CenteredPane">
+      <div className='top'>
+        <Header/>
+        <div className='bottom'>
+          <NavBar/>
+          <div className='clientArea'>
             <Switch>
               <Route path="/home" exact component={Default}/>
               <Route path="/home/leaderboard" component={Leaderboard}/>
@@ -29,7 +28,8 @@ class Home extends Component {
               <Route path="/home/voting" component={Voting}/>
               <Route path="/home/testboard" component={TestGameBoard}/>
             </Switch>
-         </div>
+          </div>
+        </div>
       </div>
     );
   }

@@ -69,14 +69,14 @@ class TestGameBoard extends Component {
       }
       return (
          <div>
+            <h3>Tile/Gameboard test</h3>
+            <GameBoard game={dummyGame} tileSize={142}/>
             <h3>Draggable/resizable test</h3>
             <div className='resize-container'>
                <Interact resizable draggable draggableOptions={draggableOptions} resizableOptions={resizableOptions}>
                   <div className='resize-drag'>FOO</div>
                </Interact>
             </div>
-            <h3>Tile/Gameboard test</h3>
-            <GameBoard game={dummyGame} tileSize={142}/>
          </div>
       );
    }
