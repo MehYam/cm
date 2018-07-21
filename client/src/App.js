@@ -10,7 +10,7 @@ import AuthTest from './test/AuthTest';
 const App = () => {
 
    return (
-      <div>
+      <div className='vertFill'>
          <Route exact path='/' component={Title}/>
          <Route path='/home' component={Home}/>
          <Route path='/authtest' component={AuthTest}/>

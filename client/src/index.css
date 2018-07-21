@@ -1,6 +1,11 @@
 html, body {
   height: 100%;
   font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 0;
+}
+
+.vertFill {
+  height: 100%;
 }
 
 .top {
@@ -10,10 +15,9 @@ html, body {
   height: 100%;
 
   background-color: #7777ff;
-  padding: 2px;
 }
 .menubar {
-  background-color: #33ff33;
+  background-color: #7777ff;
   padding: 2px;
 }
 .bottom {
@@ -22,10 +26,9 @@ html, body {
   flex-grow: 1;
 
   background-color: #cccccc;
-  padding: 2px;
 }
 .sideNav {
-  background-color: #ff7777;
+  background-color: #7777ff;
   padding: 2px;
 }
 .sideNav ul {
@@ -35,8 +38,8 @@ html, body {
 }
 .clientArea {
   flex-grow: 1;
-  background-color: #8888ff;
-  padding: 2px;
+  background-color: #9999ff;
+  padding: 4px;
 }
 
 .clear {
