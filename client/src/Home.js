@@ -20,7 +20,7 @@ class Home extends Component {
         <Header/>
         <div className='bottom'>
           <NavBar/>
-          <div className='clientArea'>
+          <div className='clientArea heavyUIPadding'>
             <Switch>
               <Route path="/home" exact component={Default}/>
               <Route path="/home/leaderboard" component={Leaderboard}/>
