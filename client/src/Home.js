@@ -16,7 +16,7 @@ const Default = () => {
 class Home extends Component {
   render() {
     return (
-      <div className='top'>
+      <div className='parent'>
         <Header/>
         <div className='bottom'>
           <NavBar/>

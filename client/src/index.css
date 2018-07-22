@@ -4,12 +4,16 @@ html, body {
   margin: 0;
 }
 
-.top {
+/* display defining the SPA-style menu, navbar, and lower-right work area */
+.parent {
   display: flex;
   flex-direction: column;
 
   height: 100%;
 
+  background-color: #7777ff;
+}
+.menubar {
   background-color: #7777ff;
 }
 .bottom {
@@ -18,9 +22,6 @@ html, body {
   flex-grow: 1;
 
   background-color: #cccccc;
-}
-.menubar {
-  background-color: #7777ff;
 }
 .sideNav {
   background-color: #7777ff;
@@ -45,35 +46,21 @@ html, body {
   height: 100%;
 }
 
-.clear {
-  clear: both;
+/* GameBoard-related */
+.board {
+  display: flex;
+  flex-direction: column;
+
+  margin: 3px;
 }
-.centerParent {
-  display: inline-block;
-  text-align: center;
-  width:100%;
+.boardrow {
+  display: flex;
+  flex-direction: row;
 }
-.centerChild {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-.centerChild_test {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width:100px;
-  height:100px;
-  background-color: yellow;
-}
-.tile2 {
+.tile {
   background: #fff;
   border: 1px dotted #cccccc;
-  float: left;
-  padding: 0;
-  text-align: center;
 }
-
-div.tile2:hover {
+div.tile:hover {
   border: 1px solid #ffffff;
 }

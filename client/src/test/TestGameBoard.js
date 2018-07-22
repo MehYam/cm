@@ -6,13 +6,6 @@ import GameBoard from '../views/board/GameBoard';
 
 import './TestGameBoard.css';
 
-
-class Tile extends Component {
-   render() {
-      return <h3>Tile</h3>;
-   }
-}
-
 const draggableOptions = {
    restrict: {
       restriction: 'parent',

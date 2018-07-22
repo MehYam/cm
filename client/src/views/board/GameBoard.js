@@ -9,9 +9,8 @@ class GameBoardRow extends Component {
          tiles.push(<Tile key={c} color={this.props.row[c] || 0} id={tileId} size={this.props.tileSize}/>);
       }
       return (
-         <div>
+         <div className='boardrow'>
             {tiles}
-            <div className='clear'/>
          </div>
       );
    }
@@ -41,6 +40,6 @@ export default class GameBoard extends Component {
       return rowComponents;
    }
    render() {
-      return <div>{this.renderRows()}</div>;
+      return <div className='board'>{this.renderRows()}</div>;
    }
 }
