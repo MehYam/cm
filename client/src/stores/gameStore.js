@@ -1,7 +1,12 @@
 import axios from 'axios';
 import auth from '../auth/auth';
 
+import { decorate, observable } from 'mobx';
+
 class GameStore {
+   games = [];
+   lastError = null;
+
    createGame() {
       axios(
          {
@@ -21,7 +26,7 @@ class GameStore {
       });
    }
 
-   getGames() {
+   requestGames() {
       axios(
          {
             method: 'POST',
@@ -31,11 +36,18 @@ class GameStore {
       )
       .then((res) => {
          console.log('/getGames response', res);
+
+         this.games = res.data.games;
       })
       .catch((error) => {
          console.error('/getGames error', error);
       })
    }
 };
+
+decorate(GameStore, {
+   games: observable,
+   lastError: observable
+});
 
 export default GameStore;

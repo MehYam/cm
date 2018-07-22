@@ -59,5 +59,4 @@ decorate(LoginStore, {
    loggedIn: computed
 });
 
-
 export default LoginStore;
