@@ -7,13 +7,14 @@ import Register from '../auth/Register';
 
 import rootStore from '../stores/rootStore';
 
+// non-ideal that we're using absolute links everywhere, but it's actually less messy than the alternative
 class SignedOutLinks extends Component {
    render() {
       return (
          <div>
-            <Link to='login'>Login</Link>
+            <Link to='/welcome/login'>Login</Link>
             <br/>
-            <Link to='register'>Register</Link>
+            <Link to='/welcome/register'>Register</Link>
          </div>
       );
    }
@@ -23,9 +24,9 @@ class SignedInLinks extends Component {
     return (
       <div>
         <h3>Welcome back, {rootStore.loginStore.user.name}</h3>
-        <Link to='home'>Begin</Link>
+        <Link to='/home'>Begin</Link>
         <br/>
-        <Link to='logout'>Logout</Link>
+        <Link to='/welcome/logout'>Logout</Link>
       </div>
     );
   }
@@ -35,7 +36,7 @@ class Logout extends Component {
     rootStore.loginStore.logout();
 
     return (
-      <Redirect to='/'/>
+      <Redirect to='/welcome'/>
     );
   }
 }
@@ -43,14 +44,15 @@ const TitleObserver = observer(class Title extends Component {
   render() {
       return (
         <div>
-          <h1>Welcome to Color Match</h1>
+          <h1>Color Match Title Screen</h1>
+          <i>KAI: this will be something impressive</i>
           <hr/>
-            <Route exact path='/' component={rootStore.loginStore.loggedIn ? SignedInLinks : SignedOutLinks}/>
-            <Route path='/register' 
+            <Route exact path='/welcome' component={rootStore.loginStore.loggedIn ? SignedInLinks : SignedOutLinks}/>
+            <Route path='/welcome/register' 
               render={(props) => rootStore.loginStore.loggedIn ? (<Redirect to='/'/>) : (<Register/>) }/>
-            <Route path='/login' 
+            <Route path='/welcome/login' 
               render={(props) => rootStore.loginStore.loggedIn ? (<Redirect to='/'/>) : (<Login/>) }/>
-            <Route path='/logout' component={Logout}/>
+            <Route path='/welcome/logout' component={Logout}/>
         </div>
       );
     }

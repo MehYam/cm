@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import './index.css';
 import Home from './Home';
@@ -11,9 +11,12 @@ const App = () => {
 
    return (
       <div className='vertFill'>
-         <Route exact path='/' component={Title}/>
-         <Route path='/home' component={Home}/>
-         <Route path='/authtest' component={AuthTest}/>
+         <Switch>
+            <Route path='/welcome' component={Title}/>
+            <Route path='/home' component={Home}/>
+            <Route path='/authtest' component={AuthTest}/>
+            <Redirect from='/' to='/welcome'/>
+         </Switch>
       </div>
    );
 };

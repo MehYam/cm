@@ -21,6 +21,12 @@ router.post('/getGames', (req, res, next) => {
          return res.status(401).end();
       }
 
+      if (!games.length) {
+         // morally I'm against special code for returning the null-or-empty case, but it avoids 
+         // round-trips to mongo with empty queries below
+         return res.json({games: []});
+      }
+
       // right now each game only has the _id of the players - look up the client-displayable names
       // and inject them into the response
       const idsToNames = {};
@@ -34,10 +40,12 @@ router.post('/getGames', (req, res, next) => {
 
       const ids = Object.keys(idsToNames);
 
+      console.log(ids);
+
       // ids is the array of player _id's, resolve them into pretty names
       User.find({_id: { $in: ids }}, {name: 1}).lean().exec((findIdsErr, users) => {
          if (findIdsErr || !users || !users.length) {
-            logger.error('error finding pretty names', findIdsErr);
+            logger.error('error finding pretty names', findIdsErr, users);
             return res.status(401).end();
          }
 

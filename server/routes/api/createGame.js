@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Game = mongoose.model('Game');
 
+const palette = require('../../data/palettes');
+
 router.post('/createGame', (req, res, next) => {
 
    logger.info('createGame', req.url);
