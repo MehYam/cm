@@ -16,9 +16,30 @@ const gameSettings = {
 };
 gameSettings.palette = require('../../data/palettes');
 
-function chooseRandomOpponent(thisUser, callback) {
-   //KAI: ensure the game creator isn't also player 2
-   throw 'implement chooseRandomOpponent';
+function chooseOpponent(user, body, callback) {
+
+   if (body.user) {
+      logger.warn('using a client-supplied opponent, this is for dev purposes only');
+      callback(body.user);
+   }
+   else {
+
+      // get the user list, minus the current user
+      User.find( { _id: { $ne: user._id} }, (findErr, list) => {
+
+         if (findErr) {
+            callback(null, findErr);
+         }
+         else {
+            if (!list.length) {
+               callback(null, 'need more users');
+            }
+            else {
+               callback(list[Math.floor(Math.random() * list.length)]._id);
+            }
+         }
+      });
+   }
 }
 function createGame(playerIds, settings) {
    const totalPlayerColors = playerIds.length * settings.playerPaletteSize;
@@ -69,42 +90,36 @@ function createGame(playerIds, settings) {
       gameData.players.push(addPlayer(id));
    })
    console.log('done creating game');
-
    return gameData;
 }
 
 router.post('/createGame', (req, res, next) => {
 
-   logger.info('createGame', req.url);
-
-   // look for this player's ID
-   logger.info('user', req.user);
+   logger.info('createGame', req.url, 'user', req.user.name);
 
    // find an opponent - look in the request first
-   let opponent = req.body.user;
-   if (!opponent) {
-      opponent = chooseRandomOpponent();
-   }
-   logger.info('player 2', opponent);
+   chooseOpponent(req.user, req.body, (opponent, chooseOpponentError) =>{
+      logger.info('opponent', opponent);
 
-   //KAI: this throws an exception
-   //logger.info('objid', mongoose.Types.ObjectId(req.body.user));
-
-   User.findById(opponent, (findErr, opponent) => {
-      if (findErr || !opponent) {
-         logger.error('findById error ', findErr);
-         return res.status(401).end();
+      if (chooseOpponentError) {
+         logger.error('chooseOpponentError', chooseOpponentError);
+         return done(err);
       }
-
-      const gameData = createGame([req.user, opponent], gameSettings)
-      const newGame = new Game(gameData);
-      newGame.save((err) => {
-
-         if (err) {
-            logger.error('new game creation error', err);
-            return done(err);
+      User.findById(opponent, (findErr, opponent) => {
+         if (findErr || !opponent) {
+            logger.error('findById error ', findErr);
+            return res.status(401).end();
          }
-         res.json({ gameId: newGame._id });
+
+         const gameData = createGame([req.user, opponent], gameSettings)
+         const newGame = new Game(gameData);
+         newGame.save((err) => {
+            if (err) {
+               logger.error('new game creation error', err);
+               return done(err);
+            }
+            res.json({ gameId: newGame._id });
+         });
       });
    });
 });

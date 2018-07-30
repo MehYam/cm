@@ -14,7 +14,7 @@ class GameStore {
             headers: { Authorization: auth.user.token },
             url: '/api/createGame',
             data: {
-               user: '5b554bcf37f6302c303ca4ba'
+               //user: '5b554bcf37f6302c303ca4ba'
             }
          }
       )
