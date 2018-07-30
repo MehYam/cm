@@ -5,6 +5,7 @@ import { decorate, observable } from 'mobx';
 
 class GameStore {
    games = [];
+   currentGame = null;
    lastError = null;
 
    createGame() {
@@ -25,7 +26,6 @@ class GameStore {
          console.error('/createGame error', error);
       });
    }
-
    requestGames() {
       axios(
          {
@@ -36,17 +36,34 @@ class GameStore {
       )
       .then((res) => {
          console.log('/getGames response', res);
-
          this.games = res.data.games;
       })
       .catch((error) => {
          console.error('/getGames error', error);
+      });
+   }
+   requestGame(gameId) {
+      this.currentGame = null;
+      axios(
+         {
+            method: 'POST',
+            headers: { Authorization: auth.user.token },
+            url: '/api/getGame'
+         }
+      )
+      .then((res) => {
+         console.log('/getGame response', res);
+         this.currentGame = res.data.game;
       })
+      .catch((error) => {
+         console.error('/getGame error', error);
+      });
    }
 };
 
 decorate(GameStore, {
    games: observable,
+   currentGame: observable,
    lastError: observable
 });
 

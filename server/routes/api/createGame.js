@@ -25,6 +25,7 @@ function chooseOpponent(user, body, callback) {
    else {
 
       // get the user list, minus the current user
+      //KAI: .lean()?
       User.find( { _id: { $ne: user._id} }, (findErr, list) => {
 
          if (findErr) {

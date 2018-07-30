@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
 
+import Game from './Game';
 import rootStore from '../stores/rootStore';
 
 const ExistingGamesObserver = observer(class ExistingGames extends React.Component {
@@ -14,8 +15,12 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
    render() {
       const games = [];
       rootStore.gameStore.games.forEach((game) => {
-         const key = games.length + 1;
-         games.push(<div key={key}>game {games.length + 1}, players {game.players[0].name}, {game.players[1].name}</div>);
+         const nthGame = games.length + 1;
+         const url = '/home/mygames/game=' + game._id;
+         games.push(
+            <div key={nthGame}>
+               <Link to={url}>game {nthGame}, players {game.players[0].name}, {game.players[1].name}</Link>
+            </div>);
       });
       return (
          <div>
@@ -43,20 +48,13 @@ class Default extends React.Component {
       );
    }
 }
-const Game = () => {
-   return (
-      <div>
-         <h2>This is a game</h2>
-      </div>
-   );
-}
 class MyGames extends Component {
    render() {
       return (
          <div>
             <Switch>
                <Route path='/home/mygames' exact component={Default}/>
-               <Route path='/home/mygames/game' component={Game}/>
+               <Route path='/home/mygames/game=:gameId' component={Game}/>
             </Switch>
          </div>
       );
