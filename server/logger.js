@@ -36,4 +36,10 @@ logger.stream = {
    write: (msg, encoding) => { logger.info(msg); }
 };
 
+logger.assert = (condition, msg) => {
+   if (!condition) {
+      logger.error(msg);
+   }
+}
+
 module.exports = logger;

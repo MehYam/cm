@@ -6,7 +6,72 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Game = mongoose.model('Game');
 
-const palette = require('../../data/palettes');
+require('seedrandom');
+
+//KAI: this should come from the db, eventually
+const gameSettings = {
+   width: 3,
+   height: 3,
+   playerPaletteSize: 7
+};
+gameSettings.palette = require('../../data/palettes');
+
+function chooseRandomOpponent(thisUser, callback) {
+   //KAI: ensure the game creator isn't also player 2
+   throw 'implement chooseRandomOpponent';
+}
+function createGame(playerIds, settings) {
+   const totalPlayerColors = playerIds.length * settings.playerPaletteSize;
+
+   logger.info("colors", totalPlayerColors, settings.width, 'x', settings.height);
+   logger.assert(playerIds && playerIds.length > 1, 'not enough players');
+   logger.assert(totalPlayerColors >= (settings.width * settings.height), 'not enough player colors for board');
+   logger.assert(totalPlayerColors <= settings.palette.length, 'palette too small for players');
+
+   // create a game representation for storage in the db
+   Math.seedrandom();
+   const gameData = 
+   {
+      seed: Math.random(),
+      width: settings.width,
+      height: settings.height,
+
+      players: [],
+      moves: []
+   };
+   Math.seedrandom(gameData.seed);
+
+   // fill out the player states, including randomized palettes
+   const colorsUsed = [];
+   function addPlayer(id) {
+      const player = {
+         user: id,
+         palette: []
+      };
+      for (let i = 0; i < settings.playerPaletteSize; ++i) {
+
+         // choose a color, unique across both players
+         let colorIdx = Math.floor(Math.random() * settings.palette.length);
+         while(colorsUsed.indexOf(settings.palette[colorIdx]) != -1) {
+            ++colorIdx;
+            if (colorIdx >= settings.palette.length) {
+               colorIdx = 0;
+            }
+         }
+         const color = settings.palette[colorIdx];
+         colorsUsed.push(color);
+         player.palette.push(color);
+      }
+      return player;
+   }
+   playerIds.forEach((id) => {
+      console.log('adding player ', id);
+      gameData.players.push(addPlayer(id));
+   })
+   console.log('done creating game');
+
+   return gameData;
+}
 
 router.post('/createGame', (req, res, next) => {
 
@@ -15,38 +80,23 @@ router.post('/createGame', (req, res, next) => {
    // look for this player's ID
    logger.info('user', req.user);
 
-   // look for player 2 ID in header, ensure it's valid
-   logger.info('player 2', req.body.user);
+   // find an opponent - look in the request first
+   let opponent = req.body.user;
+   if (!opponent) {
+      opponent = chooseRandomOpponent();
+   }
+   logger.info('player 2', opponent);
 
    //KAI: this throws an exception
    //logger.info('objid', mongoose.Types.ObjectId(req.body.user));
 
-   //KAI: if player 2 is missing, choose a user at random
-
-   //KAI: ensure the game creator isn't also player 2
-
-   User.findById(req.body.user, (findErr, player2) => {
-      if (findErr || !player2) {
-         logger.error('findById error in gatekeeper', findErr);
+   User.findById(opponent, (findErr, opponent) => {
+      if (findErr || !opponent) {
+         logger.error('findById error ', findErr);
          return res.status(401).end();
       }
 
-      const gameData = {
-         seed: 0,
-         width: 3,
-         height: 3,
-         players: [
-            {
-               user: req.user,
-               palette: [0, 1, 2]
-            },
-            {
-               user: player2,
-               palette: [3, 4, 5]
-            }
-         ]
-      };
-
+      const gameData = createGame([req.user, opponent], gameSettings)
       const newGame = new Game(gameData);
       newGame.save((err) => {
 
@@ -54,9 +104,7 @@ router.post('/createGame', (req, res, next) => {
             logger.error('new game creation error', err);
             return done(err);
          }
-         res.json({
-            here: true
-         });
+         res.json({ gameId: newGame._id });
       });
    });
 });

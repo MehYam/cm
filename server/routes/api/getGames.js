@@ -10,10 +10,10 @@ router.post('/getGames', (req, res, next) => {
 
    logger.info('getGames');
 
-   // {players: { $elemMatch: { user: ObjectId(...) } } }
+   const thisUser = req.user._id;
 
-   logger.warn('testing getGames with a hard-coded ID');
-   Game.find().lean().elemMatch('players', {'user': req.user._id}).exec((findErr, games) => {
+   // {players: { $elemMatch: { user: ObjectId(...) } } }
+   Game.find().lean().elemMatch('players', {'user': thisUser}).exec((findErr, games) => {
 
       logger.info('elemMatch returns', games && games.length);
       if (findErr || !games) {
