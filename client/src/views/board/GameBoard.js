@@ -19,6 +19,9 @@ class GameBoardRow extends Component {
 export default class GameBoard extends Component {
    renderRows() {
       const game = this.props.game;
+      if (!game) {
+         return null;
+      }
       const rows = new Array(game.height);
       for (let r = 0; r < rows.length; ++r) {
          rows[r] = new Array(game.width);
