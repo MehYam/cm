@@ -8,10 +8,12 @@ const User = mongoose.model('User');
 
 router.post('/getGame', (req, res, next) => {
 
-   const thisUser = req.user._id;
-   const gameId = req.body.gameId;
+   const thisUser = req.user;
+   const gameId = req.body.game;
 
-   Game.findById({ _id: req.body.gameId }, (findErr, game) => {
+   logger.info('/getGame', thisUser.name, 'body', req.body, 'gameId:', gameId);
+
+   Game.findById({ _id: gameId }, (findErr, game) => {
       if (findErr || !game) {
          logger.error('game not found', findErr);
          //KAI: should really return errors to the client so it can display them

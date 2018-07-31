@@ -15,7 +15,7 @@ class GameStore {
             headers: { Authorization: auth.user.token },
             url: '/api/createGame',
             data: {
-               //user: '5b554bcf37f6302c303ca4ba'
+               user: '5b554bcf37f6302c303ca4ba'
             }
          }
       )
@@ -48,7 +48,10 @@ class GameStore {
          {
             method: 'POST',
             headers: { Authorization: auth.user.token },
-            url: '/api/getGame'
+            url: '/api/getGame',
+            data: {
+               game: gameId
+            }
          }
       )
       .then((res) => {

@@ -8,12 +8,11 @@ const User = mongoose.model('User');
 
 router.post('/getGames', (req, res, next) => {
 
-   logger.info('getGames');
-
-   const thisUser = req.user._id;
+   const user = req.user;
+   logger.info('getGames', user.name);
 
    // {players: { $elemMatch: { user: ObjectId(...) } } }
-   Game.find().lean().elemMatch('players', {'user': thisUser}).exec((findErr, games) => {
+   Game.find().lean().elemMatch('players', {'user': user._id}).exec((findErr, games) => {
 
       logger.info('elemMatch returns', games && games.length);
       if (findErr || !games) {
