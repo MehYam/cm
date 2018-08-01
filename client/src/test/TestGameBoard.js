@@ -7,8 +7,10 @@ import GameBoard from '../views/board/GameBoard';
 import './TestGameBoard.css';
 
 const draggableOptions = {
+   inertia: true,
    restrict: {
       restriction: 'parent',
+      endOnly: true,
       elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
    },
    onmove: event => {
@@ -66,7 +68,7 @@ class TestGameBoard extends Component {
             <GameBoard game={dummyGame} tileSize={142}/>
             <h3>Draggable/resizable test</h3>
             <div className='resize-container'>
-               <Interact resizable draggable draggableOptions={draggableOptions} resizableOptions={resizableOptions}>
+               <Interact draggableOptions={draggableOptions} resizableOptions={resizableOptions}>
                   <div className='resize-drag'>FOO</div>
                </Interact>
             </div>

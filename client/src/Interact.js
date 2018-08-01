@@ -7,8 +7,6 @@ import interact from 'interact.js'
 class Interact extends Component {
 
    static defaultProps = {
-      draggable: false,
-      resizable: false,
       draggableOptions: {},
       resizableOptions: {}
    }
@@ -31,16 +29,14 @@ class Interact extends Component {
    }
 
    setInteractions() {
-      if (this.props.draggable) this.interact.draggable(this.props.draggableOptions)
-      if (this.props.resizable) this.interact.resizable(this.props.resizableOptions)
+      if (this.props.draggableOptions) this.interact.draggable(this.props.draggableOptions)
+      if (this.props.resizableOptions) this.interact.resizable(this.props.resizableOptions)
    }
 }
 
 Interact.propTypes = {
    children: PropTypes.node.isRequired,
-   draggable: PropTypes.bool,
    draggableOptions: PropTypes.object,
-   resizable: PropTypes.bool,
    resizableOptions: PropTypes.object
 }
 
