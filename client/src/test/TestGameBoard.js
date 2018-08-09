@@ -55,7 +55,19 @@ const resizableOptions = {
       target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height);      
    }
 };
+const dropzoneOptions = {
+   overlap: 0.75,
 
+   ondragenter: event => {
+      console.log('ondragenter', event);
+   },
+   ondragleave: event => {
+      console.log('ondragleave', event);
+   },
+   ondrop: event => {
+      console.log('ondrop', event);
+   }
+};
 class TestGameBoard extends Component {
    render() {
       const dummyGame = {
@@ -71,7 +83,11 @@ class TestGameBoard extends Component {
                <Interact draggableOptions={draggableOptions} resizableOptions={resizableOptions}>
                   <div className='resize-drag'>FOO</div>
                </Interact>
+               <Interact dropzoneOptions={dropzoneOptions}>
+                  <div className='dropzone'/>
+               </Interact>
             </div>
+            <h3>Dropzone</h3>
          </div>
       );
    }

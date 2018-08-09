@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import interact from 'interact.js'
 
+//KAI: the more correct thing might be separate components for resizable, draggable, dropzone, etc.  Not sure.
+// everything is candy-machine interfaces these days
 class Interact extends Component {
 
    static defaultProps = {
@@ -31,13 +33,15 @@ class Interact extends Component {
    setInteractions() {
       if (this.props.draggableOptions) this.interact.draggable(this.props.draggableOptions)
       if (this.props.resizableOptions) this.interact.resizable(this.props.resizableOptions)
+      if (this.props.dropzoneOptions) this.interact.dropzone(this.props.dropzoneOptions)
    }
 }
 
 Interact.propTypes = {
    children: PropTypes.node.isRequired,
    draggableOptions: PropTypes.object,
-   resizableOptions: PropTypes.object
+   resizableOptions: PropTypes.object,
+   dropzoneOptions: PropTypes.object
 }
 
 export default Interact;

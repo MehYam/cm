@@ -1,12 +1,32 @@
 import React, { Component } from 'react';
 import Tile from './Tile';
 
+import Interact from '../../Interact';
+
+const dropzoneOptions = {
+   overlap: 0.75,
+
+   ondragenter: event => {
+      console.log('GameBoard ondragenter', event);
+   },
+   ondragleave: event => {
+      console.log('GameBoard ondragleave', event);
+   },
+   ondrop: event => {
+      console.log('GameBoard ondrop', event);
+   }
+};
+
 class GameBoardRow extends Component {
    render() {
       const tiles = [];
       for (let c = 0; c < this.props.row.length; ++c) {
          const tileId = { row: this.props.rowIndex, col: c};
-         tiles.push(<Tile key={c} color={this.props.row[c] || 0} id={tileId} size={this.props.tileSize}/>);
+         tiles.push(
+            <Interact key={c} dropzoneOptions={dropzoneOptions}>
+               <Tile color={this.props.row[c] || 0} id={tileId} size={this.props.tileSize}/>
+            </Interact>
+         );
       }
       return (
          <div className='boardrow'>

@@ -37,16 +37,14 @@ class Palette extends React.Component {
       if (this.props.player) {
          this.props.player.palette.forEach(color => {
             tiles.push(
-               <Interact draggableOptions={draggableOptions}>
-                  <Tile key={color} color={color} size={this.props.tileSize}/>
+               <Interact key={color} draggableOptions={draggableOptions}>
+                  <Tile color={color} size={this.props.tileSize}/>
                </Interact>
             );
          });
       }
       return (
-         <div class='palette'>
-            {tiles}
-         </div>
+         <div className='palette'>{tiles}</div>
       );
    }  
 }

@@ -15,9 +15,16 @@
 .resize-container {
   display: inline-block;
   width: 100%;
-  height: 240px;
+  height: 400px;
 
   background-color: #ffff00;
+}
+
+.dropzone {
+  width: 200px;
+  height: 150px;
+
+  background-color: #00ffff;
 }
 
 .testGameBoard {
