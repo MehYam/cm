@@ -6,27 +6,38 @@ import GameBoard from '../views/board/GameBoard';
 
 import './TestGameBoard.css';
 
+function moveTo(elem, x, y, scale) {
+      // translate the element
+      const transform = `translate(${x}px, ${y}px) scale(${scale})`;
+      elem.style.webkitTransform = transform;
+      elem.style.transform = transform;
+
+      // keep the dragged position in the data-x/data-y attributes
+      elem.setAttribute('data-x', x);
+      elem.setAttribute('data-y', y);
+}
+function dragBy(elem, dx, dy, scale) {
+      const x = (parseFloat(elem.getAttribute('data-x')) || 0) + dx;
+      const y = (parseFloat(elem.getAttribute('data-y')) || 0) + dy;
+
+      moveTo(elem, x, y, scale);
+}
+const startPos = {x: 0, y:0};
 const draggableOptions = {
-   inertia: true,
-   restrict: {
+   x_restrict: {
       restriction: 'parent',
       endOnly: true,
       elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
    },
+   onstart: event => {
+      event.target.className = 'resize-drag dragging';
+   },
    onmove: event => {
-      const target = event.target;
-      // keep the dragged position in the data-x/data-y attributes
-      const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
-      const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
-
-      // translate the element
-      target.style.webkitTransform =
-      target.style.transform =
-        'translate(' + x + 'px, ' + y + 'px)'
-
-      // update the posiion attributes
-      target.setAttribute('data-x', x);
-      target.setAttribute('data-y', y);
+      dragBy(event.target, event.dx, event.dy, 1.1);
+   },
+   onend: event => {
+      event.target.className = 'resize-drag notdragging';
+      moveTo(event.target, 0, 0, 1);
    }
 };
 const resizableOptions = {
@@ -81,7 +92,7 @@ class TestGameBoard extends Component {
             <h3>Draggable/resizable test</h3>
             <div className='resize-container'>
                <Interact draggableOptions={draggableOptions} resizableOptions={resizableOptions}>
-                  <div className='resize-drag'>FOO</div>
+                  <div className='resize-drag notdragging'>FOO</div>
                </Interact>
                <Interact dropzoneOptions={dropzoneOptions}>
                   <div className='dropzone'/>
