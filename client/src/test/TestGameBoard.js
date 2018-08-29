@@ -16,13 +16,12 @@ function moveTo(elem, x, y, scale) {
       elem.setAttribute('data-x', x);
       elem.setAttribute('data-y', y);
 }
-function dragBy(elem, dx, dy, scale) {
+function drag(elem, dx, dy, scale) {
       const x = (parseFloat(elem.getAttribute('data-x')) || 0) + dx;
       const y = (parseFloat(elem.getAttribute('data-y')) || 0) + dy;
 
       moveTo(elem, x, y, scale);
 }
-const startPos = {x: 0, y:0};
 const draggableOptions = {
    x_restrict: {
       restriction: 'parent',
@@ -33,7 +32,7 @@ const draggableOptions = {
       event.target.className = 'resize-drag dragging';
    },
    onmove: event => {
-      dragBy(event.target, event.dx, event.dy, 1.1);
+      drag(event.target, event.dx, event.dy, 1.1);
    },
    onend: event => {
       event.target.className = 'resize-drag notdragging';
