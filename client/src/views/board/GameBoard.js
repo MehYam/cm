@@ -3,28 +3,14 @@ import Tile from './Tile';
 
 import Interact from '../../Interact';
 
-const dropzoneOptions = {
-   overlap: 0.75,
-
-   ondragenter: event => {
-      console.log('GameBoard ondragenter', event);
-   },
-   ondragleave: event => {
-      console.log('GameBoard ondragleave', event);
-   },
-   ondrop: event => {
-      console.log('GameBoard ondrop', event);
-   }
-};
-
 class GameBoardRow extends Component {
    render() {
       const tiles = [];
       for (let c = 0; c < this.props.row.length; ++c) {
          const tileId = { row: this.props.rowIndex, col: c};
          tiles.push(
-            <Interact key={c} dropzoneOptions={dropzoneOptions}>
-               <Tile color={this.props.row[c] || 0} id={tileId} size={this.props.tileSize}/>
+            <Interact key={c} dropzoneOptions={this.props.dropzoneOptions}>
+               <Tile key={c} color={this.props.row[c] || 0} id={tileId} size={this.props.tileSize}/>
             </Interact>
          );
       }
@@ -58,7 +44,7 @@ export default class GameBoard extends Component {
       const rowComponents= [];
       for (let r = 0; r < rows.length; ++r) {
          const row = rows[r];
-         rowComponents.push(<GameBoardRow key={r} row={row} rowIndex={r} tileSize={this.props.tileSize}/>);
+         rowComponents.push(<GameBoardRow dropzoneOptions={this.props.dropzoneOptions} key={r} row={row} rowIndex={r} tileSize={this.props.tileSize}/>);
       }
       return rowComponents;
    }

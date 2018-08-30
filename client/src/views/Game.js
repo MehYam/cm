@@ -50,7 +50,20 @@ const draggableOptions = {
       moveTo(event.target, 0, 0, 1);
    }, 
    onmove: event => {
-      drag(event.target, event.dx, event.dy, 1.1);
+      drag(event.target, event.dx, event.dy, 1.25);
+   }
+};
+const dropzoneOptions = {
+   overlap: 0.75,
+
+   ondragenter: event => {
+      console.log('GameBoard ondragenter', event);
+   },
+   ondragleave: event => {
+      console.log('GameBoard ondragleave', event);
+   },
+   ondrop: event => {
+      console.log('GameBoard ondrop', event);
    }
 };
 
@@ -81,8 +94,8 @@ const GameObserver = observer(class Game extends React.Component {
       const you = game && game.players.find(player => player.you);
       return (
          <div>
-            <h2>This is game {this.props.match.params.gameId}</h2>
-            <GameBoard game={game} tileSize={142}/>
+            <h2>Game ID: {this.props.match.params.gameId}</h2>
+            <GameBoard game={game} dropzoneOptions={dropzoneOptions} tileSize={142}/>
             <hr/>
             <Palette player={you} tileSize={70}/>
          </div>

@@ -7,29 +7,20 @@ import interact from 'interact.js'
 //KAI: the more correct thing might be separate components for resizable, draggable, dropzone, etc.  Not sure.
 // everything is candy-machine interfaces these days
 class Interact extends Component {
-
-   static defaultProps = {
-      draggableOptions: {},
-      resizableOptions: {}
-   }
-
    render() {
       return cloneElement(this.props.children, {
          ref: node => this.node = node,
          draggable: false
       })
    }
-
    componentDidMount() {
       this.interact = interact(findDOMNode(this.node))
       this.setInteractions()
    }
-
    componentWillReceiveProps() {
       this.interact = interact(findDOMNode(this.node))
       this.setInteractions()
    }
-
    setInteractions() {
       if (this.props.draggableOptions) this.interact.draggable(this.props.draggableOptions)
       if (this.props.resizableOptions) this.interact.resizable(this.props.resizableOptions)

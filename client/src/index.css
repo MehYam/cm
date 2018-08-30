@@ -64,7 +64,6 @@ html, body {
 }
 .tile {
   background: #fff;
-  border: 1px dotted #cccccc;
 }
 .draggable {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
@@ -74,9 +73,7 @@ html, body {
 }
 .draggableInMotion {
   box-shadow: rgba(0, 0, 0, 0.1) 5px 5px 5px 0px;
-}
-div.tile:hover {
-  border: 1px solid #ffffff;
+  z-index: 10;
 }
 .palette {
   display: flex;
