@@ -3,9 +3,13 @@ import auth from '../auth/auth';
 
 import { decorate, observable } from 'mobx';
 
+
+//KAI: think about how to lock down this state and make it more authoritative.  currentGame and 'localGameState' being separate is a little janky,
+// might be simpler and better if they were the same object
 class GameStore {
    games = [];
    currentGame = null;
+   localGameState = null;
    lastError = null;
 
    createGame() {
@@ -67,6 +71,7 @@ class GameStore {
 decorate(GameStore, {
    games: observable,
    currentGame: observable,
+   localGameState: observable,
    lastError: observable
 });
 

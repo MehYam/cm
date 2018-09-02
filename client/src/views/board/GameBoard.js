@@ -8,6 +8,7 @@ class GameBoardRow extends Component {
       const tiles = [];
       for (let c = 0; c < this.props.row.length; ++c) {
          const tileId = { row: this.props.rowIndex, col: c};
+         console.warn('tileId', tileId);
          tiles.push(
             <Interact key={c} dropzoneOptions={this.props.dropzoneOptions}>
                <Tile key={c} color={this.props.row[c] || 0} id={tileId} size={this.props.tileSize}/>

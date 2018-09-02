@@ -64,6 +64,9 @@ const dropzoneOptions = {
    },
    ondrop: event => {
       console.log('GameBoard ondrop', event);
+
+      const idx = event.target.id.split('_');
+      console.log('GameBoard ondrop tile', idx[0], idx[1]);
    }
 };
 
@@ -91,11 +94,12 @@ const GameObserver = observer(class Game extends React.Component {
    }
    render() {
       const game = rootStore.gameStore.currentGame;
+      const localGameState = rootStore.gameStore.localGameState;
       const you = game && game.players.find(player => player.you);
       return (
          <div>
             <h2>Game ID: {this.props.match.params.gameId}</h2>
-            <GameBoard game={game} dropzoneOptions={dropzoneOptions} tileSize={142}/>
+            <GameBoard game={game} localGameState={localGameState} dropzoneOptions={dropzoneOptions} tileSize={142}/>
             <hr/>
             <Palette player={you} tileSize={70}/>
          </div>

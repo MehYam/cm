@@ -13,6 +13,10 @@ export default class Tile extends Component {
          height: this.props.size
       };
 
-      return <div className='tile draggable' style={styleF}></div>;
+      var txtId;
+      if (this.props.id) {
+         txtId = this.props.id.row + '_' + this.props.id.col;
+      }
+      return <div id={txtId} className='tile draggable' style={styleF}></div>;
    }
 }
