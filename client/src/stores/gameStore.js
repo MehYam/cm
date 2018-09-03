@@ -9,7 +9,6 @@ import { decorate, observable } from 'mobx';
 class GameStore {
    games = [];
    currentGame = null;
-   localGameState = null;
    lastError = null;
 
    createGame() {
@@ -66,12 +65,14 @@ class GameStore {
          console.error('/getGame error', error);
       });
    }
+
+   pendingMove = null;
 };
 
 decorate(GameStore, {
    games: observable,
    currentGame: observable,
-   localGameState: observable,
+   pendingMove: observable,
    lastError: observable
 });
 

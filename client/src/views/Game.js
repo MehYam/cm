@@ -42,6 +42,10 @@ const draggableOptions = {
    onstart: event => {
       removeClass(event.target, 'draggable');
       addClass(event.target, 'draggableInMotion');
+
+      rootStore.gameStore.pendingMove = {
+         paletteIndex: event.target.id
+      }
    },
    onend: event => {
       removeClass(event.target, 'draggableInMotion');
@@ -53,20 +57,43 @@ const draggableOptions = {
       drag(event.target, event.dx, event.dy, 1.25);
    }
 };
+function parseCoords(elementId)
+{
+   const indexes = elementId.split('_');
+   return indexes.length == 2 
+      ? { row: parseInt(indexes[0]), col: parseInt(indexes[1])}
+      : null;
+}
 const dropzoneOptions = {
-   overlap: 0.75,
-
    ondragenter: event => {
-      console.log('GameBoard ondragenter', event);
+      const coords = parseCoords(event.target.id);
+      console.log('GameBoard ondragenter', event, coords);
+
+      rootStore.gameStore.pendingMove = {
+         paletteIndex: rootStore.gameStore.pendingMove.draggingIndex,
+         color: 0x00ff00,
+         hoverCoords: coords
+      };
    },
    ondragleave: event => {
-      console.log('GameBoard ondragleave', event);
+      const coords = parseCoords(event.target.id);
+      console.log('GameBoard ondragleave', event, coords);
+
+      rootStore.gameStore.pendingMove = {
+         paletteIndex: rootStore.gameStore.pendingMove.draggingIndex,
+         color: 0x00ff00,
+         hoverCoords: null
+      };
    },
    ondrop: event => {
-      console.log('GameBoard ondrop', event);
+      const coords = parseCoords(event.target.id);
+      console.log('GameBoard ondrop tile', coords);
 
-      const idx = event.target.id.split('_');
-      console.log('GameBoard ondrop tile', idx[0], idx[1]);
+      rootStore.gameStore.pendingMove = {
+         paletteIndex: rootStore.gameStore.pendingMove.draggingIndex,
+         color: 0x00ff00,
+         dropCoords: coords
+      };
    }
 };
 
@@ -74,10 +101,11 @@ class Palette extends React.Component {
    render() {
       const tiles = [];
       if (this.props.player) {
+         let idx = 0;
          this.props.player.palette.forEach(color => {
             tiles.push(
                <Interact key={color} draggableOptions={draggableOptions}>
-                  <Tile color={color} size={this.props.tileSize}/>
+                  <Tile id={idx++} color={color} size={this.props.tileSize}/>
                </Interact>
             );
          });
@@ -93,13 +121,13 @@ const GameObserver = observer(class Game extends React.Component {
       rootStore.gameStore.requestGame(this.props.match.params.gameId);
    }
    render() {
-      const game = rootStore.gameStore.currentGame;
-      const localGameState = rootStore.gameStore.localGameState;
+      const store = rootStore.gameStore;
+      const game = store.currentGame;
       const you = game && game.players.find(player => player.you);
       return (
          <div>
             <h2>Game ID: {this.props.match.params.gameId}</h2>
-            <GameBoard game={game} localGameState={localGameState} dropzoneOptions={dropzoneOptions} tileSize={142}/>
+            <GameBoard game={game} pendingMove={store.pendingMove} dropzoneOptions={dropzoneOptions} tileSize={142}/>
             <hr/>
             <Palette player={you} tileSize={70}/>
          </div>
