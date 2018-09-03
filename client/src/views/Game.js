@@ -43,8 +43,13 @@ const draggableOptions = {
       removeClass(event.target, 'draggable');
       addClass(event.target, 'draggableInMotion');
 
+      console.log('dragging', event.target.id);
+
+      const you = rootStore.gameStore.you;
+      const paletteIndex = parseInt(event.target.id);
       rootStore.gameStore.pendingMove = {
-         paletteIndex: event.target.id
+         paletteIndex,
+         color: you.palette[paletteIndex]
       }
    },
    onend: event => {
@@ -69,9 +74,10 @@ const dropzoneOptions = {
       const coords = parseCoords(event.target.id);
       console.log('GameBoard ondragenter', event, coords);
 
-      rootStore.gameStore.pendingMove = {
-         paletteIndex: rootStore.gameStore.pendingMove.draggingIndex,
-         color: 0x00ff00,
+      const store = rootStore.gameStore;
+      store.pendingMove = {
+         paletteIndex: store.pendingMove.draggingIndex,
+         color: store.pendingMove.color,
          hoverCoords: coords
       };
    },
@@ -79,9 +85,10 @@ const dropzoneOptions = {
       const coords = parseCoords(event.target.id);
       console.log('GameBoard ondragleave', event, coords);
 
-      rootStore.gameStore.pendingMove = {
-         paletteIndex: rootStore.gameStore.pendingMove.draggingIndex,
-         color: 0x00ff00,
+      const store = rootStore.gameStore;
+      store.pendingMove = {
+         paletteIndex: store.pendingMove.draggingIndex,
+         color: store.pendingMove.color,
          hoverCoords: null
       };
    },
@@ -89,9 +96,10 @@ const dropzoneOptions = {
       const coords = parseCoords(event.target.id);
       console.log('GameBoard ondrop tile', coords);
 
-      rootStore.gameStore.pendingMove = {
-         paletteIndex: rootStore.gameStore.pendingMove.draggingIndex,
-         color: 0x00ff00,
+      const store = rootStore.gameStore;
+      store.pendingMove = {
+         paletteIndex: store.pendingMove.draggingIndex,
+         color: store.pendingMove.color,
          dropCoords: coords
       };
    }
@@ -123,7 +131,7 @@ const GameObserver = observer(class Game extends React.Component {
    render() {
       const store = rootStore.gameStore;
       const game = store.currentGame;
-      const you = game && game.players.find(player => player.you);
+      const you = store.you;
       return (
          <div>
             <h2>Game ID: {this.props.match.params.gameId}</h2>

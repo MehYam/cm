@@ -65,6 +65,9 @@ class GameStore {
          console.error('/getGame error', error);
       });
    }
+   get you() {
+      return this.currentGame && this.currentGame.players.find(player => player.you);
+   }
 
    pendingMove = null;
 };
