@@ -49,6 +49,7 @@ class GameStore {
    }
    requestGame(gameId) {
       this.currentGame = null;
+      this.pendingMove = null;
       axios(
          {
             method: 'POST',
