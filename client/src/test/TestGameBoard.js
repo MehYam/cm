@@ -82,7 +82,8 @@ class TestGameBoard extends Component {
    render() {
       const dummyGame = {
          height: 3,
-         width: 3
+         width: 3,
+         moves: []
       }
       return (
          <div>

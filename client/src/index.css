@@ -72,7 +72,7 @@ html, body {
   transition: transform 0.5s, box-shadow 0.5s;
 }
 .draggableInMotion {
-  box-shadow: rgba(0, 0, 0, 0.1) 5px 5px 5px 0px;
+  box-shadow: rgba(0, 0, 0, 0.3) 5px 5px 5px 0px;
   z-index: 10;
 }
 .palette {

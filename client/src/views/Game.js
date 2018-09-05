@@ -59,7 +59,7 @@ const draggableOptions = {
       moveTo(event.target, 0, 0, 1);
    }, 
    onmove: event => {
-      drag(event.target, event.dx, event.dy, 1.25);
+      drag(event.target, event.dx, event.dy, 1.5);
    }
 };
 function parseCoords(elementId)
