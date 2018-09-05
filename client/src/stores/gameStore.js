@@ -9,7 +9,9 @@ import { decorate, observable } from 'mobx';
 class GameStore {
    games = [];
    currentGame = null;
-   lastError = null;
+   lastError = null;  //KAI: looks like we're not using this anywhere
+
+   pendingMove = null;
 
    createGame() {
       axios(
@@ -65,11 +67,31 @@ class GameStore {
          console.error('/getGame error', error);
       });
    }
+   applyPendingMove() {
+      //KAI: a whole bunch of state needs to be set up correctly for this to work, assert it or something
+      axios(
+         {
+            method: 'POST',
+            headers: { Authorization: auth.user.token },
+            url: '/api/doMove',
+            data: {
+               game: this.currentGame._id,
+               paletteIndex: this.pendingMove.paletteIndex,
+               row: this.pendingMove.dropCoords.row,
+               col: this.pendingMove.dropCoords.col
+            }
+         }
+      )
+      .then((res) => {
+         console.log('/doMove response', res);
+      })
+      .catch((error) => {
+         console.error('/doMove error', error);
+      });
+   }
    get you() {
       return this.currentGame && this.currentGame.players.find(player => player.you);
    }
-
-   pendingMove = null;
 };
 
 decorate(GameStore, {

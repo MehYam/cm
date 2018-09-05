@@ -76,7 +76,7 @@ const dropzoneOptions = {
 
       const store = rootStore.gameStore;
       store.pendingMove = {
-         paletteIndex: store.pendingMove.draggingIndex,
+         paletteIndex: store.pendingMove.paletteIndex,
          color: store.pendingMove.color,
          hoverCoords: coords
       };
@@ -87,7 +87,7 @@ const dropzoneOptions = {
 
       const store = rootStore.gameStore;
       store.pendingMove = {
-         paletteIndex: store.pendingMove.draggingIndex,
+         paletteIndex: store.pendingMove.paletteIndex,
          color: store.pendingMove.color,
          hoverCoords: null
       };
@@ -98,10 +98,12 @@ const dropzoneOptions = {
 
       const store = rootStore.gameStore;
       store.pendingMove = {
-         paletteIndex: store.pendingMove.draggingIndex,
+         paletteIndex: store.pendingMove.paletteIndex,
          color: store.pendingMove.color,
          dropCoords: coords
       };
+
+      store.applyPendingMove();
    }
 };
 

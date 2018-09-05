@@ -14,6 +14,7 @@ const moveSchema = new Schema({
 
 const Game = mongoose.model('Game', new Schema({
    created: {type: Date, default: Date.now},
+   completed: {type: Date, default: null},
    seed: {type: Number, required: true},
    width: {type: Number, required: true},
    height: {type: Number, required: true},

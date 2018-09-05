@@ -54,6 +54,7 @@ app.use('/api', require('./routes/auth/gatekeeper'));
 app.use('/api', require('./routes/api/createGame'));
 app.use('/api', require('./routes/api/getGames'));
 app.use('/api', require('./routes/api/getGame'));
+app.use('/api', require('./routes/api/doMove'));
 
 // app.use('/api/getGames', require('./routes/api/getGames'));
 app.get('/api/:call', (req, res) => {
