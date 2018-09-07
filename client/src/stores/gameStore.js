@@ -90,8 +90,16 @@ class GameStore {
          console.error('/doMove error', error);
       });
    }
+   //KAI: 1. these could throw, 2. these belong in a Game object somewhere
    get you() {
       return this.currentGame && this.currentGame.players.find(player => player.you);
+   }
+   get currentPlayer() {
+      if (this.currentGame) {
+         const currentPlayerIndex = this.currentGame.moves.length % this.currentGame.players.length;
+         return this.currentGame.players[currentPlayerIndex];
+      }
+      return null;
    }
 };
 

@@ -134,9 +134,20 @@ const GameObserver = observer(class Game extends React.Component {
       const store = rootStore.gameStore;
       const game = store.currentGame;
       const you = store.you;
+
+      const players = [];
+      if (game && game.players) {
+         game.players.forEach(player => {
+            players.push(<h3>player {players.length + 1}: {player.user}</h3>);
+         });
+      }
+
+      const yourTurn = store.currentPlayer && store.currentPlayer.you;
       return (
          <div>
             <h2>Game ID: {this.props.match.params.gameId}</h2>
+            {players}
+            <h3>{yourTurn ? 'waiting for your move' : 'waiting for other player'}</h3>
             <GameBoard game={game} pendingMove={store.pendingMove} dropzoneOptions={dropzoneOptions} tileSize={142}/>
             <hr/>
             <Palette player={you} tileSize={70}/>

@@ -6,6 +6,11 @@ const mongoose = require('mongoose');
 const Game = mongoose.model('Game');
 const User = mongoose.model('User');
 
+//KAI: shared code b/w client and server
+function currentPlayerIndex(game) {
+   const nPlayers = Math.max(1, game.players.length);
+   return game.moves.length % game.players.length;
+}
 router.post('/doMove', (req, res, next) => {
 
    const thisUser = req.user;
@@ -33,7 +38,7 @@ router.post('/doMove', (req, res, next) => {
 
          const you = game.players[playerIndex];
 
-         if (playerIndex != (game.moves.length % game.players.length)) {
+         if (playerIndex != (currentPlayerIndex(game))) {
             throw "not this player's turn";
          }
 
