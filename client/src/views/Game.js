@@ -112,9 +112,11 @@ class Palette extends React.Component {
       const tiles = [];
       if (this.props.player) {
          let idx = 0;
+
+         const draggable = this.props.enabled ? draggableOptions : null;
          this.props.player.palette.forEach(color => {
             tiles.push(
-               <Interact key={color} draggableOptions={draggableOptions}>
+               <Interact key={color} draggableOptions={draggable}>
                   <Tile id={idx++} color={color} size={this.props.tileSize}/>
                </Interact>
             );
@@ -150,7 +152,7 @@ const GameObserver = observer(class Game extends React.Component {
             <h3>{yourTurn ? 'waiting for your move' : 'waiting for other player'}</h3>
             <GameBoard game={game} pendingMove={store.pendingMove} dropzoneOptions={dropzoneOptions} tileSize={142}/>
             <hr/>
-            <Palette player={you} tileSize={70}/>
+            <Palette enabled={yourTurn} player={you} tileSize={70}/>
          </div>
       );
    }

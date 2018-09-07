@@ -92,7 +92,31 @@ class GameStore {
    }
    //KAI: 1. these could throw, 2. these belong in a Game object somewhere
    get you() {
-      return this.currentGame && this.currentGame.players.find(player => player.you);
+      const index = this.yourIndex;
+      return index >= 0
+         ? this.currentGame.players[index]
+         : null;
+   }
+   get yourIndex() {
+      return this.currentGame 
+         ? this.currentGame.players.findIndex(player => player.you)
+         : -1;
+   }
+   get yourMoves() {
+      const retval = [];
+      const yourIndex = this.yourIndex;
+
+      //KAI: our Game data structure is kind of a pain to use due to its simplicity
+      if (yourIndex >= 0) {
+         const nPlayers = this.currentGame.players.length;
+         const nMoves = this.currentGame.moves.length;
+         for (var i = 0; i < nMoves; ++i) {
+            if ((i % nPlayers) == yourIndex) {
+               retval.push(this.currentGame.moves[i]);
+            }
+         }
+      }
+      return retval;
    }
    get currentPlayer() {
       if (this.currentGame) {
