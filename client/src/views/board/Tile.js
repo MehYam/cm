@@ -7,12 +7,14 @@ export default class Tile extends Component {
       const colorHexPad = '000000';
       const colorHex = (colorHexPad + color.toString(16)).slice(-colorHexPad.length);
 
-      const styleF = {
+      const visibility = (this.props.visible == undefined || this.props.visible) ? 'visible' : 'hidden';
+      const style = {
          backgroundColor: '#' + colorHex,
          width: this.props.size,
-         height: this.props.size
+         height: this.props.size,
+         visibility
       };
 
-      return <div id={this.props.id} className='tile draggable' style={styleF}></div>;
+      return <div id={this.props.id} className='tile draggable' style={style}></div>;
    }
 }

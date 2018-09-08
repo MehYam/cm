@@ -91,6 +91,13 @@ class GameStore {
       });
    }
    //KAI: 1. these could throw, 2. these belong in a Game object somewhere
+   get currentPlayer() {
+      if (this.currentGame) {
+         const currentPlayerIndex = this.currentGame.moves.length % this.currentGame.players.length;
+         return this.currentGame.players[currentPlayerIndex];
+      }
+      return null;
+   }
    get you() {
       const index = this.yourIndex;
       return index >= 0
@@ -117,13 +124,6 @@ class GameStore {
          }
       }
       return retval;
-   }
-   get currentPlayer() {
-      if (this.currentGame) {
-         const currentPlayerIndex = this.currentGame.moves.length % this.currentGame.players.length;
-         return this.currentGame.players[currentPlayerIndex];
-      }
-      return null;
    }
 };
 

@@ -115,9 +115,13 @@ class Palette extends React.Component {
 
          const draggable = this.props.enabled ? draggableOptions : null;
          this.props.player.palette.forEach(color => {
+
+            const visible = !this.props.moves.find(move => move.paletteIdx == idx);
+
+            console.log('visible', visible);
             tiles.push(
                <Interact key={color} draggableOptions={draggable}>
-                  <Tile id={idx++} color={color} size={this.props.tileSize}/>
+                  <Tile id={idx++} color={color} visible={visible} size={this.props.tileSize}/>
                </Interact>
             );
          });
@@ -140,11 +144,12 @@ const GameObserver = observer(class Game extends React.Component {
       const players = [];
       if (game && game.players) {
          game.players.forEach(player => {
-            players.push(<h3>player {players.length + 1}: {player.user}</h3>);
+            players.push(<h3 key={player.user}>player {players.length + 1}: {player.user}</h3>);
          });
       }
 
       const yourTurn = store.currentPlayer && store.currentPlayer.you;
+      console.warn('moves', store.yourMoves.length);
       return (
          <div>
             <h2>Game ID: {this.props.match.params.gameId}</h2>
@@ -152,7 +157,7 @@ const GameObserver = observer(class Game extends React.Component {
             <h3>{yourTurn ? 'waiting for your move' : 'waiting for other player'}</h3>
             <GameBoard game={game} pendingMove={store.pendingMove} dropzoneOptions={dropzoneOptions} tileSize={142}/>
             <hr/>
-            <Palette enabled={yourTurn} player={you} tileSize={70}/>
+            <Palette enabled={yourTurn} player={you} moves={store.yourMoves} tileSize={70}/>
          </div>
       );
    }
