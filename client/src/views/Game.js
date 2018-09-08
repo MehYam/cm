@@ -45,9 +45,10 @@ const draggableOptions = {
 
       console.log('dragging', event.target.id);
 
-      const you = rootStore.gameStore.you;
+      const store = rootStore.gameStore;
+      const you = store.currentGame.yourPlayer;
       const paletteIndex = parseInt(event.target.id);
-      rootStore.gameStore.pendingMove = {
+      store.pendingMove = {
          paletteIndex,
          color: you.palette[paletteIndex]
       }
@@ -103,29 +104,23 @@ const dropzoneOptions = {
          dropCoords: coords
       };
 
-      store.applyPendingMove();
+      //store.applyPendingMove();
    }
 };
 
 class Palette extends React.Component {
    render() {
       const tiles = [];
-      if (this.props.player) {
-         let idx = 0;
+      const draggable = this.props.enabled ? draggableOptions : null;
 
-         const draggable = this.props.enabled ? draggableOptions : null;
-         this.props.player.palette.forEach(color => {
-
-            const visible = !this.props.moves.find(move => move.paletteIdx == idx);
-
-            console.log('visible', visible);
-            tiles.push(
-               <Interact key={color} draggableOptions={draggable}>
-                  <Tile id={idx++} color={color} visible={visible} size={this.props.tileSize}/>
-               </Interact>
-            );
-         });
-      }
+      console.log('enabled', this.props.enabled);
+      this.props.palette.forEach(paletteSlot => {
+         tiles.push(
+            <Interact key={paletteSlot.color} draggableOptions={draggable}>
+               <Tile id={tiles.length} color={paletteSlot.color} visible={!paletteSlot.used} size={this.props.tileSize}/>
+            </Interact>
+         );
+      });
       return (
          <div className='palette'>{tiles}</div>
       );
@@ -139,7 +134,6 @@ const GameObserver = observer(class Game extends React.Component {
    render() {
       const store = rootStore.gameStore;
       const game = store.currentGame;
-      const you = store.you;
 
       const players = [];
       if (game && game.players) {
@@ -148,8 +142,16 @@ const GameObserver = observer(class Game extends React.Component {
          });
       }
 
-      const yourTurn = store.currentPlayer && store.currentPlayer.you;
-      console.warn('moves', store.yourMoves.length);
+      //KAI: WHY DOES THIS NOT WORK!  IT DOES IN THE CONSOLE!
+      //const yourTurn = game && game.currentPlayer == game.yourPlayer;
+      const yourTurn = game && game.currentPlayer._id == game.yourPlayer._id;
+
+      const palette = game ? game.yourPlayer.availablePalette : [];
+
+      console.log('yourTurn', yourTurn);
+      if (game) {
+         console.log('whut', game.currentPlayer._id, game.yourPlayer._id, game.currentPlayer == game.yourPlayer);
+      }
       return (
          <div>
             <h2>Game ID: {this.props.match.params.gameId}</h2>
@@ -157,7 +159,7 @@ const GameObserver = observer(class Game extends React.Component {
             <h3>{yourTurn ? 'waiting for your move' : 'waiting for other player'}</h3>
             <GameBoard game={game} pendingMove={store.pendingMove} dropzoneOptions={dropzoneOptions} tileSize={142}/>
             <hr/>
-            <Palette enabled={yourTurn} player={you} moves={store.yourMoves} tileSize={70}/>
+            <Palette enabled={yourTurn} palette={palette} tileSize={70}/>
          </div>
       );
    }

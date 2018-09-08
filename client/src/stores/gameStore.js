@@ -62,7 +62,10 @@ class GameStore {
       )
       .then((res) => {
          console.log('/getGame response', res);
-         this.currentGame = res.data.game;
+
+         // The server's Game is a minimal data structure that stores only the set of events that have occurred,
+         // with no redundancy.  Unfold this into a structure that's easier for clients to use.
+         this.currentGame = this.hydrateGame(res.data.game);
       })
       .catch((error) => {
          console.error('/getGame error', error);
@@ -90,40 +93,50 @@ class GameStore {
          console.error('/doMove error', error);
       });
    }
-   //KAI: 1. these could throw, 2. these belong in a Game object somewhere
-   get currentPlayer() {
-      if (this.currentGame) {
-         const currentPlayerIndex = this.currentGame.moves.length % this.currentGame.players.length;
-         return this.currentGame.players[currentPlayerIndex];
-      }
-      return null;
-   }
-   get you() {
-      const index = this.yourIndex;
-      return index >= 0
-         ? this.currentGame.players[index]
-         : null;
-   }
-   get yourIndex() {
-      return this.currentGame 
-         ? this.currentGame.players.findIndex(player => player.you)
-         : -1;
-   }
-   get yourMoves() {
-      const retval = [];
-      const yourIndex = this.yourIndex;
+   //KAI: could/should share this with server
+   hydrateGame(game) {
 
-      //KAI: our Game data structure is kind of a pain to use due to its simplicity
-      if (yourIndex >= 0) {
-         const nPlayers = this.currentGame.players.length;
-         const nMoves = this.currentGame.moves.length;
-         for (var i = 0; i < nMoves; ++i) {
-            if ((i % nPlayers) == yourIndex) {
-               retval.push(this.currentGame.moves[i]);
-            }
+      // unfold per-player info
+      var iPlayer = 0;
+      game.players.forEach(player => {
+         player.index = iPlayer++;
+         player.moves = [];
+         player.availablePalette = [];
+
+         player.palette.forEach(color => {
+            const used = false;
+            player.availablePalette.push({ color, used });
+         });
+
+         if (player.you) {
+            game.yourPlayer = player;
          }
+      });
+
+      game.currentPlayer = game.players[game.moves.length % game.players.length];
+
+      // deduce a board
+      game.rows = [];
+      for (var r = 0; r < game.height; r++) {
+         game.rows.push([]);
       }
-      return retval;
+
+      // walk the move events and rebuild the game state
+      for (var i = 0; i < game.moves.length; ++i) {
+         const move = game.moves[i];
+         const player = game.players[i % game.players.length];
+
+         player.moves.push(move);
+         player.availablePalette[move.paletteIdx].used = true;
+
+         game.rows[move.y][move.x] = player.palette[move.paletteIdx];
+      }
+
+      //KAI: debugging
+      window.game = game;
+
+      //KAI: ripe for unit tests here
+      return game;
    }
 };
 
