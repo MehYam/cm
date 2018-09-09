@@ -171,12 +171,23 @@ const GameObserver = observer(class Game extends React.Component {
       //KAI: WHAT'S WRONG WITH THIS EQUALITY!  IT WORKS IN THE CONSOLE!
       //const yourTurn = game && game.currentPlayer == game.yourPlayer;
       const yourTurn = game && game.currentPlayer._id === game.yourPlayer._id;
-      const paletteEnabled = yourTurn && !pendingDrop;
+      const paletteEnabled = game && !game.completed && yourTurn && !pendingDrop;
+
+      var statusMessage;
+      if (game && game.completed) {
+         statusMessage = 'Game finished at ' + game.completed;
+      }
+      else if (yourTurn) {
+         statusMessage = 'Your turn';
+      }
+      else {
+         statusMessage = "Waiting for opponent's turn";
+      }
       return (
          <div>
             <h2>Game ID: {this.props.match.params.gameId}</h2>
             {players}
-            <h3>{yourTurn ? 'waiting for your move' : 'waiting for other player'}</h3>
+            <h3>{statusMessage}</h3>
             <GameBoard game={game} pendingMove={store.pendingMove} dropzoneOptions={dropzoneOptions} tileSize={142}/>
             { this.acceptUndo() }
             <hr/>

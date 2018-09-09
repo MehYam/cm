@@ -63,6 +63,9 @@ router.post('/doMove', (req, res, next) => {
 
          // everything checks out, make the move
          game.moves.push({ x: col, y: row, paletteIdx: paletteIndex});
+         if (game.moves.length == game.width * game.height) {
+            game.completed = new Date();
+         }
          game.save((err, updatedGame) => {
             if (err) {
                logger.error('game.save', err);
