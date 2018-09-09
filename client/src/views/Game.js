@@ -43,8 +43,6 @@ const draggableOptions = {
       removeClass(event.target, 'draggable');
       addClass(event.target, 'draggableInMotion');
 
-      console.log('dragging', event.target.id);
-
       const store = rootStore.gameStore;
       const you = store.currentGame.yourPlayer;
       const paletteIndex = parseInt(event.target.id, 10);
@@ -73,8 +71,6 @@ function parseCoords(elementId)
 const dropzoneOptions = {
    ondragenter: event => {
       const coords = parseCoords(event.target.id);
-      console.log('GameBoard ondragenter', event, coords);
-
       const store = rootStore.gameStore;
       store.pendingMove = {
          paletteIndex: store.pendingMove.paletteIndex,
@@ -84,8 +80,6 @@ const dropzoneOptions = {
    },
    ondragleave: event => {
       const coords = parseCoords(event.target.id);
-      console.log('GameBoard ondragleave', event, coords);
-
       const store = rootStore.gameStore;
       store.pendingMove = {
          paletteIndex: store.pendingMove.paletteIndex,
@@ -95,8 +89,6 @@ const dropzoneOptions = {
    },
    ondrop: event => {
       const coords = parseCoords(event.target.id);
-      console.log('GameBoard ondrop tile', coords);
-
       const store = rootStore.gameStore;
       store.pendingMove = {
          paletteIndex: store.pendingMove.paletteIndex,
@@ -111,16 +103,17 @@ const dropzoneOptions = {
 class Palette extends React.Component {
    render() {
       const tiles = [];
-      const draggable = this.props.enabled ? draggableOptions : null;
 
-      console.log('Palette enabled', this.props.enabled, draggable);
       this.props.palette.forEach(paletteSlot => {
-         console.log('used', paletteSlot.used);
-         tiles.push(
-            <Interact key={paletteSlot.color} draggableOptions={draggable}>
-               <Tile id={tiles.length} color={paletteSlot.color} visible={!paletteSlot.used} size={this.props.tileSize}/>
-            </Interact>
-         );
+
+         const visible = !paletteSlot.used && this.props.hideOne != tiles.length;
+         const tile = this.props.enabled 
+            ? (<Interact key={paletteSlot.color} draggableOptions={draggableOptions}>
+                  <Tile id={tiles.length} color={paletteSlot.color} visible={visible} size={this.props.tileSize}/>
+               </Interact>)
+            : (<Tile key={paletteSlot.color} id={tiles.length} color={paletteSlot.color} visible={visible} size={this.props.tileSize}/>)
+
+         tiles.push(tile);
       });
       return (
          <div className='palette'>{tiles}</div>
@@ -163,15 +156,17 @@ const GameObserver = observer(class Game extends React.Component {
          });
       }
 
-      const palette = game ? [...game.yourPlayer.availablePalette] : [];
-      // if (store.pendingMove && store.pendingMove.dropCoords) {
-      //    console.log('HIDING');
-      //    palette[game.pendingMove.paletteIndex].used = true;
-      // }
+      const pendingDrop = store.pendingMove && store.pendingMove.dropCoords;
+      const palette = game ? game.yourPlayer.availablePalette : [];
+      var hideDroppedTile = -1;  //KLUDGE
+      if (pendingDrop) {
+         hideDroppedTile = store.pendingMove.paletteIndex;
+      }
 
       //KAI: WHAT'S WRONG WITH THIS EQUALITY!  IT WORKS IN THE CONSOLE!
       //const yourTurn = game && game.currentPlayer == game.yourPlayer;
       const yourTurn = game && game.currentPlayer._id === game.yourPlayer._id;
+      const paletteEnabled = yourTurn && !pendingDrop;
       return (
          <div>
             <h2>Game ID: {this.props.match.params.gameId}</h2>
@@ -180,7 +175,7 @@ const GameObserver = observer(class Game extends React.Component {
             <GameBoard game={game} pendingMove={store.pendingMove} dropzoneOptions={dropzoneOptions} tileSize={142}/>
             { this.acceptUndo() }
             <hr/>
-            <Palette enabled={yourTurn} palette={palette} tileSize={70}/>
+            <Palette enabled={paletteEnabled} palette={palette} hideOne={hideDroppedTile} tileSize={70}/>
          </div>
       );
    }
