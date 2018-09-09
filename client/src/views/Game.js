@@ -112,8 +112,7 @@ class Palette extends React.Component {
    render() {
       const tiles = [];
       const draggable = this.props.enabled ? draggableOptions : null;
-
-      console.log('enabled', this.props.enabled);
+      
       this.props.palette.forEach(paletteSlot => {
          tiles.push(
             <Interact key={paletteSlot.color} draggableOptions={draggable}>
@@ -127,9 +126,29 @@ class Palette extends React.Component {
    }  
 }
 
+class AcceptUndo extends React.Component {
+   accept() { rootStore.gameStore.acceptPendingMove(); }
+   undo() { rootStore.gameStore.undoPendingMove(); }
+   render() {
+      return (
+         <div>
+            <button onClick={this.accept}>Accept</button>
+            <button onClick={this.undo}>Undo</button>
+            Accept this move?
+         </div>
+      );
+   }
+}
+
 const GameObserver = observer(class Game extends React.Component {
    componentDidMount() {
       rootStore.gameStore.requestGame(this.props.match.params.gameId);
+   }
+   acceptUndo() {
+      const store = rootStore.gameStore;
+      return store.pendingMove && store.pendingMove.dropCoords
+         ? <AcceptUndo/>
+         : null;
    }
    render() {
       const store = rootStore.gameStore;
@@ -142,22 +161,17 @@ const GameObserver = observer(class Game extends React.Component {
          });
       }
 
-      //KAI: WHY DOES THIS NOT WORK!  IT DOES IN THE CONSOLE!
+      //KAI: WHAT'S WRONG WITH THIS EQUALITY!  IT WORKS IN THE CONSOLE!
       //const yourTurn = game && game.currentPlayer == game.yourPlayer;
       const yourTurn = game && game.currentPlayer._id == game.yourPlayer._id;
-
       const palette = game ? game.yourPlayer.availablePalette : [];
-
-      console.log('yourTurn', yourTurn);
-      if (game) {
-         console.log('whut', game.currentPlayer._id, game.yourPlayer._id, game.currentPlayer == game.yourPlayer);
-      }
       return (
          <div>
             <h2>Game ID: {this.props.match.params.gameId}</h2>
             {players}
             <h3>{yourTurn ? 'waiting for your move' : 'waiting for other player'}</h3>
             <GameBoard game={game} pendingMove={store.pendingMove} dropzoneOptions={dropzoneOptions} tileSize={142}/>
+            { this.acceptUndo() }
             <hr/>
             <Palette enabled={yourTurn} palette={palette} tileSize={70}/>
          </div>

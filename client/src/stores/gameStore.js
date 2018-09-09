@@ -71,7 +71,7 @@ class GameStore {
          console.error('/getGame error', error);
       });
    }
-   applyPendingMove() {
+   acceptPendingMove() {
       //KAI: a whole bunch of state needs to be set up correctly for this to work, assert it or something
       axios(
          {
@@ -88,10 +88,15 @@ class GameStore {
       )
       .then((res) => {
          console.log('/doMove response', res);
+         this.currentGame = this.hydrateGame(res.data.game);
       })
       .catch((error) => {
          console.error('/doMove error', error);
       });
+      this.pendingMove = null;
+   }
+   undoPendingMove() {
+      this.pendingMove = null;
    }
    //KAI: could/should share this with server
    hydrateGame(game) {

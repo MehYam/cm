@@ -57,7 +57,8 @@ router.post('/doMove', (req, res, next) => {
          }
 
          if (game.moves.find(move => move.paletteIdx == paletteIndex)) {
-            throw 'color already used';
+            //KAI: this test is broken - logic is faulty because both players use the same color indexes
+            //throw 'color already used';
          }
 
          // everything checks out, make the move
@@ -68,7 +69,13 @@ router.post('/doMove', (req, res, next) => {
                res.status(400).json({ error: err });
             }
             else {
-               res.send(updatedGame);
+               //KAI: copy pasta from getGame.js - should be fixed
+               // client user doesn't know it's own _id, so mark the current user so they know which player they are
+               const retval = updatedGame.toObject();
+               retval.players.forEach((player) => {
+                  player.you = String(player.user) == String(thisUser._id);
+               })               
+               res.send({ game: retval });
             }
          });
       }
