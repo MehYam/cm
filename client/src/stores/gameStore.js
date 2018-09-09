@@ -91,12 +91,13 @@ class GameStore {
       )
       .then((res) => {
          console.log('/doMove response', res);
+
+         this.pendingMove = null;
          this.currentGame = this.hydrateGame(res.data.game);
       })
       .catch((error) => {
          console.error('/doMove error', error);
       });
-      this.pendingMove = null;
    }
    undoPendingMove() {
       this.pendingMove = null;
