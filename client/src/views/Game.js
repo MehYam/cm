@@ -72,11 +72,13 @@ const dropzoneOptions = {
    ondragenter: event => {
       const coords = parseCoords(event.target.id);
       const store = rootStore.gameStore;
-      store.pendingMove = {
-         paletteIndex: store.pendingMove.paletteIndex,
-         color: store.pendingMove.color,
-         hoverCoords: coords
-      };
+      if (!store.currentGame.rows[coords.row][coords.col]) {
+         store.pendingMove = {
+            paletteIndex: store.pendingMove.paletteIndex,
+            color: store.pendingMove.color,
+            hoverCoords: coords
+         };
+      }
    },
    ondragleave: event => {
       const coords = parseCoords(event.target.id);
@@ -90,13 +92,16 @@ const dropzoneOptions = {
    ondrop: event => {
       const coords = parseCoords(event.target.id);
       const store = rootStore.gameStore;
-      store.pendingMove = {
-         paletteIndex: store.pendingMove.paletteIndex,
-         color: store.pendingMove.color,
-         dropCoords: coords
-      };
-
-      //store.applyPendingMove();
+      if (store.currentGame.rows[coords.row][coords.col]) {
+         store.pendingMove = null;
+      }
+      else {
+         store.pendingMove = {
+            paletteIndex: store.pendingMove.paletteIndex,
+            color: store.pendingMove.color,
+            dropCoords: coords
+         };
+      }
    }
 };
 
