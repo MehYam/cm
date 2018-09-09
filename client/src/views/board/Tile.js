@@ -7,7 +7,7 @@ export default class Tile extends Component {
       const colorHexPad = '000000';
       const colorHex = (colorHexPad + color.toString(16)).slice(-colorHexPad.length);
 
-      const visibility = (this.props.visible == undefined || this.props.visible) ? 'visible' : 'hidden';
+      const visibility = (this.props.visible === undefined || this.props.visible) ? 'visible' : 'hidden';
       const style = {
          backgroundColor: '#' + colorHex,
          width: this.props.size,

@@ -10,7 +10,7 @@ class GameBoardRow extends Component {
 
          const local = this.props.localGameState;
          var color = this.props.row[c] || 0;
-         if (local && local.hovering && local.hovering.row == this.props.rowIndex && local.hovering.col == c) {
+         if (local && local.hovering && local.hovering.row === this.props.rowIndex && local.hovering.col === c) {
             color = local.localDragging.color;
          }
 

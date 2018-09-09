@@ -10,14 +10,14 @@ import rootStore from '../stores/rootStore';
 //KAI: x-browser class editing from w3schools - put in a utils class
 function addClass(elem, className) {
    const classes = elem.className.split(' ');
-   if (classes.indexOf(className) == -1) {
+   if (classes.indexOf(className) === -1) {
       elem.className += ' ' + className;
    }
 }
 function removeClass(elem, className) {
    let classes = elem.className.split(' ');
    const index = classes.indexOf(className);
-   if (index != -1) {
+   if (index !== -1) {
       classes.splice(index, 1)
       elem.className = classes.join(' ');
    }
@@ -47,7 +47,7 @@ const draggableOptions = {
 
       const store = rootStore.gameStore;
       const you = store.currentGame.yourPlayer;
-      const paletteIndex = parseInt(event.target.id);
+      const paletteIndex = parseInt(event.target.id, 10);
       store.pendingMove = {
          paletteIndex,
          color: you.palette[paletteIndex]
@@ -66,8 +66,8 @@ const draggableOptions = {
 function parseCoords(elementId)
 {
    const indexes = elementId.split('_');
-   return indexes.length == 2 
-      ? { row: parseInt(indexes[0]), col: parseInt(indexes[1])}
+   return indexes.length === 2 
+      ? { row: parseInt(indexes[0], 10), col: parseInt(indexes[1], 10)}
       : null;
 }
 const dropzoneOptions = {
@@ -112,8 +112,10 @@ class Palette extends React.Component {
    render() {
       const tiles = [];
       const draggable = this.props.enabled ? draggableOptions : null;
-      
+
+      console.log('Palette enabled', this.props.enabled, draggable);
       this.props.palette.forEach(paletteSlot => {
+         console.log('used', paletteSlot.used);
          tiles.push(
             <Interact key={paletteSlot.color} draggableOptions={draggable}>
                <Tile id={tiles.length} color={paletteSlot.color} visible={!paletteSlot.used} size={this.props.tileSize}/>
@@ -161,10 +163,15 @@ const GameObserver = observer(class Game extends React.Component {
          });
       }
 
+      const palette = game ? [...game.yourPlayer.availablePalette] : [];
+      // if (store.pendingMove && store.pendingMove.dropCoords) {
+      //    console.log('HIDING');
+      //    palette[game.pendingMove.paletteIndex].used = true;
+      // }
+
       //KAI: WHAT'S WRONG WITH THIS EQUALITY!  IT WORKS IN THE CONSOLE!
       //const yourTurn = game && game.currentPlayer == game.yourPlayer;
-      const yourTurn = game && game.currentPlayer._id == game.yourPlayer._id;
-      const palette = game ? game.yourPlayer.availablePalette : [];
+      const yourTurn = game && game.currentPlayer._id === game.yourPlayer._id;
       return (
          <div>
             <h2>Game ID: {this.props.match.params.gameId}</h2>

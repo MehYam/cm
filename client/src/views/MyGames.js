@@ -35,6 +35,7 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
 class Default extends React.Component {
    startGame() {
       rootStore.gameStore.createGame();
+      rootStore.gameStore.requestGames();
    }
    render() {
       return (

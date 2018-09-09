@@ -14,13 +14,16 @@ class GameStore {
    pendingMove = null;
 
    createGame() {
+      const testUser = '5b554bcf37f6302c303ca4ba';
+      if (testUser) console.warn('starting game with hard-coded test user');
+
       axios(
          {
             method: 'POST',
             headers: { Authorization: auth.user.token },
             url: '/api/createGame',
             data: {
-               user: '5b554bcf37f6302c303ca4ba'
+               user: testUser
             }
          }
       )
