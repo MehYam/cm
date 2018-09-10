@@ -157,7 +157,7 @@ const GameObserver = observer(class Game extends React.Component {
       const players = [];
       if (game && game.players) {
          game.players.forEach(player => {
-            players.push(<h3 key={player.user}>player {players.length + 1}: {player.user}</h3>);
+            players.push(<h3 key={player.user}>player {players.length + 1}: {player.name}</h3>);
          });
       }
 
@@ -174,14 +174,16 @@ const GameObserver = observer(class Game extends React.Component {
       const paletteEnabled = game && !game.completed && yourTurn && !pendingDrop;
 
       var statusMessage;
-      if (game && game.completed) {
-         statusMessage = 'Game finished at ' + game.completed;
-      }
-      else if (yourTurn) {
-         statusMessage = 'Your turn';
-      }
-      else {
-         statusMessage = "Waiting for opponent's turn";
+      if (game) {
+         if (game.completed) {
+            statusMessage = 'Game finished at ' + game.completed;
+         }
+         else if (yourTurn) {
+            statusMessage = 'Your turn';
+         }
+         else {
+            statusMessage = `Waiting for ${game.currentPlayer.name}'s turn`;
+         }
       }
       return (
          <div>
