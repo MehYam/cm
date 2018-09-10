@@ -42,11 +42,11 @@ function chooseOpponent(user, body, callback) {
       });
    }
 }
-function createGame(playerIds, settings) {
-   const totalPlayerColors = playerIds.length * settings.playerPaletteSize;
+function createGame(players, settings) {
+   const totalPlayerColors = players.length * settings.playerPaletteSize;
 
    logger.info("colors", totalPlayerColors, settings.width, 'x', settings.height);
-   logger.assert(playerIds && playerIds.length > 1, 'not enough players');
+   logger.assert(players && players.length > 1, 'not enough players');
    logger.assert(totalPlayerColors >= (settings.width * settings.height), 'not enough player colors for board');
    logger.assert(totalPlayerColors <= settings.palette.length, 'palette too small for players');
 
@@ -65,9 +65,10 @@ function createGame(playerIds, settings) {
 
    // fill out the player states, including randomized palettes
    const colorsUsed = [];
-   function addPlayer(id) {
+   function addPlayer(p) {
       const player = {
-         user: id,
+         user: p,      //KAI: what is this sorcery - it automatically casts to ObjectId!?
+         name: p.name,
          palette: []
       };
       for (let i = 0; i < settings.playerPaletteSize; ++i) {
@@ -86,10 +87,8 @@ function createGame(playerIds, settings) {
       }
       return player;
    }
-   playerIds.forEach((id) => {
-      console.log('adding player ', id);
-      gameData.players.push(addPlayer(id));
-   })
+   players.forEach(player => { gameData.players.push(addPlayer(player)); });
+
    console.log('done creating game');
    return gameData;
 }
