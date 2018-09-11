@@ -81,7 +81,6 @@ const dropzoneOptions = {
       }
    },
    ondragleave: event => {
-      const coords = parseCoords(event.target.id);
       const store = rootStore.gameStore;
       store.pendingMove = {
          paletteIndex: store.pendingMove.paletteIndex,
@@ -111,7 +110,7 @@ class Palette extends React.Component {
 
       this.props.palette.forEach(paletteSlot => {
 
-         const visible = !paletteSlot.used && this.props.hideOne != tiles.length;
+         const visible = !paletteSlot.used && this.props.hideOne !== tiles.length;
          const tile = this.props.enabled 
             ? (<Interact key={paletteSlot.color} draggableOptions={draggableOptions}>
                   <Tile id={tiles.length} color={paletteSlot.color} visible={visible} size={this.props.tileSize}/>

@@ -20,7 +20,11 @@ const Game = mongoose.model('Game', new Schema({
    width: {type: Number, required: true},
    height: {type: Number, required: true},
    players: [playerSchema],
-   moves: [moveSchema]
+   moves: [moveSchema],
+
+   //KAI: what's the best decision here?  we could instead host a separate table of voting data.  Doing it this way is a little simpler in the short term
+   ballots: {type: Number, default: 0},
+   votes: {type: Number, default: 0}   
 }));
 
 module.exports = Game;

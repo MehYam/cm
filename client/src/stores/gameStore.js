@@ -3,9 +3,6 @@ import auth from '../auth/auth';
 
 import { decorate, observable } from 'mobx';
 
-
-//KAI: think about how to lock down this state and make it more authoritative.  currentGame and 'localGameState' being separate is a little janky,
-// might be simpler and better if they were the same object
 class GameStore {
    games = [];
    currentGame = null;
@@ -23,7 +20,7 @@ class GameStore {
             headers: { Authorization: auth.user.token },
             url: '/api/createGame',
             data: {
-               user: testUser
+               // user: testUser
             }
          }
       )
@@ -32,6 +29,7 @@ class GameStore {
       })
       .catch((error) => {
          console.error('/createGame error', error);
+         this.lastError = error;
       });
    }
    requestGames() {
@@ -48,6 +46,7 @@ class GameStore {
       })
       .catch((error) => {
          console.error('/getGames error', error);
+         this.lastError = error;
       });
    }
    requestGame(gameId) {
@@ -72,6 +71,7 @@ class GameStore {
       })
       .catch((error) => {
          console.error('/getGame error', error);
+         this.lastError = error;
       });
    }
    acceptPendingMove() {
@@ -97,6 +97,7 @@ class GameStore {
       })
       .catch((error) => {
          console.error('/doMove error', error);
+         this.lastError = error;
       });
    }
    undoPendingMove() {

@@ -55,11 +55,13 @@ app.use('/api', require('./routes/api/createGame'));
 app.use('/api', require('./routes/api/getGames'));
 app.use('/api', require('./routes/api/getGame'));
 app.use('/api', require('./routes/api/doMove'));
+app.use('/api', require('./routes/api/getBallot'));
+//app.use('/api', require('./routes/api/doVote'));
 
 // app.use('/api/getGames', require('./routes/api/getGames'));
 app.get('/api/:call', (req, res) => {
 
-   const response = `empty call at ${req.params.call} succeeded`;
+   const response = `api call at ${req.params.call} passed authorization, but is unimplemented`;
    logger.info(response);
    res.send(response)
 });

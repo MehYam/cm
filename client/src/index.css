@@ -81,3 +81,29 @@ html, body {
   
   width: 100%;
 }
+
+/* Vote */
+.boardParent {
+  display: flex;
+  flex-direction: row;
+}
+.voteButton {
+  border: none;
+  text-align: center;
+  background-color: #00000000;
+
+  margin: 4px;
+  padding: 5px;
+  cursor: pointer;
+  outline: none;
+
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+.voteButton:hover {
+  background-color: #00000033;
+}
+.voteButton:active {
+  background-color: #00000055;
+  transform: translateY(4px);
+}
