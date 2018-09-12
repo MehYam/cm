@@ -156,7 +156,7 @@ const GameObserver = observer(class Game extends React.Component {
       const players = [];
       if (game && game.players) {
          game.players.forEach(player => {
-            players.push(<h3 key={player.user}>player {players.length + 1}: {player.name}</h3>);
+            players.push(<h5 key={player.user}>player {players.length + 1}: {player.name}</h5>);
          });
       }
 
@@ -186,10 +186,8 @@ const GameObserver = observer(class Game extends React.Component {
       }
       return (
          <div>
-            <h2>Game ID: {this.props.match.params.gameId}</h2>
-            {players}
-            <h3>{statusMessage}</h3>
-            <GameBoard game={game} pendingMove={store.pendingMove} dropzoneOptions={dropzoneOptions} tileSize={142}/>
+            <h1 className='centerText'>{statusMessage}</h1>
+            <GameBoard game={game} pendingMove={store.pendingMove} dropzoneOptions={dropzoneOptions} tileSize={150}/>
             { this.acceptUndo() }
             <hr/>
             <Palette enabled={paletteEnabled} palette={palette} hideOne={hideDroppedTile} tileSize={70}/>
