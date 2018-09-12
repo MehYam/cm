@@ -1,5 +1,8 @@
 html, body {
   height: 100%;
+  background-color: #282923;
+  color: #dddddd;
+
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: 0;
 }
@@ -10,26 +13,26 @@ html, body {
   flex-direction: column;
 
   height: 100%;
-
-  background-color: #7777ff;
 }
 .menubar {
-  background-color: #7777ff;
+  background-color: #222222;
+  padding: 7px;
 }
 .bottom {
   display: flex;
   flex-direction: row;
   flex-grow: 1;
-
-  background-color: #cccccc;
 }
 .sideNav {
-  background-color: #7777ff;
+  background-color: #222222;
 }
 .sideNav ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+.sideNav ul li {
+  padding: 3px;
 }
 .clientArea {
   display: flex;
@@ -38,7 +41,6 @@ html, body {
   justify-content: center;
 
   flex-grow: 1;
-  background-color: #9999ff;
   padding: 4px;
 }
 .lightUIPadding {
@@ -50,6 +52,39 @@ html, body {
 .vertFill {
   height: 100%;
 }
+.centerText {
+  text-align: center;
+}
+
+hr {
+  border: 1px solid #888888;
+  margin: 0px;
+}
+a {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+a:link {
+  color: #555599;
+}
+a:visited {
+  color: #777799;
+}
+a:hover {
+  color: #888899;
+}
+a:active {
+  color: #9999bb; 
+}
+
+.title {
+  font: 50px "Century Gothic", Futura, sans-serif;
+}
+.titleParent {
+  background-color: #222222;
+  padding: 30px;
+}
+
 
 /* GameBoard-related */
 .board {
@@ -63,7 +98,6 @@ html, body {
   flex-direction: row;
 }
 .tile {
-  background: #fff;
 }
 .draggable {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
@@ -90,7 +124,7 @@ html, body {
 .voteButton {
   border: none;
   text-align: center;
-  background-color: #00000000;
+  background-color: #ffffff00;
 
   margin: 4px;
   padding: 5px;
@@ -101,9 +135,9 @@ html, body {
   transition-duration: 0.4s;
 }
 .voteButton:hover {
-  background-color: #00000033;
+  background-color: #ffffff44;
 }
 .voteButton:active {
-  background-color: #00000055;
+  background-color: #ffffffaa;
   transform: translateY(4px);
 }

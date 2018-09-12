@@ -44,8 +44,10 @@ const TitleObserver = observer(class Title extends Component {
   render() {
       return (
         <div>
-          <h1>Color Match Title Screen</h1>
-          <i>KAI: this will be something impressive</i>
+          <div className='titleParent'>
+            <div className='title centerText'>Color Match</div>
+            <div className='centerText'><i>A Steve Rockwell Game</i></div>
+          </div>
           <hr/>
             <Route exact path='/welcome' component={rootStore.loginStore.loggedIn ? SignedInLinks : SignedOutLinks}/>
             <Route path='/welcome/register' 
