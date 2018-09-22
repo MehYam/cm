@@ -23,11 +23,8 @@ class Candidate extends Component {
 }
 
 const VotingObserver = observer(class Voting extends Component {
-   test() {
+   componentDidMount() {
       rootStore.ballotStore.requestBallot();
-   }
-   vote() {
-
    }
    render() {
       const ballot = rootStore.ballotStore.ballot;
@@ -38,10 +35,7 @@ const VotingObserver = observer(class Voting extends Component {
       return (
          <div>
             <h1>Voting</h1>
-            <button onClick={this.test}>Refresh Ballot</button>
-            <div className='boardParent'>
-               {renderedBallots}
-            </div>
+            <div className='boardParent'>{renderedBallots}</div>
          </div>
       );
    }

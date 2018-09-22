@@ -18,7 +18,6 @@ class BallotStore {
       )
       .then((res) => {
          console.log('/getBallot response', res);
-
          this.ballot = res.data.ballot;
       })
       .catch((error) => {
@@ -38,6 +37,8 @@ class BallotStore {
       )
       .then((res) => {
          console.log('/doVote response', res);
+
+         this.requestBallot();
       })
       .catch((error) => {
          console.error('/doVote error', error);
