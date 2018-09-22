@@ -16,7 +16,9 @@ const userSchema = new mongoose.Schema({
 
    //KAI: should we just query to get these whenever we need them?
    votesPlaced: {type: Number, default: 0},
-   votesReceived: {type: Number, default: 0}
+   votesReceived: {type: Number, default: 0},
+
+   currentBallot: { type: Array, default: null }
 });
 
 userSchema.methods.comparePassword = function comparePassword_this(password, callback) {
@@ -28,13 +30,13 @@ userSchema.methods.comparePassword = function comparePassword_this(password, cal
 userSchema.pre('save', function(next) {
 
    const user = this;
-   logger.info('registering user', user.name);
+   logger.info('saving user', user.name, user.ballot && user.ballot.length);
 
    if (!user.isModified('password')) { 
       return next(); 
    }
 
-   logger.info('hashing and salting');
+   logger.info('new/modified password field, hashing and salting');
    return bcrypt.genSalt((saltError, salt) => {
       if (saltError) 
       {

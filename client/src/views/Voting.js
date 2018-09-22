@@ -11,8 +11,7 @@ class Candidate extends Component {
       this.vote = this.vote.bind(this);
    }
    vote() {
-      //rootStore.ballotStore.doVote();
-      console.log('would vote', this.props.index);
+      rootStore.ballotStore.vote(this.props.index);
    }
    render() {
       return (

@@ -27,9 +27,10 @@ class BallotStore {
       });
    }
    vote(index) {
+      this.ballot = [];
       axios(
          {
-            method: 'GET',
+            method: 'POST',
             headers: { Authorization: auth.user.token },
             url: '/api/doVote',
             data: { index }
@@ -42,7 +43,6 @@ class BallotStore {
          console.error('/doVote error', error);
          this.lastError = error;
       });
-      this.requestBallot();
    }
 }
 

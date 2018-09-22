@@ -56,7 +56,7 @@ app.use('/api', require('./routes/api/getGames'));
 app.use('/api', require('./routes/api/getGame'));
 app.use('/api', require('./routes/api/doMove'));
 app.use('/api', require('./routes/api/getBallot'));
-//app.use('/api', require('./routes/api/doVote'));
+app.use('/api', require('./routes/api/doVote'));
 
 // app.use('/api/getGames', require('./routes/api/getGames'));
 app.get('/api/:call', (req, res) => {
