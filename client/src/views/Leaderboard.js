@@ -14,7 +14,7 @@ const LeaderboardObserver = observer(class Leaderboard extends Component {
          leaders.push(
             <div key={game._id}>
                <GameBoard game={game} tileSize={15}/>
-               Score: {game.score}
+               Score: { (game.score * 100).toFixed(2) + ' (' + game.votes + ' / ' + game.ballots + ')' }
             </div>);
       }
       return (
