@@ -13,21 +13,35 @@ router.post('/doVote', async (req, res, next) => {
 
    const user = req.user;
    const ballot = user.currentBallot;
+
    if (!ballot || !ballot.length) {
       logger.error('user attempting to vote without ballot', user.name);
       return res.status(400).send('voting without ballot');
    }
    try {
+      //KAI: exploit possibility?  with the right timing, it may be possible to vote multiple times per ballot.  Not sure how to 
+      // critical-section the voting record, but for now we're not building Fort Knox here.
+
+      // remove the current user's ballot
+      logger.info('removing user ballot and saving', user.name);
+      user.currentBallot = null;
+      await user.save();
+
       const index = req.body.index;
       if (index < 0 || index >= ballot.length) {
          throw 'bad winner index';
       }
 
       const winnerId = ballot[index]._id;
+      logger.info('winnerId', winnerId.toString());
 
       // loop the ballot, crediting wins and losses to each game
       for (let candidate of ballot ) {
+         logger.info('candidateId', candidate._id.toString());
+
          const game = await Game.findById(candidate._id);
+         if (!game) throw 'game not found';
+
          ++game.ballots;
 
          if (candidate._id === winnerId) {
@@ -36,14 +50,6 @@ router.post('/doVote', async (req, res, next) => {
          logger.info('saving game', game._id);
          await game.save();
       }
-
-      //KAI: exploit possibility?  with the right timing, it may be possible to vote multiple times per ballot.  Not sure how to 
-      // critical-section the voting record, but for now we're not building Fort Knox here.
-
-      // remove the current user's ballot
-      logger.info('removing user ballot and saving', user.name);
-      user.currentBallot = null;
-      await user.save();
    }
    catch (err) {
       logger.error('doVote error:', err);
