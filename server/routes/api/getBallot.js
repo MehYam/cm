@@ -22,7 +22,7 @@ router.get('/getBallot', async (req, res, next) => {
 
       // create a ballot from BALLOTSIZE completed games
       try {
-         //KAI: need to scrub this data of user-specific info to ensure anonymity
+         //KAI: need to scrub this data of user-specific info to ensure anonymity - $project helps here
          const games = await Game.aggregate([ {$match: { completed: { $ne: null } } },  {$sample: {size: 3}} ]);
          user.currentBallot = games;
 
