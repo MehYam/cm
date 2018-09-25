@@ -23,6 +23,9 @@ router.get('/getLeaders', async (req, res, next) => {
             $addFields: {
                score: { '$divide': ['$votes', '$ballots'] }
             }
+         },
+         {
+            $sort: { score: -1 }
          }
       ]);
       return res.json({ leaders });

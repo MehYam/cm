@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 
+import GameBoard from './board/GameBoard';
 import rootStore from '../stores/rootStore';
 
 const LeaderboardObserver = observer(class Leaderboard extends Component {
@@ -9,8 +10,12 @@ const LeaderboardObserver = observer(class Leaderboard extends Component {
    }
    render() {
       const leaders = [];
-      for (let leader of rootStore.leaderboardStore.leaderboard) {
-         leaders.push(<div key={leader._id}>leader with score {leader.score}</div>);
+      for (let game of rootStore.leaderboardStore.leaderboard) {
+         leaders.push(
+            <div key={game._id}>
+               <GameBoard game={game} tileSize={15}/>
+               Score: {game.score}
+            </div>);
       }
       return (
          <div>
