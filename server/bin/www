@@ -75,7 +75,7 @@ websocketServer.on('connection', (ws, req) => {
 
   ws.onmessage = event => {
     console.log('ws.onmessage', event.data, ++received);
-    ws.send('server says welcome ' + received);
+    ws.send('welcome');
   };
   ws.onerror = event => {
     console.log('ws.onerror', event);
