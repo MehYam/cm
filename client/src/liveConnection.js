@@ -14,6 +14,9 @@ export default class LiveConnection {
          console.log('LiveConnection.onclose');
       }
    }
+   get connected() {
+      return this.socket && this.socket.readyState === 1;      
+   }
    send(payload) {
       if (this.socket) {
          if (this.socket.readyState === 1) {

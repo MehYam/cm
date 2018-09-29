@@ -61,9 +61,13 @@ app.use('/api', require('./routes/api/doVote'));
 app.use('/api', require('./routes/api/getLeaders'));
 
 app.get('/api/:call', (req, res) => {
-
-   const response = `api call at ${req.params.call} passed authorization, but is unimplemented`;
-   logger.info(response);
+   const response = `api GET at ${req.params.call} passed authorization, but is unimplemented`;
+   logger.warn(response);
+   res.send(response)
+});
+app.post('/api/:call', (req, res) => {
+   const response = `api POST at ${req.params.call} passed authorization, but is unimplemented`; 
+   logger.warn(response);
    res.send(response)
 });
 

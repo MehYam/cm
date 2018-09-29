@@ -24,6 +24,34 @@ class LoginStore {
       this.lastError = null;
       this.liveConnection.disconnect();
    }
+   connectLive() {  // KAI: should be private
+      if (!this.liveConnection.connected) {
+         //KAI: this seems dubious - longer term, review the authentication strategy, there's likely a way to make passport
+         // work with websockets
+         const wsURL = 'ws://localhost:3000/live'; //KAI: wire this up to the page's root instead
+         this.liveConnection.connect(wsURL, JSON.stringify(auth.user)); 
+      }
+   }
+   // this will make a raw api call - KAI: if it fails, we should nav our route to the login screen
+   testCredentials() {
+      if (auth.user) {
+         axios({
+            method: 'GET',
+            headers: { Authorization: auth.user.token },
+            url: '/api/ping'
+         })
+         .then(res => {
+            console.log('testCreds success');
+            if (!this.liveConnection.connected) {
+               this.connectLive();
+            }
+         })
+         .catch(error => {
+            console.log('testCreds error', error);
+            this.logout();
+         })
+      }
+   }
    requestLogin(name, password) {
       axios.post('/auth/login', { name, password })
       .then((res) => {
@@ -34,10 +62,7 @@ class LoginStore {
          this.user = auth.user;
          this.lastError = null;
 
-         //KAI: this seems dubious - longer term, review the authentication strategy, there's likely a way to make passport
-         // work with websockets
-         const wsURL = 'ws://localhost:3000/live'; //KAI: wire this up to the page's root instead
-         this.liveConnection.connect(wsURL, JSON.stringify(res.data.user)); 
+         this.connectLive();
       })
       .catch((error) => {
          console.log('/auth/login error', error);
