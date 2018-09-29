@@ -42,4 +42,6 @@ logger.assert = (condition, msg) => {
    }
 }
 
+logger.info('Logging initialized');
+
 module.exports = logger;

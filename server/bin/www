@@ -1,12 +1,16 @@
 #!/usr/bin/env node
 
-const app = require('../app');
+//KAI: not sure I understand the value of having this under 'bin', where the build monitor doesn't watch it
+
 const http = require('http');
-const ws = require('ws');
+
+const app = require('../app');
 const config = require('../config');
 const logger = require('../logger');
 
-logger.info("Logging initialized, starting server");
+const LiveConnection = require('../liveConnection');
+
+logger.info("=-=-=-=-=-=-=-=- Starting ColorMatch server =-=-=-=-=-=-=-=-");
 
 const port = normalizePort(config.port);
 app.set('port', port);
@@ -68,19 +72,4 @@ function onListening() {
   logger.info('Listening on ' + bind);
 }
 
-const websocketServer = new ws.Server({ server });
-var received = 0;
-websocketServer.on('connection', (ws, req) => {
-  console.log('websocket connected', req.url);
-
-  ws.onmessage = event => {
-    console.log('ws.onmessage', event.data, ++received);
-    ws.send('welcome');
-  };
-  ws.onerror = event => {
-    console.log('ws.onerror', event);
-  }
-  ws.onclose = event => {
-    console.log('ws.onclose', event.wasClean, event.code, event.reason);
-  };
-});
+const liveConnection = new LiveConnection(server);
