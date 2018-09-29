@@ -2,8 +2,15 @@ const ws = require('ws');
 const logger = require('./logger');
 
 class LiveConnection {
-   constructor(server)  {
-      logger.debug('opening LiveConnection server');
+   constructor()  {
+      logger.debug('instantiating LiveConnection server');
+   }
+
+   //KAI: it would be better if this worked like logger or any of the other imports, which are fully constructed and
+   // importable as a fully-constructed singleton by anybody.  This is different, because the http server setup in 
+   // 'www' needs to run first before this object is used.  There's probably a nicer solution
+   init(server) {
+      logger.debug('running LiveConnection server');
 
       this.websocketServer = new ws.Server({ server });
       this.websocketServer.on('connection', (ws, req) => {
@@ -27,7 +34,8 @@ class LiveConnection {
       this.websocketServer.on('error', error => {
          logger.error('LiveConnection error', error);
       });
+
    }
 }
 
-module.exports = LiveConnection;
+module.exports = new LiveConnection();

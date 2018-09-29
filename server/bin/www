@@ -8,8 +8,6 @@ const app = require('../app');
 const config = require('../config');
 const logger = require('../logger');
 
-const LiveConnection = require('../liveConnection');
-
 logger.info("=-=-=-=-=-=-=-=- Starting ColorMatch server =-=-=-=-=-=-=-=-");
 
 const port = normalizePort(config.port);
@@ -21,19 +19,19 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
+const liveConnection = require('../liveConnection');
+liveConnection.init(server);
+
 function normalizePort(val) {
   var port = parseInt(val, 10);
-
   if (isNaN(port)) {
     // named pipe
     return val;
   }
-
   if (port >= 0) {
     // port number
     return port;
   }
-
   throw "invalid port number " + val;
 }
 
@@ -69,7 +67,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
 
-  logger.info('Listening on ' + bind);
+  logger.info('HTTP server listening on' + bind);
 }
-
-const liveConnection = new LiveConnection(server);
