@@ -26,10 +26,8 @@ class LoginStore {
    }
    connectLive() {  // KAI: should be private
       if (!this.liveConnection.connected) {
-         //KAI: this seems dubious - longer term, review the authentication strategy, there's likely a way to make passport
-         // work with websockets
          const wsURL = 'ws://localhost:3000/live'; //KAI: wire this up to the page's root instead
-         this.liveConnection.connect(wsURL, JSON.stringify(auth.user)); 
+         this.liveConnection.connect(wsURL, auth.user.token); 
       }
    }
    // this will make a raw api call - KAI: if it fails, we should nav our route to the login screen

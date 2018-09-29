@@ -1,11 +1,14 @@
 const ws = require('ws');
+
 const logger = require('./logger');
+const tokenToUser = require('./routes/auth/tokenToUser');
 
 class LiveConnection {
    constructor()  {
       logger.debug('instantiating LiveConnection server');
       this.connections = 0;
       this.clients = {};
+      this.users = {};
    }
 
    //KAI: it would be better if this worked like logger or any of the other imports, which are fully constructed and
@@ -30,8 +33,19 @@ class LiveConnection {
       });
    }
 
+   onClientUserEstablished(client) {
+      logger.debug('LiveConnectionClient user established', client.user.name, client.user._id);
+      this.users[client.user._id] = client;
+
+      // send anything to the client to signal user establishment
+      client.send('welcome');
+   }
    onClientClosed(client) {
       logger.debug('LiveConnection removing client', client.id);
+
+      if (client.user) {
+         delete this.users[client.user._id];
+      }
       delete this.clients[client];
    }
 }
@@ -40,6 +54,7 @@ class LiveConnectionClient {
    constructor(liveConnection, websocket, id) {
       this.liveConnection = liveConnection;
       this.id = id;
+      this.user = null;
 
       this.websocket = websocket;
       this.websocket.onmessage = event => {this.onmessage(event)};
@@ -48,8 +63,22 @@ class LiveConnectionClient {
 
       this.received = 0;
    }
+   async lookupUser(token) {
+      try {
+         logger.info('LiveConnectionClient looking up user', token);
+         this.user = await tokenToUser(token)
+         this.liveConnection.onClientUserEstablished(this);
+      }
+      catch (err) {
+         logger.error('--- DENIED - LiveConnectionClient error in authorization', err);
+         this.websocket.close();
+      }
+   }
    onmessage(event) {
       logger.debug('LiveConnectionClient(%s).onmessage (%s) %s', this.id, ++this.received, event.data);
+      if (!this.user) {
+         this.lookupUser(event.data);
+      }
    }
    onerror(event) {
       logger.error('LiveConnectionClient(%s).onerror', this.id, event);
@@ -57,6 +86,13 @@ class LiveConnectionClient {
    onclose(event) {
       logger.debug('LiveConnectionClient(%s).onclose, (msgs, clean, code, reason):', this.id, this.received, event.wasClean, event.code, event.reason);
       this.liveConnection.onClientClosed(this);
+   }
+   send(payload) {
+      if (!this.user) {
+         logger.error('trying to send to a non-established LiveConnectionClient');
+         return;
+      }
+      this.websocket.send(payload);
    }
 }
 module.exports = new LiveConnection();
