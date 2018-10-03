@@ -7,6 +7,8 @@ import NavBar from './NavBar';
 import Leaderboard from './views/Leaderboard';
 import MyGames from './views/MyGames';
 import Voting from './views/Voting';
+import Friends from './views/Friends';
+
 import TestGameBoard from './test/TestGameBoard';
 
 const Default = () => {
@@ -25,6 +27,7 @@ class Home extends Component {
               <Route path="/home" exact component={Default}/>
               <Route path="/home/leaderboard" component={Leaderboard}/>
               <Route path="/home/mygames" component={MyGames}/>
+              <Route path="/home/friends" component={Friends}/>
               <Route path="/home/voting" component={Voting}/>
               <Route path="/home/testboard" component={TestGameBoard}/>
             </Switch>

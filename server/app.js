@@ -46,18 +46,19 @@ passport.use('local-signin', require('./passport/passportLoginStrategy'));
 
 app.use('/auth', require('./routes/auth/register'));
 app.use('/auth', require('./routes/auth/login'));
+app.use('/api', require('./routes/auth/gatekeeper'));
 
 //app.use('/logout', require('./auth/logout'));
 
-// routes requiring authentication
-app.use('/api', require('./routes/auth/gatekeeper'));
+// secure api routes
 app.use('/api', require('./routes/api/test'));
 app.use('/api', require('./routes/api/createGame'));
-app.use('/api', require('./routes/api/getGames'));
-app.use('/api', require('./routes/api/getGame'));
 app.use('/api', require('./routes/api/doMove'));
-app.use('/api', require('./routes/api/getBallot'));
 app.use('/api', require('./routes/api/doVote'));
+app.use('/api', require('./routes/api/getBallot'));
+app.use('/api', require('./routes/api/getFriends'));
+app.use('/api', require('./routes/api/getGame'));
+app.use('/api', require('./routes/api/getGames'));
 app.use('/api', require('./routes/api/getLeaders'));
 
 app.get('/api/:call', (req, res) => {

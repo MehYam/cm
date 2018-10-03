@@ -8,6 +8,7 @@ const Game = mongoose.model('Game');
 
 require('seedrandom');
 
+//KAI: doVote vs. createGame vs. doCreateGame?  Consistencizer it
 //KAI: this should come from the db, eventually
 const gameSettings = {
    width: 3,

@@ -18,7 +18,10 @@ const userSchema = new mongoose.Schema({
    votesPlaced: {type: Number, default: 0},
    votesReceived: {type: Number, default: 0},
 
-   currentBallot: { type: Array, default: null }
+   currentBallot: { type: Array, default: null },
+
+   // statuses useful for LiveConnection
+   lastActivity: {type: Object}  // e.g. {date: ..., name: 'viewGame', gameId: ...}, {date: ..., name: 'vote'}, etc
 });
 
 userSchema.methods.comparePassword = function comparePassword_this(password, callback) {
