@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const Game = mongoose.model('Game');
 const User = mongoose.model('User');
 
-router.post('/getGames', (req, res, next) => {
+router.get('/getGames', (req, res, next) => {
 
    const user = req.user;
    logger.info('getGames', user.name);

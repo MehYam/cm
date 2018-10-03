@@ -35,7 +35,7 @@ class GameStore {
    requestGames() {
       axios(
          {
-            method: 'POST',
+            method: 'GET',
             headers: { Authorization: auth.user.token },
             url: '/api/getGames'
          }
