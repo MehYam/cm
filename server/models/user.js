@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
    currentBallot: { type: Array, default: null },
 
    // statuses useful for LiveConnection
+   status: {type: String},
    lastActivity: {type: Object}  // e.g. {date: ..., name: 'viewGame', gameId: ...}, {date: ..., name: 'vote'}, etc
 });
 

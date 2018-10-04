@@ -1,7 +1,11 @@
 const ws = require('ws');
-
+const mongoose = require('mongoose');
 const logger = require('./logger');
+
 const tokenToUser = require('./routes/auth/tokenToUser');
+const User = mongoose.model('User');
+
+const ModelUtils = require('./modelUtils');
 
 class LiveConnection {
    constructor()  {
@@ -36,9 +40,6 @@ class LiveConnection {
    onClientUserEstablished(client) {
       logger.debug('LiveConnectionClient user established', client.user.name, client.user._id);
       this.users[client.user._id] = client;
-
-      // send anything to the client to signal user establishment
-      client.send('welcome');
    }
    onClientClosed(client) {
       logger.debug('LiveConnection removing client', client.id);
@@ -47,6 +48,27 @@ class LiveConnection {
          delete this.users[client.user._id];
       }
       delete this.clients[client];
+   }
+
+   onUserStatusChange(client) {
+      logger.debug('LiveConnection noticed change in user', client.user.name);
+      this.broadcastUserStatusChange(client);
+   }
+   async broadcastUserStatusChange(client) {
+      // when a client changes status, loop its friends and send them the updated status
+      // KAI: this is a firehose of unnecessary info, could be much more efficient.
+      const friends = await ModelUtils.findFriends(client.user);
+      for (const friend of friends) {
+
+         const lccFriend = this.users[friend._id];
+         if (lccFriend) {
+            const friendsFriends = await ModelUtils.findFriends(friend);
+            lccFriend.send({ friends: friendsFriends });
+         }
+         else {
+            logger.error('no lcc for', friend.name);
+         }
+      }
    }
 }
 
@@ -63,11 +85,28 @@ class LiveConnectionClient {
 
       this.received = 0;
    }
+   async setUserStatus(status) {
+      try {
+         this.user.status = status;
+         await this.user.save();
+
+         this.liveConnection.onUserStatusChange(this);
+      }
+      catch (err) {
+         logger.error('error in LiveConnectionClient.setUserStatus');
+      }
+   }
    async lookupUser(token) {
       try {
          logger.info('LiveConnectionClient looking up user', token);
          this.user = await tokenToUser(token)
          this.liveConnection.onClientUserEstablished(this);
+        
+         //KAI: setUserStatus doesn't return anything... does this still work?
+         await this.setUserStatus('online');
+
+         // send anything to the client to signal user establishment
+         this.send({ welcome: 'hello' });
       }
       catch (err) {
          logger.error('--- DENIED - LiveConnectionClient error in authorization', err);
@@ -86,13 +125,14 @@ class LiveConnectionClient {
    onclose(event) {
       logger.debug('LiveConnectionClient(%s).onclose, (msgs, clean, code, reason):', this.id, this.received, event.wasClean, event.code, event.reason);
       this.liveConnection.onClientClosed(this);
+      this.setUserStatus('offline');
    }
    send(payload) {
       if (!this.user) {
          logger.error('trying to send to a non-established LiveConnectionClient');
          return;
       }
-      this.websocket.send(payload);
+      this.websocket.send(JSON.stringify(payload));
    }
 }
 module.exports = new LiveConnection();

@@ -1,9 +1,8 @@
 const logger = require('../../logger');
 const express = require('express');
 const router = new express.Router();
-const mongoose = require('mongoose');
 
-const User = mongoose.model('User');
+const ModelUtils = require('../../modelUtils');
 
 router.get('/getFriends', async (req, res, next) => {
 
@@ -12,7 +11,7 @@ router.get('/getFriends', async (req, res, next) => {
    const user = req.user;
 
    try {
-      const friends = await User.find({ _id: { $ne: user._id } }).lean();
+      const friends = await ModelUtils.findFriends(user);
       res.send({ friends });
    }
    catch (err) {

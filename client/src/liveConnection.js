@@ -1,3 +1,5 @@
+import rootStore from './stores/rootStore';
+
 export default class LiveConnection {
 
    socket = null;
@@ -9,6 +11,12 @@ export default class LiveConnection {
       };
       this.socket.onmessage = event => {
          console.log('LiveConnection.onmessage', event);
+
+         const json = JSON.parse(event.data);
+         if (json.friends) {
+            console.log('LiveConnection receiving friends');
+            rootStore.friendStore.friends = json.friends;
+         }
       }
       this.socket.onclose = event => {
          console.log('LiveConnection.onclose');
