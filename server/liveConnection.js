@@ -19,7 +19,7 @@ class LiveConnection {
    // importable as a fully-constructed singleton by anybody.  This is different, because the http server setup in 
    // 'www' needs to run first before this object is used.  There's probably a nicer solution
    init(server) {
-      logger.debug('running LiveConnection server');
+      logger.info('=-=-=-=-=-=- Initiating LiveConnection server =-=-=-=-=-=-');
 
       this.websocketServer = new ws.Server({ server });
       this.websocketServer.on('connection', (ws, req) => {
@@ -64,9 +64,6 @@ class LiveConnection {
          if (lccFriend) {
             const friendsFriends = await ModelUtils.findFriends(friend);
             lccFriend.send({ friends: friendsFriends });
-         }
-         else {
-            logger.error('no lcc for', friend.name);
          }
       }
    }

@@ -3,6 +3,11 @@ import { observer } from 'mobx-react';
 
 import rootStore from '../stores/rootStore';
 
+const statusToColor = {
+   offline: 'red',
+   idle: 'amber',
+   online: 'green'
+};
 const FriendsObserver = observer(class Friends extends React.Component {
    componentDidMount() {
       rootStore.friendStore.requestFriends();
@@ -13,12 +18,13 @@ const FriendsObserver = observer(class Friends extends React.Component {
    render() {
       const friends = [];
       for (const friend of rootStore.friendStore.friends) {
+         const style = { color: statusToColor[friend.status] };
          friends.push(
             <div key={friends.length}>
                <h3>
                   <button disabled>New Game</button>
                   &nbsp;
-                  name: {friend.name}, status: { friend.status }, lastActivity: { friend.lastActivity }
+                  name: {friend.name}, status: <span style={style}>{ friend.status }</span>, lastActivity: { friend.lastActivity }
                </h3>
             </div>
          );

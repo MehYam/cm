@@ -1,14 +1,18 @@
 #!/usr/bin/env node
-
 //KAI: not sure I understand the value of having this under 'bin', where the build monitor doesn't watch it
+
+const logger = require('../logger');
+
+logger.info('');
+logger.info("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+logger.info("    =-=-=-=-=-=- Starting ColorMatch server =-=-=-=-=-=-");
+logger.info("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+logger.info('');
 
 const http = require('http');
 
 const app = require('../app');
 const config = require('../config');
-const logger = require('../logger');
-
-logger.info("=-=-=-=-=-=-=-=- Starting ColorMatch server =-=-=-=-=-=-=-=-");
 
 const port = normalizePort(config.port);
 app.set('port', port);

@@ -43,7 +43,7 @@ class Default extends React.Component {
          <div>
             <ExistingGamesObserver/>
             <hr/>
-            <button onClick={this.startGame}>Start New Game</button><br/>
+            <button onClick={this.startGame}>Start Random Game</button><br/>
             <i>KAI: need to mark games where it's your turn</i><br/>
             <i>KAI: need option to abandon games</i>
          </div>
