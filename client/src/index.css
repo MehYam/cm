@@ -146,3 +146,13 @@ a:active {
 
 /* MyGames */
 
+/* Leaderboard */
+.leaderboardParent {
+  display: flex;
+  flex-flow: row wrap;
+}
+.leaderboardEntry {
+  border: 1px solid #ffffff77;
+  margin: 1px;
+  padding: 1px;
+}
