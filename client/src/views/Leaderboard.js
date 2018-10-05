@@ -12,8 +12,8 @@ const LeaderboardObserver = observer(class Leaderboard extends Component {
       const leaders = [];
       for (let game of rootStore.leaderboardStore.leaderboard) {
          leaders.push(
-            <div key={game._id}>
-               <GameBoard game={game} tileSize={15}/>
+            <div key={game._id} className='boardParentHorizontal'>
+               <GameBoard game={game} tileSize={30}/>
                Score: { (game.score * 100).toFixed(2) + ' (' + game.votes + ' / ' + game.ballots + ')' }
             </div>);
       }

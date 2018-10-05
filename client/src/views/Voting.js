@@ -35,7 +35,7 @@ const VotingObserver = observer(class Voting extends Component {
       return (
          <div>
             <h1>Voting</h1>
-            <div className='boardParent'>{renderedBallots}</div>
+            <div>{renderedBallots}</div>
          </div>
       );
    }

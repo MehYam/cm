@@ -86,7 +86,7 @@ a:active {
 }
 
 
-/* GameBoard-related */
+/* GameBoard */
 .board {
   display: flex;
   flex-direction: column;
@@ -117,11 +117,12 @@ a:active {
   width: 100%;
 }
 
-/* Vote */
-.boardParent {
+.boardParentHorizontal {
   display: flex;
   flex-direction: row;
 }
+
+/* Voting */
 .voteButton {
   border: none;
   text-align: center;
@@ -142,3 +143,6 @@ a:active {
   background-color: #ffffffaa;
   transform: translateY(4px);
 }
+
+/* MyGames */
+

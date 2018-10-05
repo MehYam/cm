@@ -64,6 +64,6 @@ export default class GameBoard extends Component {
       return rowComponents;
    }
    render() {
-      return <div className='board'>{this.renderRows()}</div>;
+      return <span className='board'>{this.renderRows()}</span>;
    }
 }
