@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const Game = mongoose.model('Game');
 const User = mongoose.model('User');
 
+const liveConnection = require('../../liveConnection');
+
 //KAI: shared code b/w client and server
 function currentPlayerIndex(game) {
    const nPlayers = Math.max(1, game.players.length);
@@ -72,13 +74,13 @@ router.post('/doMove', (req, res, next) => {
                res.status(400).json({ error: err });
             }
             else {
-               //KAI: copy pasta from getGame.js - should be fixed
-               // client user doesn't know it's own _id, so mark the current user so they know which player they are
                const retval = updatedGame.toObject();
-               retval.players.forEach((player) => {
-                  player.you = String(player.user) == String(thisUser._id);
-               })               
+               // retval.players.forEach((player) => {
+               //    player.you = String(player.user) == String(thisUser._id);
+               // })               
                res.send({ game: retval });
+
+               liveConnection.onGameChange(updatedGame, thisUser);
             }
          });
       }

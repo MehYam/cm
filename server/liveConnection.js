@@ -67,6 +67,24 @@ class LiveConnection {
          }
       }
    }
+
+   onGameChange(game, user) {
+      // notify the other players in this game that it's changed
+      logger.debug('LiveConnection noticed a change in game', game._id);
+      for (const player of game.players) {
+         logger.debug('checking user %s/%s against player %s/%s', user.name, user._id, player.name, player.user);
+         if (String(player.user) !== String(user._id)) {
+            logger.debug('found opponent, looking up lcc');
+            // just send the game to the other player
+            // KAI: firehosing again
+            const lccPlayer = this.users[player.user];
+            if (lccPlayer) {
+               logger.debug('sending move');
+               lccPlayer.send({ updatedGame: game });
+            }
+         }
+      }
+   }
 }
 
 class LiveConnectionClient {

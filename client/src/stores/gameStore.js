@@ -10,6 +10,11 @@ class GameStore {
 
    pendingMove = null;
 
+   //KAI: replace with setter, would have already but not sure about mobx and getter/setter observers.
+   setCurrentGame(game) {
+      this.currentGame = this.hydrateGame(game);
+   }
+
    createGame() {
       const testUser = '5b554bcf37f6302c303ca4ba';
       if (testUser) console.warn('starting game with hard-coded test user');
@@ -67,7 +72,7 @@ class GameStore {
 
          // The server's Game is a minimal data structure that stores only the set of events that have occurred,
          // with no redundancy.  Unfold this into a structure that's easier for clients to use.
-         this.currentGame = this.hydrateGame(res.data.game);
+         this.setCurrentGame(res.data.game);
       })
       .catch((error) => {
          console.error('/getGame error', error);
@@ -93,7 +98,7 @@ class GameStore {
          console.log('/doMove response', res);
 
          this.pendingMove = null;
-         this.currentGame = this.hydrateGame(res.data.game);
+         this.setCurrentGame(res.data.game);
       })
       .catch((error) => {
          console.error('/doMove error', error);
@@ -118,7 +123,7 @@ class GameStore {
             player.availablePalette.push({ color, used });
          });
 
-         if (player.you) {
+         if (player.user === auth.user.id) {
             game.yourPlayer = player;
          }
       });

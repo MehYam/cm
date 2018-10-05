@@ -51,7 +51,6 @@ export default class GameBoard extends Component {
       if (pending) {
          const coords = pending.hoverCoords || pending.dropCoords;
          if (coords) {
-            console.log('rendered color', coords.row, coords.col, pending.color);
             rows[coords.row][coords.col] = pending.color;
          }
       }

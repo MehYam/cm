@@ -17,6 +17,13 @@ export default class LiveConnection {
             console.log('LiveConnection receiving friends');
             rootStore.friendStore.friends = json.friends;
          }
+         else if (json.updatedGame) {
+            console.log('LiveConnection receiving game update');
+
+            if (rootStore.gameStore.currentGame && rootStore.gameStore.currentGame._id === json.updatedGame._id) {
+               rootStore.gameStore.setCurrentGame(json.updatedGame);
+            }
+         }
       }
       this.socket.onclose = event => {
          console.log('LiveConnection.onclose');

@@ -19,10 +19,9 @@ router.post('/getGame', (req, res, next) => {
          return res.status(400).send('game not found');
       }
 
-      // client user doesn't know it's own _id, so mark the current user so they know which player they are
-      game.players.forEach((player) => {
-         player.you = String(player.user) == String(thisUser._id);
-      })
+      // game.players.forEach((player) => {
+      //    player.you = String(player.user) == String(thisUser._id);
+      // })
       res.json({game});
    });
 });

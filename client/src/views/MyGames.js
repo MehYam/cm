@@ -20,7 +20,7 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
          const url = '/home/mygames/game=' + game._id;
          games.push(
             <div key={nthGame}>
-               <Link to={url} className='boardParentHorizontal'><GameBoard game={game} tileSize={6}/><span>game {nthGame}, players {game.players[0].name}, {game.players[1].name}</span></Link>
+               <Link to={url} className='boardParentHorizontal'><GameBoard game={game} tileSize={10}/> {nthGame}. {game.players[0].name} - {game.players[1].name}</Link>
             </div>);
       }
       return (
