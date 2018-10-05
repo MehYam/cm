@@ -7,11 +7,15 @@ import Game from './Game';
 import rootStore from '../stores/rootStore';
 
 const ExistingGamesObserver = observer(class ExistingGames extends React.Component {
-   refreshGames() {
-      rootStore.gameStore.requestGames();
-   }
    componentDidMount() {
       this.refreshGames();
+   }
+   startGame() {
+      rootStore.gameStore.createGame();
+      rootStore.gameStore.requestGames();
+   }
+   refreshGames() {
+      rootStore.gameStore.requestGames();
    }
    render() {
       const games = [];
@@ -20,13 +24,16 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
          const url = '/home/mygames/game=' + game._id;
          games.push(
             <div key={nthGame}>
-               <Link to={url} className='boardParentHorizontal'><GameBoard game={game} tileSize={10}/> {nthGame}. {game.players[0].name} - {game.players[1].name}</Link>
+               <Link to={url}><GameBoard game={game} tileSize={30}/><div>{nthGame}. {game.players[0].name} - {game.players[1].name}</div></Link>
             </div>);
       }
       return (
          <div>
             <h2>Existing games:</h2>
-            {games}
+            <div className='gamesParent'>
+               {games}
+            </div>
+            <button onClick={this.startGame}>Start Random Game</button><br/>
             <button onClick={this.refreshGames}>Refresh Games</button><br/>
          </div>
       );
@@ -34,16 +41,10 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
 });
 
 class Default extends React.Component {
-   startGame() {
-      rootStore.gameStore.createGame();
-      rootStore.gameStore.requestGames();
-   }
    render() {
       return (
          <div>
             <ExistingGamesObserver/>
-            <hr/>
-            <button onClick={this.startGame}>Start Random Game</button><br/>
             <i>KAI: need to mark games where it's your turn</i><br/>
             <i>KAI: need option to abandon games</i>
          </div>

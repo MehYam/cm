@@ -12,8 +12,9 @@ const FriendsObserver = observer(class Friends extends React.Component {
    componentDidMount() {
       rootStore.friendStore.requestFriends();
    }
-   createGame() {
+   createGame(friendId) {
       // ... implement the button, and the opening of the game.  createGame should return a new game id
+      rootStore.gameStore.createGame(friendId);
    }
    render() {
       const friends = [];
@@ -22,7 +23,7 @@ const FriendsObserver = observer(class Friends extends React.Component {
          friends.push(
             <div key={friends.length}>
                <h3>
-                  <button disabled>New Game</button>
+                  <button onClick={this.createGame.bind(this, friend._id)}>New Game</button>
                   &nbsp;
                   name: {friend.name}, status: <span style={style}>{ friend.status }</span>, lastActivity: { friend.lastActivity }
                </h3>

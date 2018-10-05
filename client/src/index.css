@@ -72,6 +72,7 @@ a:visited {
 }
 a:hover {
   color: #888899;
+  background-color: #444444;
 }
 a:active {
   color: #9999bb; 
@@ -84,7 +85,6 @@ a:active {
   background-color: #222222;
   padding: 30px;
 }
-
 
 /* GameBoard */
 .board {
@@ -145,6 +145,10 @@ a:active {
 }
 
 /* MyGames */
+.gamesParent {
+  display: flex;
+  flex-flow: row wrap;
+}
 
 /* Leaderboard */
 .leaderboardParent {
