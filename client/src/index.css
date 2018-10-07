@@ -117,11 +117,6 @@ a:active {
   width: 100%;
 }
 
-.boardParentHorizontal {
-  display: flex;
-  flex-direction: row;
-}
-
 /* Voting */
 .voteButton {
   border: none;
@@ -148,6 +143,23 @@ a:active {
 .gamesParent {
   display: flex;
   flex-flow: row wrap;
+}
+.myGamesEntry {
+  background-color: #ffffff00;
+
+  border: none;
+  margin: 1px;
+  padding: 1px;
+
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+.myGamesEntry:hover {
+  background-color: #ffffff44;
+}
+.myGamesEntry:active {
+  background-color: #ffffffaa;
+  transform: translateY(4px);
 }
 
 /* Leaderboard */

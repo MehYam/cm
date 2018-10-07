@@ -55,6 +55,7 @@ app.use('/api', require('./routes/api/test'));
 app.use('/api', require('./routes/api/createGame'));
 app.use('/api', require('./routes/api/doMove'));
 app.use('/api', require('./routes/api/doVote'));
+app.use('/api', require('./routes/api/getBadges'));
 app.use('/api', require('./routes/api/getBallot'));
 app.use('/api', require('./routes/api/getFriends'));
 app.use('/api', require('./routes/api/getGame'));

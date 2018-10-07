@@ -3,13 +3,15 @@ import GameStore from './gameStore';
 import BallotStore from './ballotStore';
 import LeaderboardStore from './leaderboardStore';
 import FriendStore from './friendStore';
+import BadgeStore from './badgeStore';
 
 class RootStore {
-   loginStore = new LoginStore();
-   gameStore = new GameStore();
+   badgeStore = new BadgeStore();
    ballotStore = new BallotStore();
-   leaderboardStore = new LeaderboardStore();
    friendStore = new FriendStore();
+   gameStore = new GameStore();
+   leaderboardStore = new LeaderboardStore();
+   loginStore = new LoginStore();
 }
 
 const rootStore = new RootStore();

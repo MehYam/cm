@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { observer } from 'mobx-react';
 
-class NavBar extends Component {
+import rootStore from './stores/rootStore';
+
+const NavBarObserver = observer(class NavBar extends Component {
+   componentDidMount() {
+      rootStore.badgeStore.requestBadges();
+   }
    render() {
+      let myGamesBadge = 'My Games';
+      if (rootStore.badgeStore.badges.readyGames) {
+         myGamesBadge += '(' + rootStore.badgeStore.badges.readyGames + ')';
+      }
       return (
          <nav className="sideNav lightUIPadding">
             <ul>
                <li><Link to='/'>Color Match</Link></li>
-               <li><Link to='/home/mygames'>My Games</Link></li>
+               <li><Link to='/home/mygames'>{myGamesBadge}</Link></li>
                <li><Link to='/home/friends'>Friends</Link></li>
                <li><Link to='/home/voting'>Voting</Link></li>
                <li><Link to='/home/leaderboard'>Leaderboard</Link></li>
@@ -18,6 +28,6 @@ class NavBar extends Component {
          </nav>
       );
    }
-}
+});
 
-export default NavBar;
+export default NavBarObserver;
