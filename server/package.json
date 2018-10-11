@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "cross-env PORT=3001 nodemon ./bin/www"
+    "start": "cross-env PORT=3001 nodemon ./bin/www",
+    "release": "cd .. && git subtree push --prefix server heroku-server master"
   },
   "dependencies": {
     "app-root-path": "^2.0.1",
@@ -26,5 +27,8 @@
   },
   "devDependencies": {
     "nodemon": "^1.17.5"
+  },
+  "engines": {
+    "node": "v10.1.0"
   }
 }
