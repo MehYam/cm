@@ -24,8 +24,6 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const config = require('./config');
-logger.debug("config:", config);
-
 mongoose.connect(config.mongoURL, (error) => {
    if (error) {
       logger.error(`Could not connect to Mongo at ${config.mongoURL}`);
