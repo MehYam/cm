@@ -71,6 +71,15 @@ app.post('/api/:call', (req, res) => {
    res.send(response)
 });
 
+// host the client in production, for heroku //////////////////////////
+if (process.env.NODE_ENV === 'production') {
+  logger.info('hosting client build for Heroku');
+  app.use(express.static(path.join(__dirname, 'client/build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  });
+}
+
 // error handlers /////////////////////////////////////////////////////
 app.use(function(req, res, next) {
    logger.warn('404-ing request', req.url);

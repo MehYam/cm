@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "cross-env nodemon ./server/bin/www"
+    "start": "cross-env nodemon ./server/bin/www",
+    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "dependencies": {
     "app-root-path": "^2.0.1",
