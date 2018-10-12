@@ -15,9 +15,17 @@ router.get('/getBadges', async (req, res, next) => {
          players: { $elemMatch: { user: user._id } }
       });
       
-      res.json({ 
-         badges: { readyGames: games.length }
-      });
+      // loop through the games to find those on our turn
+      const thisUserId = String(user._id);
+      let ourTurn = 0;
+      for (const game of games) {
+         const playerIndex = game.players.findIndex(player => String(player.user) === thisUserId);
+         if (playerIndex == game.moves.length % game.players.length) {
+            ++ourTurn;
+         }
+      }
+
+      res.json({ badges: { readyGames: ourTurn } });
    }
    catch (err) {
       logger.error('getBadges failure', err);

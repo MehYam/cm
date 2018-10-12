@@ -33,7 +33,8 @@ router.post('/doMove', (req, res, next) => {
             throw 'trying to move in a completed game';
          }
 
-         const playerIndex = game.players.findIndex(player => String(player.user) == String(thisUser._id));
+         const thisUserId = String(thisUser._id);
+         const playerIndex = game.players.findIndex(player => String(player.user) === thisUserId);
          if (playerIndex < 0) {
             throw 'player not in this game';
          }
