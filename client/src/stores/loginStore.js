@@ -5,6 +5,9 @@ import { decorate, computed, observable } from 'mobx';
 
 import LiveConnection from '../liveConnection';
 
+function getWebsocketURL() {
+   return ((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host;   
+}
 class LoginStore {
    user = null;
    lastError = null;
@@ -26,7 +29,7 @@ class LoginStore {
    }
    connectLive() {  // KAI: should be private
       if (!this.liveConnection.connected) {
-         const wsURL = 'ws://localhost:3000/live'; //KAI: wire this up to the page's root instead
+         const wsURL = getWebsocketURL() + '/live'; //KAI: wire this up to the page's root instead
          this.liveConnection.connect(wsURL, auth.user.token); 
       }
    }
