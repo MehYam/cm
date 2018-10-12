@@ -13,8 +13,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false}));//KAI: do we need this?
 
-app.use('/', require('./routes/index'));
-
 // some useful Express experimentation
 //app.use('/test', require('./test/secure'));
 //app.use('/test', require('./test/test'));
@@ -78,6 +76,9 @@ if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
+}
+else {
+  app.use('/', require('./routes/index'));
 }
 
 // error handlers /////////////////////////////////////////////////////
