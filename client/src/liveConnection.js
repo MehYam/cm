@@ -23,6 +23,7 @@ export default class LiveConnection {
             if (rootStore.gameStore.currentGame && rootStore.gameStore.currentGame._id === json.updatedGame._id) {
                rootStore.gameStore.setCurrentGame(json.updatedGame);
             }
+            rootStore.badgeStore.requestBadges();
          }
       }
       this.socket.onclose = event => {
