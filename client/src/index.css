@@ -145,6 +145,7 @@ a:active {
   flex-flow: row wrap;
 }
 .myGamesEntry {
+  color: #cccccc;
   background-color: #ffffff00;
 
   border: none;
