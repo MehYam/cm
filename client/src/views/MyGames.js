@@ -8,33 +8,39 @@ import rootStore from '../stores/rootStore';
 
 const ExistingGamesObserver = observer(class ExistingGames extends React.Component {
    componentDidMount() {
-      this.refreshGames();
+      rootStore.gameStore.requestGames();
    }
    startGame() {
       rootStore.gameStore.createGame();
-      rootStore.gameStore.requestGames();
-   }
-   refreshGames() {
+
+      //KAI: fix
       rootStore.gameStore.requestGames();
    }
    render() {
-      const games = [];
-      for (const game of rootStore.gameStore.games) {
-         const nthGame = games.length + 1;
-         const url = '/home/mygames/game=' + game._id;
-         games.push(
-            <button className='myGamesEntry' key={nthGame}>
-               <Link to={url}><GameBoard game={game} tileSize={30}/><div>{nthGame}. {game.players[0].name} - {game.players[1].name}</div></Link>
-            </button>);
+      const pendingGames = rootStore.gameStore.games.filter(game => game.moves.length < (game.width * game.height));
+      const completeGames = rootStore.gameStore.games.filter(game => game.moves.length == (game.width * game.height));
+
+      function renderGames(games) {
+         let retval = [];
+
+         for (const game of games) {
+            const nthGame = retval.length + 1;
+            const url = '/home/mygames/game=' + game._id;
+            retval.push(
+               <button className='myGamesEntry' key={nthGame}>
+                  <Link to={url}><GameBoard game={game} tileSize={30}/><div>{nthGame}. {game.players[0].name} - {game.players[1].name}</div></Link>
+               </button>
+            );
+         }
+         return retval;
       }
       return (
          <div>
-            <h2>Existing games:</h2>
-            <div className='gamesParent'>
-               {games}
-            </div>
-            <button onClick={this.startGame}>Start Random Game</button><br/>
-            <button onClick={this.refreshGames}>Refresh Games</button><br/>
+            <button onClick={this.startGame}>Create New Random Game</button><br/>
+            <h2>In Progress:</h2>
+            <div className='gamesParent'> {renderGames(pendingGames)} </div>
+            <h2>Complete:</h2>
+            <div className='gamesParent'> {renderGames(completeGames)} </div>
          </div>
       );
    }
