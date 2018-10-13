@@ -7,6 +7,7 @@ import rootStore from './stores/rootStore';
 const NavBarObserver = observer(class NavBar extends Component {
    componentDidMount() {
       rootStore.badgeStore.requestBadges();
+      rootStore.friendStore.requestFriends();
    }
    render() {
       let myGamesBadge = 'My Games';

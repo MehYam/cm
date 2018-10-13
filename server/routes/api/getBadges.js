@@ -17,13 +17,10 @@ router.get('/getBadges', async (req, res, next) => {
       
       // loop through the games to find those on our turn
       const thisUserId = String(user._id);
-      let ourTurn = 0;
-      for (const game of games) {
+      const ourTurn = games.reduce((total, game) => {
          const playerIndex = game.players.findIndex(player => String(player.user) === thisUserId);
-         if (playerIndex == game.moves.length % game.players.length) {
-            ++ourTurn;
-         }
-      }
+         return Number(playerIndex == game.moves.length % game.players.length) + total;
+      }, 0);
 
       res.json({ badges: { readyGames: ourTurn } });
    }
