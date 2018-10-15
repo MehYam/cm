@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Redirect, Link } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { observer } from 'mobx-react';
 
 import Login from '../auth/Login';

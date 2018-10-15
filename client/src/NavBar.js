@@ -15,7 +15,7 @@ const NavBarObserver = observer(class NavBar extends Component {
          myGamesBadge += '(' + rootStore.badgeStore.badges.readyGames + ')';
       }
 
-      const onlineFriends = rootStore.friendStore.friends.reduce((total, friend) => total + Number(friend.status == 'online'), 0);
+      const onlineFriends = rootStore.friendStore.friends.reduce((total, friend) => total + Number(friend.status === 'online'), 0);
       let friendsBadge = 'Friends (' + onlineFriends + ')';
       return (
          <nav className="sideNav lightUIPadding">

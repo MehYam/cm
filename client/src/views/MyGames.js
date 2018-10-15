@@ -15,7 +15,7 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
    }
    render() {
       const pendingGames = rootStore.gameStore.games.filter(game => game.moves.length < (game.width * game.height));
-      const completeGames = rootStore.gameStore.games.filter(game => game.moves.length == (game.width * game.height));
+      const completeGames = rootStore.gameStore.games.filter(game => game.moves.length === (game.width * game.height));
 
       function renderGames(games) {
          let retval = [];
