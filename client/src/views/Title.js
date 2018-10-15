@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 
 import Login from '../auth/Login';
 import Register from '../auth/Register';
+import LinkButton from '../LinkButton';
 
 import rootStore from '../stores/rootStore';
 
@@ -11,10 +12,10 @@ import rootStore from '../stores/rootStore';
 class SignedOutLinks extends Component {
    render() {
       return (
-         <div>
-            <Link to='/welcome/login'>Login</Link>
+         <div className='centerText'>
+            <LinkButton to='/welcome/login' label='Login'/>
             <br/>
-            <Link to='/welcome/register'>Register</Link>
+            <LinkButton to='/welcome/register' label='Register'/>
          </div>
       );
    }
@@ -22,11 +23,11 @@ class SignedOutLinks extends Component {
 class SignedInLinks extends Component {
   render() {
     return (
-      <div>
+      <div className='centerText'>
         <h3>Welcome back, {rootStore.loginStore.user.name}</h3>
-        <Link to='/home'>Begin</Link>
+        <LinkButton to='/home' label='Begin'/>
         <br/>
-        <Link to='/welcome/logout'>Logout</Link>
+        <LinkButton to='/welcome/logout' label='Logout'/>
       </div>
     );
   }
@@ -49,12 +50,14 @@ const TitleObserver = observer(class Title extends Component {
             <div className='centerText'><i>A Game of Aesthetic Strategy from Steve Rockwell</i></div>
           </div>
           <hr/>
+          <div className='vertCenterParent'>
             <Route exact path='/welcome' component={rootStore.loginStore.loggedIn ? SignedInLinks : SignedOutLinks}/>
             <Route path='/welcome/register' 
               render={(props) => rootStore.loginStore.loggedIn ? (<Redirect to='/'/>) : (<Register/>) }/>
             <Route path='/welcome/login' 
               render={(props) => rootStore.loginStore.loggedIn ? (<Redirect to='/'/>) : (<Login/>) }/>
             <Route path='/welcome/logout' component={Logout}/>
+          </div>
         </div>
       );
     }

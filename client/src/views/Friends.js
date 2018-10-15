@@ -23,7 +23,7 @@ const FriendsObserver = observer(class Friends extends React.Component {
          friends.push(
             <div key={friends.length}>
                <h3>
-                  <button onClick={this.createGame.bind(this, friend._id)}>New Game</button>
+                  <button className='linkButton' onClick={this.createGame.bind(this, friend._id)}>New Game</button>
                   &nbsp;
                   name: {friend.name}, status: <span style={style}>{ friend.status }</span>, lastActivity: { friend.lastActivity }
                </h3>
