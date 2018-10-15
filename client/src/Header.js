@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { observer } from 'mobx-react';
 
-class Header extends Component {
+import rootStore from './stores/rootStore';
+
+const HeaderObserver = observer(class Header extends Component {
    render() {
-      return (<div className='menubar'>Header</div>);
+      return (<div className='menubar'>Signed in as: <span className='menubarNameplate'>{rootStore.loginStore.user.name}</span></div>);
    }
-}
+});
 
-export default Header;
+export default HeaderObserver;

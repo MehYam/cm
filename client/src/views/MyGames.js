@@ -12,9 +12,6 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
    }
    startGame() {
       rootStore.gameStore.createGame();
-
-      //KAI: fix
-      rootStore.gameStore.requestGames();
    }
    render() {
       const pendingGames = rootStore.gameStore.games.filter(game => game.moves.length < (game.width * game.height));

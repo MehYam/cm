@@ -14,17 +14,18 @@ class Interact extends Component {
       })
    }
    componentDidMount() {
-      this.interact = interact(findDOMNode(this.node))
       this.setInteractions()
    }
    componentWillReceiveProps() {
-      this.interact = interact(findDOMNode(this.node))
       this.setInteractions()
    }
    setInteractions() {
-      if (this.props.draggableOptions) this.interact.draggable(this.props.draggableOptions)
-      if (this.props.resizableOptions) this.interact.resizable(this.props.resizableOptions)
-      if (this.props.dropzoneOptions) this.interact.dropzone(this.props.dropzoneOptions)
+      if (this.props.draggableOptions || this.props.resizableOptions || this.props.dropzoneOptions) {
+         this.interact = interact(findDOMNode(this.node))
+         if (this.props.draggableOptions) this.interact.draggable(this.props.draggableOptions)
+         if (this.props.resizableOptions) this.interact.resizable(this.props.resizableOptions)
+         if (this.props.dropzoneOptions) this.interact.dropzone(this.props.dropzoneOptions)
+      }
    }
 }
 

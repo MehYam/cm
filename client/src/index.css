@@ -5,6 +5,14 @@ html, body {
 
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: 0;
+
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome and Opera */
 }
 
 /* display defining the SPA-style menu, navbar, and lower-right work area */
@@ -14,9 +22,13 @@ html, body {
 
   height: 100%;
 }
-.menubar {
-  background-color: #222222;
+.menubar 
+{  background-color: #222222;
   padding: 7px;
+  text-align: right;
+}
+.menubarNameplate {
+  font-weight: bold;
 }
 .bottom {
   display: flex;
@@ -25,11 +37,12 @@ html, body {
 }
 .sideNav {
   background-color: #222222;
+  font-weight: bold;
 }
 .sideNav ul {
   list-style-type: none;
   margin: 0;
-  padding: 0;
+  padding: 1px;
 }
 .sideNav ul li {
   padding: 3px;
@@ -84,7 +97,7 @@ html, body {
 }
 
 hr {
-  border: 1px solid #888888;
+  border: 1px dashed #888888;
   margin: 0px;
 }
 a {

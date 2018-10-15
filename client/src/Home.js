@@ -12,7 +12,7 @@ import Friends from './views/Friends';
 import TestGameBoard from './test/TestGameBoard';
 
 const Default = () => {
-  return <div><h2>Choose an option on the left</h2><i>KAI: one should probably just be default</i></div>;
+  return <div><h2>Choose an option on the left</h2><i>KAI: don't show this and choose one by default</i></div>;
 }
 
 class Home extends Component {
