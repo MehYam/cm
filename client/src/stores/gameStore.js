@@ -5,8 +5,11 @@ import { decorate, observable } from 'mobx';
 
 class GameStore {
    games = [];
-   currentGame = null;
-   lastError = null;  //KAI: looks like we're not using this anywhere
+   currentGame = null;  //KAI: maybe this should be combined with pendingCreateGame below into a single thing.  The two pieces of state are already coupled.
+
+   pendingCreateGame = null;
+
+   lastError = null;  //KAI: we need to start handling this everywhere
 
    pendingMove = null;
 
@@ -15,6 +18,11 @@ class GameStore {
       this.currentGame = this.hydrateGame(game);
    }
    createGame(user) {
+      if (this.pendingCreateGame) {
+         throw new Error('trying to create a game while one is pending');
+      }
+
+      this.pendingCreateGame = { called: true };
       const data = { user };
       axios(
          {
@@ -26,10 +34,12 @@ class GameStore {
       )
       .then((res) => {
          console.log('/createGame response', res);
+         this.pendingCreateGame = { result: res.data.gameId };
       })
       .catch((error) => {
          console.error('/createGame error', error);
          this.lastError = error;
+         this.pendingCreateGame = null;
       });
    }
    requestGames() {
@@ -153,6 +163,7 @@ class GameStore {
 decorate(GameStore, {
    games: observable,
    currentGame: observable,
+   pendingCreateGame: observable,
    pendingMove: observable,
    lastError: observable
 });

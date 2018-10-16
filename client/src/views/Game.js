@@ -141,6 +141,10 @@ class AcceptUndo extends React.Component {
 
 const GameObserver = observer(class Game extends React.Component {
    componentDidMount() {
+      //KAI: this pending business is so hacky...
+      if (rootStore.gameStore.pendingCreateGame) {
+         rootStore.gameStore.pendingCreateGame = null;
+      }
       rootStore.gameStore.requestGame(this.props.match.params.gameId);
    }
    acceptUndo() {

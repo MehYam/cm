@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import rootStore from '../stores/rootStore';
+import { getGameUrl, getNewGameRedirect } from '../util';
 
 const statusToColor = {
    offline: 'red',
@@ -17,6 +18,12 @@ const FriendsObserver = observer(class Friends extends React.Component {
       rootStore.gameStore.createGame(friendId);
    }
    render() {
+      //KAI: this pendingGame hack has leaked into here...
+      const gs = rootStore.gameStore;
+      if (gs.pendingCreateGame && gs.pendingCreateGame.result) {
+         return getNewGameRedirect(gs.pendingCreateGame.result);
+      }
+
       const friends = [];
       for (const friend of rootStore.friendStore.friends) {
          const style = { color: statusToColor[friend.status] };

@@ -6,23 +6,30 @@ import GameBoard from './board/GameBoard';
 import Game from './Game';
 import rootStore from '../stores/rootStore';
 
+import { getGameUrl, getNewGameRedirect } from '../util';
+
 const ExistingGamesObserver = observer(class ExistingGames extends React.Component {
    componentDidMount() {
       rootStore.gameStore.requestGames();
    }
-   startGame() {
+   createGame() {
       rootStore.gameStore.createGame();
    }
    render() {
-      const pendingGames = rootStore.gameStore.games.filter(game => game.moves.length < (game.width * game.height));
-      const completeGames = rootStore.gameStore.games.filter(game => game.moves.length === (game.width * game.height));
+      const gs = rootStore.gameStore;
+      if (gs.pendingCreateGame && gs.pendingCreateGame.result) {
+         return getNewGameRedirect(gs.pendingCreateGame.result);
+      }
+
+      const pendingGames = gs.games.filter(game => game.moves.length < (game.width * game.height));
+      const completeGames = gs.games.filter(game => game.moves.length === (game.width * game.height));
 
       function renderGames(games) {
          let retval = [];
 
          for (const game of games) {
             const nthGame = retval.length + 1;
-            const url = '/home/mygames/game=' + game._id;
+            const url = getGameUrl(game._id);
             retval.push(
                <Link to={url} key={nthGame}>
                   <button className='myGamesEntry'>
@@ -35,7 +42,7 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
       }
       return (
          <div>
-            <button className='linkButton' onClick={this.startGame}>Start New Random Game</button><br/>
+            <button className='linkButton' onClick={this.createGame}>Start New Random Game</button><br/>
             <h2>In Progress:</h2>
             <div className='gamesParent'> {renderGames(pendingGames)} </div>
             <h2>Complete:</h2>
