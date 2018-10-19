@@ -11,7 +11,7 @@ class LiveConnection {
    constructor()  {
       logger.debug('instantiating LiveConnection server');
       this.connections = 0;
-      this.clients = {};
+      this.clients = new Set();
       this.users = {};
    }
 
@@ -26,7 +26,7 @@ class LiveConnection {
          logger.debug('websocket joined from', req.url);
 
          const client = new LiveConnectionClient(this, ws, ++this.connections);
-         this.clients[client] = this.connections;
+         this.clients.add(client);
       });
       this.websocketServer.on('listening', () => {
          logger.debug('LiveConnection server listening');
@@ -59,7 +59,7 @@ class LiveConnection {
       if (client.user) {
          delete this.users[client.user._id];
       }
-      delete this.clients[client];
+      this.clients.delete(client);
    }
 
    onUserStatusChange(client) {
