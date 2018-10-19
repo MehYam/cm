@@ -70,7 +70,7 @@ app.post('/api/:call', (req, res) => {
 });
 
 // host the client in production, for heroku //////////////////////////
-if (process.env.NODE_ENV === 'production') {
+if (process.env.HOST_CLIENT) {
   logger.info('hosting client build for Heroku');
   app.use(express.static(path.join(__dirname, '../client/build')));
   app.get('*', (req, res) => {

@@ -35,6 +35,18 @@ class LiveConnection {
          //KAI: nuke the instance and try again...?
          logger.error('LiveConnection error', error);
       });
+
+      // heroku times out websockets with no activity after 55 seconds.
+      if (process.env.HEROKU_KEEPALIVE_SECONDS) {
+         const interval = Math.max(10, parseInt(process.env.HEROKU_KEEPALIVE_SECONDS)) * 1000;
+
+         logger.info('LiveConnection creating ad-hoc keepalive interval', interval)
+         setInterval(() => {
+            for (const client of this.clients) {
+               client.send({msg: 'staywithus'});
+            }
+         }, interval);
+      }
    }
 
    onClientUserEstablished(client) {
