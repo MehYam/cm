@@ -3,6 +3,7 @@ import rootStore from './stores/rootStore';
 export default class LiveConnection {
 
    socket = null;
+   received = 0;
    connect(url, token) {
       this.socket = new WebSocket(url);
       this.socket.onopen = event => {
@@ -10,6 +11,8 @@ export default class LiveConnection {
          this.send(token);
       };
       this.socket.onmessage = event => {
+         ++this.received;
+
          console.log('LiveConnection.onmessage', event);
 
          const json = JSON.parse(event.data);
@@ -27,7 +30,7 @@ export default class LiveConnection {
          }
       }
       this.socket.onclose = event => {
-         console.log('LiveConnection.onclose');
+         console.log('LiveConnection.onclose, (msgs: %s, clean: %s, code: %s, reason: %s)', this.received, event.wasClean, event.code, event.reason);
       }
    }
    get connected() {

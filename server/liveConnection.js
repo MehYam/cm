@@ -138,7 +138,7 @@ class LiveConnectionClient {
       logger.error('LiveConnectionClient(%s).onerror', this.id, event);
    }
    onclose(event) {
-      logger.debug('LiveConnectionClient(%s).onclose, (msgs, clean, code, reason):', this.id, this.received, event.wasClean, event.code, event.reason);
+      logger.debug('LiveConnectionClient(%s).onclose, (msgs: %s, clean: %s, code: %s, reason: %s)', this.id, this.received, event.wasClean, event.code, event.reason);
       this.liveConnection.onClientClosed(this);
       this.setUserStatus('offline');
    }
