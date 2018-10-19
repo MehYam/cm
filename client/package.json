@@ -5,7 +5,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "interact.js": "^1.2.8",
-    "mobx": "^5.0.3",
+    "mobx": "4.5.1",
     "mobx-react": "^5.2.3",
     "prop-types": "^15.6.2",
     "react": "^16.4.0",
