@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 
 import rootStore from '../stores/rootStore';
-import { getGameUrl, getNewGameRedirect } from '../util';
+import { getNewGameRedirect } from '../util';
 
 const statusToColor = {
    offline: 'red',
