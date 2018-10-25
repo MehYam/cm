@@ -30,6 +30,9 @@ export default class LiveConnection {
          else if (json.updatedGame) {
             console.log('LiveConnection receiving game update');
 
+            if (json.updatedGameUser) {
+               toast.success(json.updatedGameUser.name + ' has placed a color');
+            }
             if (rootStore.gameStore.currentGame && rootStore.gameStore.currentGame._id === json.updatedGame._id) {
                rootStore.gameStore.setCurrentGame(json.updatedGame);
             }

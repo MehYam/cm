@@ -98,7 +98,7 @@ class LiveConnection {
             const lccPlayer = this.users[player.user];
             if (lccPlayer) {
                logger.debug('sending move');
-               lccPlayer.send({ updatedGame: game });
+               lccPlayer.send({ updatedGame: game, updatedGameUser: user });
             }
          }
       }
