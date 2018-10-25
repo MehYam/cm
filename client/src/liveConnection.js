@@ -19,6 +19,11 @@ export default class LiveConnection {
          if (json.friends) {
             console.log('LiveConnection receiving friends');
             rootStore.friendStore.friends = json.friends;
+
+            if (json.change) {
+               const change = json.change;
+               console.log('LiveConnection friend %s status change from %s to %s', change.friend.name, change.oldStatus, change.friend.status);
+            }
          }
          else if (json.updatedGame) {
             console.log('LiveConnection receiving game update');

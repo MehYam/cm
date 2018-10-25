@@ -62,20 +62,26 @@ class LiveConnection {
       this.clients.delete(client);
    }
 
-   onUserStatusChange(client) {
-      logger.debug('LiveConnection noticed change in user', client.user.name);
-      this.broadcastUserStatusChange(client);
+   onUserStatusChange(client, oldStatus) {
+      logger.debug('LiveConnection noticed change in user %s from %s to %s', client.user.name, oldStatus, client.user.status);
+      this.broadcastUserStatusChange(client, oldStatus);
    }
-   async broadcastUserStatusChange(client) {
+   async broadcastUserStatusChange(client, oldStatus) {
       // when a client changes status, loop its friends and send them the updated status
       // KAI: this is a firehose of unnecessary info, could be much more efficient.
       const friends = await ModelUtils.findFriends(client.user);
       for (const friend of friends) {
 
-         const lccFriend = this.users[friend._id];
-         if (lccFriend) {
+         const liveFriend = this.users[friend._id];
+         if (liveFriend) {
             const friendsFriends = await ModelUtils.findFriends(friend);
-            lccFriend.send({ friends: friendsFriends });
+            liveFriend.send({ 
+               friends: friendsFriends,
+               change: {
+                  friend: client.user,
+                  oldStatus
+               }
+            });
          }
       }
    }
@@ -114,10 +120,13 @@ class LiveConnectionClient {
    }
    async setUserStatus(status) {
       try {
-         this.user.status = status;
-         await this.user.save();
+         const oldStatus = this.user.status;
+         if (status !== oldStatus) {
+            this.user.status = status;
+            await this.user.save();
 
-         this.liveConnection.onUserStatusChange(this);
+            this.liveConnection.onUserStatusChange(this, oldStatus);
+         }
       }
       catch (err) {
          logger.error('error in LiveConnectionClient.setUserStatus');
