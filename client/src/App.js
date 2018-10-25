@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import './index.css';
 import Home from './Home';
@@ -23,6 +25,17 @@ class App extends Component {
                <Route path='/authtest' component={AuthTest}/>
                <Redirect from='/' to='/welcome'/>
             </Switch>
+            <ToastContainer 
+               position="top-right"
+               autoClose={5000}
+               hideProgressBar={false}
+               newestOnTop={false}
+               closeOnClick
+               rtl={false}
+               pauseOnVisibilityChange
+               draggable
+               pauseOnHover
+            />
          </div>
       );
    }

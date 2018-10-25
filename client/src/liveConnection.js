@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify';
+
 import rootStore from './stores/rootStore';
 
 export default class LiveConnection {
@@ -22,7 +24,7 @@ export default class LiveConnection {
 
             if (json.change) {
                const change = json.change;
-               console.log('LiveConnection friend %s status change from %s to %s', change.friend.name, change.oldStatus, change.friend.status);
+               toast.success(change.friend.name + ' is ' + change.friend.status);
             }
          }
          else if (json.updatedGame) {
