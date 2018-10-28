@@ -86,19 +86,30 @@ class LiveConnection {
       }
    }
 
+   onGameCreate(game, user) {
+      logger.debug('LiveConnection noticed new game', game._id);
+      for (const player of game.players) {
+         if (String(player.user) !== String(user._id)) {
+            const lccPlayer = this.users[player.user];
+            if (lccPlayer) {
+               logger.debug('sending created game');
+               lccPlayer.send({ createdGame: game, createdBy: user });
+            }
+         }
+      }
+   }
+   //KAI: copy pasta with above
    onGameChange(game, user) {
       // notify the other players in this game that it's changed
       logger.debug('LiveConnection noticed a change in game', game._id);
       for (const player of game.players) {
-         logger.debug('checking user %s/%s against player %s/%s', user.name, user._id, player.name, player.user);
          if (String(player.user) !== String(user._id)) {
-            logger.debug('found opponent, looking up lcc');
             // just send the game to the other player
             // KAI: firehosing again
             const lccPlayer = this.users[player.user];
             if (lccPlayer) {
                logger.debug('sending move');
-               lccPlayer.send({ updatedGame: game, updatedGameUser: user });
+               lccPlayer.send({ updatedGame: game, updatedBy: user });
             }
          }
       }

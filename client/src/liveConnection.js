@@ -30,13 +30,19 @@ export default class LiveConnection {
          else if (json.updatedGame) {
             console.log('LiveConnection receiving game update');
 
-            if (json.updatedGameUser) {
-               toast.success(json.updatedGameUser.name + ' has placed a color');
+            if (json.updatedBy) {
+               toast.success(json.updatedBy.name + ' has placed a color');
             }
             if (rootStore.gameStore.currentGame && rootStore.gameStore.currentGame._id === json.updatedGame._id) {
                rootStore.gameStore.setCurrentGame(json.updatedGame);
             }
             rootStore.badgeStore.requestBadges();
+         }
+         else if (json.createdGame) {
+            console.log('LiveConnection receiving new game');
+            toast.success(json.createdBy.name + ' has started a new game with you');
+
+            rootStore.gameStore.requestGames();
          }
       }
       this.socket.onclose = event => {

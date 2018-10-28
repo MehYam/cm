@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Game = mongoose.model('Game');
 
+const liveConnection = require('../../liveConnection');
+
 require('seedrandom');
 
 //KAI: doVote vs. createGame vs. doCreateGame?  Consistencizer it
@@ -68,7 +70,7 @@ function createGame(players, settings) {
    const colorsUsed = [];
    function addPlayer(p) {
       const player = {
-         user: p,      //KAI: what is this sorcery - it automatically casts to ObjectId!?
+         user: p._id,
          name: p.name,
          palette: []
       };
@@ -114,12 +116,14 @@ router.post('/createGame', (req, res, next) => {
 
          const gameData = createGame([req.user, opponent], gameSettings)
          const newGame = new Game(gameData);
-         newGame.save((err) => {
+         newGame.save((err, savedGame) => {
             if (err) {
                logger.error('new game creation error', err);
                return done(err);
             }
             res.json({ gameId: newGame._id });
+
+            liveConnection.onGameCreate(savedGame, req.user);
          });
       });
    });
