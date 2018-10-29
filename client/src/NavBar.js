@@ -6,13 +6,14 @@ import rootStore from './stores/rootStore';
 
 const NavBarObserver = observer(class NavBar extends Component {
    componentDidMount() {
-      rootStore.badgeStore.requestBadges();
       rootStore.friendStore.requestFriends();
+      rootStore.gameStore.requestGames();
    }
    render() {
       let myGamesBadge = 'My Games';
-      if (rootStore.badgeStore.badges.readyGames) {
-         myGamesBadge += '(' + rootStore.badgeStore.badges.readyGames + ')';
+      const readyGames = rootStore.gameStore.games.yourTurn.length;
+      if (readyGames) {
+         myGamesBadge += ' (' + readyGames + ')';
       }
 
       const onlineFriends = rootStore.friendStore.friends.reduce((total, friend) => total + Number(friend.status === 'online'), 0);

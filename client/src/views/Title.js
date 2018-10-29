@@ -48,6 +48,7 @@ const TitleObserver = observer(class Title extends Component {
           <div className='titleParent'>
             <div className='title centerText'>Color Match Game (BETA)</div>
             <div className='centerText'><i>A Game of Aesthetic Strategy from Steve Rockwell</i></div>
+            <div className='centerText'>v0.0.1</div>
           </div>
           <hr/>
           <div className='vertCenterParent'>

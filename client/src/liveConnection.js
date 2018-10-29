@@ -34,7 +34,6 @@ export default class LiveConnection {
                toast.success(json.updatedBy.name + ' has placed a color');
             }
             rootStore.gameStore.handleUpdatedGame(json.updatedGame);
-            rootStore.badgeStore.requestBadges();
          }
          else if (json.createdGame) {
             console.log('LiveConnection receiving new game');

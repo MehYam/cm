@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const Game = mongoose.model('Game');
 const User = mongoose.model('User');
 
+//KAI: deprecate this.  client doesn't really need it, and I'm not sure it's the right idea without rethinking the
+// entire flow of the application
 router.get('/getBadges', async (req, res, next) => {
 
    const user = req.user;

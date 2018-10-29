@@ -56,7 +56,6 @@ class Default extends React.Component {
       return (
          <div>
             <ExistingGamesObserver/>
-            <i>KAI: need to mark games where it's your turn</i><br/>
             <i>KAI: need option to abandon games</i>
          </div>
       );
