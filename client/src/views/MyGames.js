@@ -17,12 +17,9 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
    }
    render() {
       const gs = rootStore.gameStore;
-      if (gs.pendingCreateGame && gs.pendingCreateGame.result) {
-         return getNewGameRedirect(gs.pendingCreateGame.result);
+      if (gs.gameCreationState && gs.gameCreationState.result) {
+         return getNewGameRedirect(gs.gameCreationState.result);
       }
-
-      const pendingGames = gs.games.filter(game => game.moves.length < (game.width * game.height));
-      const completeGames = gs.games.filter(game => game.moves.length === (game.width * game.height));
 
       function renderGames(games) {
          let retval = [];
@@ -42,11 +39,13 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
       }
       return (
          <div>
-            <button className='linkButton' onClick={this.createGame}>Start New Random Game</button><br/>
-            <h2>In Progress:</h2>
-            <div className='gamesParent'> {renderGames(pendingGames)} </div>
+            <button className='linkButton' onClick={this.createGame}>Start a Random Game</button><br/>
+            <h2>Your Turn:</h2>
+            <div className='gamesParent'> {renderGames(gs.games.yourTurn)} </div>
+            <h2>Their Turn:</h2>
+            <div className='gamesParent'> {renderGames(gs.games.theirTurn)} </div>
             <h2>Complete:</h2>
-            <div className='gamesParent'> {renderGames(completeGames)} </div>
+            <div className='gamesParent'> {renderGames(gs.games.completed)} </div>
          </div>
       );
    }

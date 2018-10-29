@@ -126,7 +126,7 @@ class Palette extends React.Component {
 }
 
 class AcceptUndo extends React.Component {
-   accept() { rootStore.gameStore.acceptPendingMove(); }
+   accept() { rootStore.gameStore.applyPendingMove(); }
    undo() { rootStore.gameStore.undoPendingMove(); }
    render() {
       return (
@@ -142,8 +142,8 @@ class AcceptUndo extends React.Component {
 const GameObserver = observer(class Game extends React.Component {
    componentDidMount() {
       //KAI: this pending business is so hacky...
-      if (rootStore.gameStore.pendingCreateGame) {
-         rootStore.gameStore.pendingCreateGame = null;
+      if (rootStore.gameStore.gameCreationState) {
+         rootStore.gameStore.gameCreationState = null;
       }
       rootStore.gameStore.requestGame(this.props.match.params.gameId);
    }

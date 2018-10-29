@@ -20,8 +20,8 @@ const FriendsObserver = observer(class Friends extends React.Component {
    render() {
       //KAI: this pendingGame hack has leaked into here...
       const gs = rootStore.gameStore;
-      if (gs.pendingCreateGame && gs.pendingCreateGame.result) {
-         return getNewGameRedirect(gs.pendingCreateGame.result);
+      if (gs.gameCreationState && gs.gameCreationState.result) {
+         return getNewGameRedirect(gs.gameCreationState.result);
       }
 
       const friends = [];
@@ -39,7 +39,6 @@ const FriendsObserver = observer(class Friends extends React.Component {
       }
       return (
          <div>
-            <h1>Friends</h1>
             {friends}
          </div>
       );
