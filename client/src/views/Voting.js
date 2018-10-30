@@ -16,7 +16,7 @@ class Candidate extends Component {
    render() {
       return (
          <button className='voteButton' onClick={this.vote}>
-            <GameBoard game={this.props.game} tileSize={60}/>
+            <GameBoard game={this.props.game} tileSize={100}/>
          </button>
       );
    }
@@ -34,7 +34,7 @@ const VotingObserver = observer(class Voting extends Component {
       });
       return (
          <div>
-            <h1>Voting</h1>
+            <h2 className='centerText'>Choose your favorite:</h2>
             <div>{renderedBallots}</div>
          </div>
       );

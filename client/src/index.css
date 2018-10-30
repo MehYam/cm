@@ -1,7 +1,7 @@
 html, body {
   height: 100%;
-  background-color: #282923;
-  color: #dddddd;
+  background-color:  #dddddd;
+  color: #555555;
 
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: 0;
@@ -23,12 +23,14 @@ html, body {
   height: 100%;
 }
 .menubar 
-{  background-color: #222222;
+{
   padding: 7px;
   text-align: right;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
 }
 .menubarNameplate {
   font-weight: bold;
+  color: #0787FF;
 }
 .bottom {
   display: flex;
@@ -36,7 +38,6 @@ html, body {
   flex-grow: 1;
 }
 .sideNav {
-  background-color: #222222;
   font-weight: bold;
 }
 .sideNav ul {
@@ -47,6 +48,30 @@ html, body {
 .sideNav ul li {
   padding: 3px;
 }
+a .navTooltip {
+  visibility: hidden;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 110%;
+}
+a .navTooltip::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
+}
+a .navTooltip:hover {
+  visibility: visible;
+}
 .clientArea {
   display: flex;
   flex-direction: column;
@@ -54,6 +79,8 @@ html, body {
   justify-content: center;
 
   flex-grow: 1;
+
+  background-color: white;
   padding: 4px;
 }
 .lightUIPadding {
@@ -97,31 +124,26 @@ html, body {
 }
 
 hr {
-  border: 1px dashed #888888;
+  border: 1px dotted #888888;
   margin: 0px;
 }
 a {
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
-}
-a:link {
-  color: #555599;
-}
-a:visited {
-  color: #777799;
+
+  color: #555555;
 }
 a:hover {
-  color: #888899;
+  color: #444444;
 }
 a:active {
-  color: #9999bb; 
+  color: #333333;
 }
 
 .title {
   font: 50px "Century Gothic", Futura, sans-serif;
 }
 .titleParent {
-  background-color: #222222;
   padding: 30px;
 }
 
@@ -161,9 +183,9 @@ a:active {
 
 /* Voting */
 .voteButton {
-  border: none;
+  background-color: #f1f1f1;
+  border-radius: 6px;
   text-align: center;
-  background-color: #ffffff00;
 
   margin: 4px;
   padding: 5px;
@@ -174,10 +196,11 @@ a:active {
   transition-duration: 0.4s;
 }
 .voteButton:hover {
-  background-color: #ffffff44;
+  background-color: #cccccc;
 }
 .voteButton:active {
-  background-color: #ffffffaa;
+  background-color: #bbbbbb;
+
   transform: translateY(4px);
 }
 

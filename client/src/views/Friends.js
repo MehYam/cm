@@ -7,7 +7,7 @@ import { getNewGameRedirect } from '../util';
 const statusToColor = {
    offline: 'red',
    idle: 'amber',
-   online: 'green'
+   online: '#22ff22'
 };
 const FriendsObserver = observer(class Friends extends React.Component {
    componentDidMount() {
@@ -32,7 +32,7 @@ const FriendsObserver = observer(class Friends extends React.Component {
                <h3>
                   <button className='linkButton' onClick={this.createGame.bind(this, friend._id)}>New Game</button>
                   &nbsp;
-                  name: {friend.name}, status: <span style={style}>{ friend.status }</span>, lastActivity: { friend.lastActivity }
+                  {friend.name}, status: <span style={style}>{ friend.status }</span>, lastActivity: { friend.lastActivity }
                </h3>
             </div>
          );
