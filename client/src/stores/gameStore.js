@@ -23,11 +23,13 @@ function hydrateGame(game) {
       if (player.user === auth.user.id) {
          game.yourPlayer = player;
       }
+      else {
+         game.theirPlayer = player;
+      }
    });
 
    const currentPlayerIndex = game.moves.length % game.players.length;
    game.currentPlayer = game.players[currentPlayerIndex];
-   game.otherPlayer = game.players[!currentPlayerIndex];
 
    // deduce a board
    game.rows = [];

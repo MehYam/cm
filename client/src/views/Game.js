@@ -180,7 +180,7 @@ const GameObserver = observer(class Game extends React.Component {
       var statusMessage;
       if (game) {
          if (game.completed) {
-            statusMessage = `Game with ${game.otherPlayer.name} finished ${prettifyJsonDateTime(game.completed)}`;
+            statusMessage = `Game with ${game.theirPlayer.name} finished ${prettifyJsonDateTime(game.completed)}`;
          }
          else if (yourTurn) {
             statusMessage = 'Your turn to place a color';

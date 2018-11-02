@@ -6,6 +6,7 @@ import Login from '../auth/Login';
 import Register from '../auth/Register';
 import LinkButton from '../LinkButton';
 
+import { version } from '../util';
 import rootStore from '../stores/rootStore';
 
 // non-ideal that we're using absolute links everywhere, but it's actually less messy than the alternative
@@ -48,7 +49,7 @@ const TitleObserver = observer(class Title extends Component {
           <div className='titleParent'>
             <div className='title centerText'>Color Match Game (BETA)</div>
             <div className='centerText'><i>A Game of Aesthetic Strategy from Steve Rockwell</i></div>
-            <div className='centerText'>v0.0.2</div>
+            <div className='centerText'>{version}</div>
           </div>
           <hr/>
           <div className='vertCenterParent'>

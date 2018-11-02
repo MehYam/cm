@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
 
+import { version } from './util';
 import rootStore from './stores/rootStore';
 
 const NavBarObserver = observer(class NavBar extends Component {
@@ -28,7 +29,8 @@ const NavBarObserver = observer(class NavBar extends Component {
                <Link to='/home/leaderboard'>Leaderboard</Link>
                <Link to='/welcome/logout'>Sign Out</Link>
                <hr/>
-               <Link to='/home/testboard'>...test...</Link>
+               <Link className='version' to='/home/testboard'>...test...</Link>
+               <div className='version'>{version}</div>
             </div>
          </nav>
       );

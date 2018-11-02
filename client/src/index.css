@@ -88,6 +88,10 @@ html, body {
   background-color: #555555;
   color: white;  
 }
+.version {
+  text-align: center;
+  font-size: 12px;
+}
 
 hr {
   margin: 0px;
