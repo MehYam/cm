@@ -31,7 +31,10 @@ export default class LiveConnection {
             console.log('LiveConnection receiving game update');
 
             if (json.updatedBy) {
-               toast.success(json.updatedBy.name + ' has placed a color');
+               //KAI: bad
+               const completed = json.updatedGame.moves.length === (json.updatedGame.width * json.updatedGame.height);
+               const status = completed ? ' has completed a game' : ' has played a turn';
+               toast.success(json.updatedBy.name + status);
             }
             rootStore.gameStore.handleUpdatedGame(json.updatedGame);
          }
