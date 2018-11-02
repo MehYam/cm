@@ -12,9 +12,6 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
    componentDidMount() {
       rootStore.gameStore.requestGames();
    }
-   createGame() {
-      rootStore.gameStore.createGame();
-   }
    render() {
       const gs = rootStore.gameStore;
       if (gs.gameCreationState && gs.gameCreationState.result) {
@@ -30,7 +27,7 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
             retval.push(
                <Link to={url} key={nthGame}>
                   <button className='myGamesEntry'>
-                     <GameBoard game={game} tileSize={30}/><div>{nthGame}. {game.players[0].name} - {game.players[1].name}</div>
+                     <GameBoard game={game} tileSize={30}/><div>{nthGame}. {game.players[0].name}, {game.players[1].name}</div>
                   </button>
                </Link>
             );
@@ -39,12 +36,11 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
       }
       return (
          <div>
-            <button className='bigButton' onClick={this.createGame}>Start a Random Game</button><br/>
-            <h2>Your Turn:</h2>
+            <h3>Your Turn:</h3>
             <div className='gamesParent gamesPlaque'> {renderGames(gs.games.yourTurn)} </div>
-            <h2>Their Turn:</h2>
+            <h3>Their Turn:</h3>
             <div className='gamesParent gamesPlaque'> {renderGames(gs.games.theirTurn)} </div>
-            <h2>Complete:</h2>
+            <h3>Complete:</h3>
             <div className='gamesParent gamesPlaque'> {renderGames(gs.games.completed)} </div>
          </div>
       );

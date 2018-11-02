@@ -8,5 +8,9 @@ function getNewGameRedirect(gameId) {
    // feels klunky to do this
    return <Redirect to={getGameUrl(gameId)}/>;
 }
+function prettifyJsonDateTime(isoString) {
+   const date = new Date(Date.parse(isoString));
+   return date.toLocaleDateString() + ' - ' + date.toLocaleTimeString();
+}
 
-export { getGameUrl, getNewGameRedirect };
+export { getGameUrl, getNewGameRedirect, prettifyJsonDateTime };

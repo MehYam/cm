@@ -5,6 +5,7 @@ import Interact from '../Interact';
 import GameBoard from './board/GameBoard';
 import Tile from './board/Tile';
 
+import { prettifyJsonDateTime } from '../util';
 import rootStore from '../stores/rootStore';
 
 //KAI: x-browser class editing from w3schools - put in a utils class
@@ -179,18 +180,18 @@ const GameObserver = observer(class Game extends React.Component {
       var statusMessage;
       if (game) {
          if (game.completed) {
-            statusMessage = 'Game finished at ' + game.completed;
+            statusMessage = `Game with ${game.otherPlayer.name} finished ${prettifyJsonDateTime(game.completed)}`;
          }
          else if (yourTurn) {
-            statusMessage = 'Your turn';
+            statusMessage = 'Your turn to place a color';
          }
          else {
-            statusMessage = `Waiting for ${game.currentPlayer.name}'s turn`;
+            statusMessage = `Waiting for ${game.currentPlayer.name} to place a color`;
          }
       }
       return (
          <div className='boardParent'>
-            <h1 className='centerText'>{statusMessage}</h1>
+            <h2 className='centerText'>{statusMessage}</h2>
             <GameBoard game={game} pendingMove={store.pendingMove} dropzoneOptions={dropzoneOptions} tileSize={150}/>
             { this.acceptUndo() }
             <Palette enabled={paletteEnabled} palette={palette} hideOne={hideDroppedTile} tileSize={70}/>

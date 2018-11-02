@@ -25,7 +25,9 @@ function hydrateGame(game) {
       }
    });
 
-   game.currentPlayer = game.players[game.moves.length % game.players.length];
+   const currentPlayerIndex = game.moves.length % game.players.length;
+   game.currentPlayer = game.players[currentPlayerIndex];
+   game.otherPlayer = game.players[!currentPlayerIndex];
 
    // deduce a board
    game.rows = [];

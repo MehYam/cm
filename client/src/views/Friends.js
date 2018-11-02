@@ -17,6 +17,9 @@ const FriendsObserver = observer(class Friends extends React.Component {
       // ... implement the button, and the opening of the game.  createGame should return a new game id
       rootStore.gameStore.createGame(friendId);
    }
+   createRandomGame() {
+      rootStore.gameStore.createGame();
+   }
    render() {
       //KAI: this pendingGame hack has leaked into here...
       const gs = rootStore.gameStore;
@@ -39,6 +42,7 @@ const FriendsObserver = observer(class Friends extends React.Component {
       }
       return (
          <div>
+            <button className='bigButton' onClick={this.createRandomGame}>Start a Random Game</button><br/>
             {friends}
          </div>
       );

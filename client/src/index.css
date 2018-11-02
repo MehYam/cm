@@ -209,10 +209,10 @@ hr {
   flex-flow: row wrap;
 }
 .myGamesEntry {
-  color: #cccccc;
-  background-color: white;
+  background-color: #f1f1f1;
 
   border: none;
+  border-radius: 4px;
   margin: 1px;
   padding: 5px;
 
@@ -220,10 +220,11 @@ hr {
   transition-duration: 0.4s;
 }
 .myGamesEntry:hover {
-  background-color: #ffffff44;
+  color: white;
+  background-color: #bbbbbb;
 }
 .myGamesEntry:active {
-  background-color: #ffffffaa;
+  background-color: #777777;
   transform: translateY(4px);
 }
 .boardParent {
@@ -234,9 +235,26 @@ hr {
 
 /* Leaderboard */
 .leaderboardParent {
+  font-size: 20px;
+}
+.leaderboardRank {
+  font-size: 24px;
+  text-align: right;
+  min-width: 35px;
+  padding-right: 5px;
 }
 .leaderboardEntry {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+
   border: 1px solid #ffffff77;
-  margin: 1px;
-  padding: 1px;
+  margin: 5px;
+  padding: 5px;
+}
+.leaderboardEntryInfo {
+  padding-left: 5px;
+}
+.leaderboardEntryField {
+  font-weight: bold;
 }
