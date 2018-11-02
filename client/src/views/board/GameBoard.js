@@ -21,11 +21,7 @@ class GameBoardRow extends Component {
             </Interact>
          );
       }
-      return (
-         <div className='boardrow'>
-            {tiles}
-         </div>
-      );
+      return <div className='boardrow'>{tiles}</div>;
    }
 }
 

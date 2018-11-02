@@ -23,7 +23,7 @@ const LeaderboardObserver = observer(class Leaderboard extends Component {
       return (
          <div>
             <h1>Leaderboard</h1>
-            <div className='leaderboardParent'>
+            <div className='leaderboardParent gamesPlaque'>
                {leaders}
             </div>
          </div>

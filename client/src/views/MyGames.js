@@ -41,11 +41,11 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
          <div>
             <button className='bigButton' onClick={this.createGame}>Start a Random Game</button><br/>
             <h2>Your Turn:</h2>
-            <div className='gamesParent'> {renderGames(gs.games.yourTurn)} </div>
+            <div className='gamesParent gamesPlaque'> {renderGames(gs.games.yourTurn)} </div>
             <h2>Their Turn:</h2>
-            <div className='gamesParent'> {renderGames(gs.games.theirTurn)} </div>
+            <div className='gamesParent gamesPlaque'> {renderGames(gs.games.theirTurn)} </div>
             <h2>Complete:</h2>
-            <div className='gamesParent'> {renderGames(gs.games.completed)} </div>
+            <div className='gamesParent gamesPlaque'> {renderGames(gs.games.completed)} </div>
          </div>
       );
    }
