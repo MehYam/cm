@@ -69,7 +69,7 @@ class Register extends Component {
                   onChange={this.handleChange}
                />
                <br/>
-               <button className='linkButton' type='submit' disabled={validationMsg !== null}>Register</button>
+               <button className='bigButton' type='submit' disabled={validationMsg !== null}>Register</button>
             </div>
          </form>
       );

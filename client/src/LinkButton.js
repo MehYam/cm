@@ -5,7 +5,7 @@ class LinkButton extends Component {
    render() {
       return (
          <Link to={this.props.to}>
-            <button className='linkButton' >
+            <button className={this.props.buttonClass} >
                {this.props.label}
             </button>
          </Link>);

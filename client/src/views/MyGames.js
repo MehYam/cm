@@ -39,7 +39,7 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
       }
       return (
          <div>
-            <button className='linkButton' onClick={this.createGame}>Start a Random Game</button><br/>
+            <button className='bigButton' onClick={this.createGame}>Start a Random Game</button><br/>
             <h2>Your Turn:</h2>
             <div className='gamesParent'> {renderGames(gs.games.yourTurn)} </div>
             <h2>Their Turn:</h2>

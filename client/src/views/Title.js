@@ -13,9 +13,9 @@ class SignedOutLinks extends Component {
    render() {
       return (
          <div className='centerText'>
-            <LinkButton to='/welcome/login' label='Sign In'/>
+            <LinkButton buttonClass='bigButton' to='/welcome/login' label='Sign In'/>
             <br/>
-            <LinkButton to='/welcome/register' label='Register'/>
+            <LinkButton buttonClass='bigButton' to='/welcome/register' label='Register'/>
          </div>
       );
    }
@@ -25,9 +25,9 @@ class SignedInLinks extends Component {
     return (
       <div className='centerText'>
         <h3>Welcome back, {rootStore.loginStore.user.name}</h3>
-        <LinkButton to='/home' label='Begin'/>
+        <LinkButton buttonClass='bigButton' to='/home' label='Begin'/>
         <br/>
-        <LinkButton to='/welcome/logout' label='Sign Out'/>
+        <LinkButton buttonClass='bigButton' to='/welcome/logout' label='Sign Out'/>
       </div>
     );
   }
