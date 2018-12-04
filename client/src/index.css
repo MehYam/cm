@@ -24,9 +24,12 @@ html, body {
 }
 .menubar 
 {
+  background-color: #cccccc;
   padding: 7px;
   text-align: right;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 2px 0px;
+
+  z-index: 10;
 }
 .menubarNameplate {
   font-weight: bold;
@@ -44,7 +47,6 @@ html, body {
 
   flex-grow: 1;
 
-  background-color: white;
   padding: 4px;
 
   overflow-y: auto;
@@ -106,6 +108,8 @@ hr {
 
 /* NavBar */
 .sideNav {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 2px 2px;
+  background-color: #cccccc;
 }
 .sideNavList {
   margin: 0;

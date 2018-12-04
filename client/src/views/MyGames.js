@@ -36,8 +36,7 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
       }
       return (
          <div>
-            <h3>Your Turn:</h3>
-            <div className='gamesParent gamesPlaque'> {renderGames(gs.games.yourTurn)} </div>
+            <div className='gamesParent gamesPlaque'><h3>Your Turn:</h3><br/> {renderGames(gs.games.yourTurn)} </div>
             <h3>Their Turn:</h3>
             <div className='gamesParent gamesPlaque'> {renderGames(gs.games.theirTurn)} </div>
             <h3>Complete:</h3>
