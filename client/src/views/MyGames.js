@@ -18,9 +18,8 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
          return getNewGameRedirect(gs.gameCreationState.result);
       }
 
-      function renderGames(games) {
+      function gamesList(games) {
          let retval = [];
-
          for (const game of games) {
             const nthGame = retval.length + 1;
             const url = getGameUrl(game._id);
@@ -34,13 +33,17 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
          }
          return retval;
       }
+      function renderGames(games) {
+         if (games.length) {
+            return gamesList(games);
+         }
+         return <h3>...none...</h3>;
+      }
       return (
          <div>
-            <div className='gamesParent gamesPlaque'><h3>Your Turn:</h3><br/> {renderGames(gs.games.yourTurn)} </div>
-            <h3>Their Turn:</h3>
-            <div className='gamesParent gamesPlaque'> {renderGames(gs.games.theirTurn)} </div>
-            <h3>Complete:</h3>
-            <div className='gamesParent gamesPlaque'> {renderGames(gs.games.completed)} </div>
+            <div className='gamesPlaque'> <div className='gamesPlaqueLabel'>Waiting on your turn:</div>{renderGames(gs.games.yourTurn)} </div>
+            <div className='gamesPlaque'> <div className='gamesPlaqueLabel'>Waiting on opponent:</div>{renderGames(gs.games.theirTurn)} </div>
+            <div className='gamesPlaque'> <div className='gamesPlaqueLabel'>Complete:</div>{renderGames(gs.games.completed)} </div>
          </div>
       );
    }
@@ -51,7 +54,6 @@ class Default extends React.Component {
       return (
          <div>
             <ExistingGamesObserver/>
-            <i>KAI: need option to abandon games</i>
          </div>
       );
    }

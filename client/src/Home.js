@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 
 import Header from './Header';
 import NavBar from './NavBar';
@@ -12,7 +12,7 @@ import Friends from './views/Friends';
 import TestGameBoard from './test/TestGameBoard';
 
 const Default = () => {
-  return <div><h2>Choose an option on the left</h2><i>KAI: don't show this and choose one by default</i></div>;
+  return <Redirect to='/home/mygames'/>;
 }
 
 class Home extends Component {

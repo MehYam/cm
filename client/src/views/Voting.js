@@ -34,7 +34,7 @@ const VotingObserver = observer(class Voting extends Component {
       });
       return (
          <div>
-            <h2 className='centerText'>Choose your favorite:</h2>
+            <h2>Choose your favorite:</h2>
             <div>{renderedBallots}</div>
          </div>
       );
