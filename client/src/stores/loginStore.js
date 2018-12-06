@@ -74,6 +74,10 @@ class LoginStore {
          this.loginError = error.response.data.message;
       })
    }
+   modifyingRegistration() {
+      // clear out any existing registration error.  This is wonky, but easy, and less wonky than what we had
+      this.registrationError = null;
+   }
    requestRegistration(name, password) {
       this.logout();
 
@@ -84,11 +88,11 @@ class LoginStore {
          this.requestLogin(name, password);
       })
       .catch((error) => {
-         console.log('/auth/register error', error);
+         console.log('/auth/register error', error.response.data);
 
          auth.clear();
          this.user = null;
-         this.registrationError = error;
+         this.registrationError = error.response.data.message;
       })
    }
 }

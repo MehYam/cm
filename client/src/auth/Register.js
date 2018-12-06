@@ -18,6 +18,8 @@ const RegisterObserver = observer(class Register extends Component {
       this.handleSubmit = this.handleSubmit.bind(this);
    }
    handleChange(event) {
+      rootStore.loginStore.modifyingRegistration();
+
       const newState = {};
       newState[event.target.id] = event.target.value;
       this.setState(newState);
@@ -71,6 +73,7 @@ const RegisterObserver = observer(class Register extends Component {
                <br/>
                <button className='bigButton' type='submit' disabled={validationMsg !== null}>Register</button>
                <div className='loginError'><i>{validationMsg}</i></div>
+               <div className='loginError'>{rootStore.loginStore.registrationError}</div>
             </div>
          </form>
       );
