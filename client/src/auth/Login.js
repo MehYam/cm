@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { observer } from 'mobx-react';
+
 import rootStore from '../stores/rootStore';
 
-class Login extends Component {
+const LoginObserver = observer(class Login extends Component {
    constructor() {
       super();
 
@@ -24,6 +26,13 @@ class Login extends Component {
       rootStore.loginStore.requestLogin(this.state.name, this.state.password);
    }
    render() {
+      let validationMsg = null;
+      if (!this.state.name) {
+         validationMsg = 'enter name';
+      }
+      else if (!this.state.password) {
+         validationMsg = 'enter password';
+      }
       return (
          <form onSubmit={this.handleSubmit}>
             <div>
@@ -43,11 +52,12 @@ class Login extends Component {
                   onChange={this.handleChange}
                />
                <br/>
-               <button className='bigButton' type='submit'>Sign In</button>
+               <button className='bigButton' type='submit' disabled={validationMsg !== null}>Sign In</button>
+               <div className='loginError'>{rootStore.loginStore.loginError}</div>
             </div>
          </form>
       );
    }
-};
+});
 
-export default Login;
+export default LoginObserver;

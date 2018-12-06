@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { observer } from 'mobx-react';
 import rootStore from '../stores/rootStore';
 
-class Register extends Component {
+const RegisterObserver = observer(class Register extends Component {
    constructor() {
       super();
 
@@ -44,7 +45,6 @@ class Register extends Component {
       return (
          <form onSubmit={this.handleSubmit}>
             <div>
-               <div><i>{validationMsg}</i></div>
                <label htmlFor='name'>Name</label>
                <input
                   type='text'
@@ -70,10 +70,11 @@ class Register extends Component {
                />
                <br/>
                <button className='bigButton' type='submit' disabled={validationMsg !== null}>Register</button>
+               <div className='loginError'><i>{validationMsg}</i></div>
             </div>
          </form>
       );
    }
-};
+});
 
-export default Register;
+export default RegisterObserver;

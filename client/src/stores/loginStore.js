@@ -10,7 +10,8 @@ function getWebsocketURL() {
 }
 class LoginStore {
    user = null;
-   lastError = null;
+   loginError = null;
+   registrationError = null;
 
    liveConnection = new LiveConnection();
 
@@ -24,7 +25,8 @@ class LoginStore {
       auth.clear();
 
       this.user = null;
-      this.lastError = null;
+      this.loginError = null;
+      this.registrationError = null;
       this.liveConnection.disconnect();
    }
    connectLive() {  // KAI: should be private
@@ -55,20 +57,21 @@ class LoginStore {
    }
    requestLogin(name, password) {
       axios.post('/auth/login', { name, password })
-      .then((res) => {
+      .then(res => {
          console.log('/auth/login response', res);
          console.log('user+token', res.data.user);
 
          auth.user = res.data.user;
          this.user = auth.user;
-         this.lastError = null;
+         this.loginError = null;
 
          this.connectLive();
       })
-      .catch((error) => {
-         console.log('/auth/login error', error);
+      .catch(error => {
+         console.log('/auth/login error', error.response);
 
          this.logout();
+         this.loginError = error.response.data.message;
       })
    }
    requestRegistration(name, password) {
@@ -85,14 +88,15 @@ class LoginStore {
 
          auth.clear();
          this.user = null;
-         this.lastError = error;
+         this.registrationError = error;
       })
    }
 }
 
 decorate(LoginStore, {
    user: observable,
-   lastError: observable,
+   loginError: observable,
+   registrationError: observable,
    loggedIn: computed
 });
 
