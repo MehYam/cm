@@ -31,7 +31,6 @@ html, body {
   background-color: #cccccc;
   padding: 7px;
   text-align: right;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 2px 0px;
 
   z-index: 10;
 }
@@ -179,11 +178,9 @@ hr {
   flex-direction: row;
 
   background-color: white;
-  margin: 20px 0;
+  margin: 20px;
   padding: 20px;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
-
-  width: 100%;
 }
 .palette > .tile {
   margin: 10px;
@@ -215,12 +212,12 @@ hr {
 /* shared */
 .gamesPlaque {
   background-color: #f1f1f1;
-  margin: 20px 0;
-  padding: 20px;
+  margin: 10px;
+  padding: 10px;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12)
 }
 .gamesPlaqueLabel {
-  font: 16px "Roboto", Futura, sans-serif;
+  /*font: 16px "Roboto", Futura, sans-serif;*/
 }
 
 /* MyGames */

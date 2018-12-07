@@ -12,6 +12,6 @@ function prettifyJsonDateTime(isoString) {
    const date = new Date(Date.parse(isoString));
    return date.toLocaleDateString() + ' - ' + date.toLocaleTimeString();
 }
-const version = 'v0.0.6';
+const version = 'v0.1.0';
 
 export { getGameUrl, getNewGameRedirect, prettifyJsonDateTime, version };

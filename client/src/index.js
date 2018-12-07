@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
-import registerServiceWorker from './boilerplate/registerServiceWorker';
+import { unregister } from './boilerplate/registerServiceWorker';
 import App from './App';
 
 import auth from './auth/auth';
@@ -25,4 +25,4 @@ ReactDOM.render(
    document.getElementById('root')
 );
 
-registerServiceWorker();
+unregister();

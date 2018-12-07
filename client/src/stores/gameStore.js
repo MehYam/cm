@@ -190,7 +190,7 @@ class GameStore {
    handleUpdatedGame(updatedGame) {
 
       // 1. update the raw list with this game, whether it's new or changed
-      const foundIndex = this.games_raw.findIndex(game => game._id === updatedGame);
+      const foundIndex = this.games_raw.findIndex(game => game._id === updatedGame._id);
       if (foundIndex >= 0) {
          this.games_raw[foundIndex] = updatedGame;
       }

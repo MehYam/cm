@@ -23,14 +23,19 @@ const NavBarObserver = observer(class NavBar extends Component {
          <nav className='sideNav lightUIPadding'>
             <div className='sideNavList'>
                <Link to='/'>Color Match</Link>
+               <hr/>
                <Link to='/home/mygames'>{myGamesBadge}</Link>
+               <hr/>
                <Link to='/home/friends'>{friendsBadge}</Link>
+               <hr/>
                <Link to='/home/voting'>Voting</Link>
+               <hr/>
                <Link to='/home/leaderboard'>Leaderboard</Link>
+               <hr/>
                <Link to='/welcome/logout'>Sign Out</Link>
                <hr/>
-               <Link className='version' to='/home/testboard'>...test...</Link>
                <div className='version'>{version}</div>
+               <Link className='version' to='/home/testboard'>...tests...</Link>
             </div>
          </nav>
       );
