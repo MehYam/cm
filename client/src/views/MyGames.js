@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
 
+import { PulseLoader } from 'react-spinners';
+
 import GameBoard from './board/GameBoard';
 import Game from './Game';
 import rootStore from '../stores/rootStore';
@@ -37,7 +39,12 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
          if (games.length) {
             return gamesList(games);
          }
-         return <h3>...none...</h3>;
+         //KAI: this is incorrect, it shouldn't show the loader if the user has no games
+         return <PulseLoader
+            sizeUnit={"px"}
+            size={150}
+            color={'#888888'}size={10}
+            loading={true}/>;
       }
       return (
          <div>

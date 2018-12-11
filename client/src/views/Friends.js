@@ -33,9 +33,9 @@ const FriendsObserver = observer(class Friends extends React.Component {
          friends.push(
             <div key={friends.length}>
                <h3>
-                  <button className='bigButton' onClick={this.createGame.bind(this, friend._id)}>New Game</button>
+                  <button className='bigButton' onClick={this.createGame.bind(this, friend._id)}>Start Game</button>
                   &nbsp;
-                  {friend.name}, status: <span style={style}>{ friend.status }</span>, lastActivity: { friend.lastActivity }
+                  {friend.name}, <span style={style}>{ friend.status }</span>, lastActive: { friend.lastActivity }
                </h3>
             </div>
          );

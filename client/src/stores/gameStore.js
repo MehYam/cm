@@ -86,7 +86,8 @@ class GameStore {
    gameCreationState = null;
    pendingMove = null;
 
-   lastError = null;  //KAI: we need to start handling this everywhere
+   callState = {};
+   lastError = null;
 
    createGame(user) {
       if (this.gameCreationState) {
@@ -94,6 +95,7 @@ class GameStore {
       }
 
       this.gameCreationState = { called: true };
+      this.callState = { pending: true };
       const data = { user };
       axios(
          {
@@ -106,14 +108,17 @@ class GameStore {
       .then((res) => {
          console.log('/createGame response', res);
          this.gameCreationState = { result: res.data.gameId };
+         this.callState = {};
       })
       .catch((error) => {
          console.error('/createGame error', error);
          this.lastError = error;
          this.gameCreationState = null;
+         this.callState = { error: error };
       });
    }
    requestGames() {
+      this.callState = { pending: true };
       axios(
          {
             method: 'GET',
@@ -125,15 +130,18 @@ class GameStore {
          console.log('/getGames response', res);
          this.games_raw = res.data.games;
          this.games = hydrateGames(this.games_raw);
+         this.callState = {};
       })
       .catch((error) => {
          console.error('/getGames error', error);
          this.lastError = error;
+         this.callState = { error: error };
       });
    }
    requestGame(gameId) {
       this.currentGame = null;
       this.pendingMove = null;
+      this.callState = { pending: true };
       axios(
          {
             method: 'POST',
@@ -150,10 +158,12 @@ class GameStore {
          // The server's Game is a minimal data structure that stores only the set of events that have occurred,
          // with no redundancy.  Unfold this into a structure that's easier for clients to use.
          this.currentGame = hydrateGame(res.data.game);
+         this.callState = {};
       })
       .catch((error) => {
          console.error('/getGame error', error);
          this.lastError = error;
+         this.callState = { error: error };
       });
    }
    applyPendingMove() {
@@ -213,7 +223,8 @@ decorate(GameStore, {
    currentGame: observable,
    gameCreationState: observable,
    pendingMove: observable,
-   lastError: observable
+   lastError: observable,
+   callState : observable,
 });
 
 export default GameStore;
