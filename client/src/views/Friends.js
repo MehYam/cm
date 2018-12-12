@@ -32,17 +32,14 @@ const FriendsObserver = observer(class Friends extends React.Component {
          const style = { color: statusToColor[friend.status] };
          friends.push(
             <div key={friends.length}>
-               <h3>
-                  <button className='bigButton' onClick={this.createGame.bind(this, friend._id)}>Start Game</button>
-                  &nbsp;
-                  {friend.name}, <span style={style}>{ friend.status }</span>, lastActive: { friend.lastActivity }
-               </h3>
+               <button className='smallButton' onClick={this.createGame.bind(this, friend._id)}>Start Game</button>
+               <b>{friend.name}, <span style={style}>{ friend.status }</span></b>
             </div>
          );
       }
       return (
          <div>
-            <button className='bigButton' onClick={this.createRandomGame}>Start a Random Game</button><br/>
+            <button className='bigButton' onClick={this.createRandomGame}>Start Random Game</button><br/>
             {friends}
          </div>
       );
