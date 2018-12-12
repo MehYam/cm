@@ -1,29 +1,21 @@
-import axios from 'axios';
-import auth from '../auth/auth';  //KAI: we should abstract this out into something all api calls go through.  apiCaller.js or something
-
 import { decorate, observable } from 'mobx';
+
+import { colorMatchAPI } from '../util';
 
 class LeaderboardStore {
    leaderboard = [];
    lastError = null;
 
-   requestLeaders() {
-      axios(
-         {
-            method: 'GET',
-            headers: { Authorization: auth.user.token },
-            url: '/api/getLeaders',
-            data: {}
-         }
-      )
-      .then((res) => {
+   async requestLeaders() {
+      try {
+         const res = await colorMatchAPI('getLeaders');
          console.log('/getLeaders response', res);
          this.leaderboard = res.data.leaders;
-      })
-      .catch((error) => {
+      }
+      catch(error) {
          console.error('/getLeaders error', error);
          this.lastError = error;
-      });
+      }
    }
 }
 

@@ -1,7 +1,8 @@
-import axios from 'axios';
-import auth from '../auth/auth';
-
 import { decorate, observable } from 'mobx';
+
+import auth from '../auth/auth';
+import { colorMatchAPI } from '../util';
+
 
 //KAI: could/should share this with server
 // the Game data type's minimality makes it a little difficult to use (i.e. whose turn is it, who played what, etc).  Here
@@ -86,111 +87,75 @@ class GameStore {
    gameCreationState = null;
    pendingMove = null;
 
-   callState = {};
+   //KAI: ditch this.  Have a 'callstate' for each call we make.
    lastError = null;
 
-   createGame(user) {
+   async createGame(user) {
       if (this.gameCreationState) {
          throw new Error('trying to create a game while one is pending');
       }
 
-      this.gameCreationState = { called: true };
-      this.callState = { pending: true };
-      const data = { user };
-      axios(
-         {
-            method: 'POST',
-            headers: { Authorization: auth.user.token },
-            url: '/api/createGame',
-            data 
-         }
-      )
-      .then((res) => {
+      try { 
+         this.gameCreationState = { called: true };
+
+         const res = await colorMatchAPI('createGame', { user });
          console.log('/createGame response', res);
          this.gameCreationState = { result: res.data.gameId };
-         this.callState = {};
-      })
-      .catch((error) => {
+      }
+      catch(error) {
          console.error('/createGame error', error);
          this.lastError = error;
          this.gameCreationState = null;
-         this.callState = { error: error };
-      });
+      }
    }
-   requestGames() {
-      this.callState = { pending: true };
-      axios(
-         {
-            method: 'GET',
-            headers: { Authorization: auth.user.token },
-            url: '/api/getGames'
-         }
-      )
-      .then((res) => {
-         console.log('/getGames response', res);
+   async requestGames() {
+      try {
+         const res = await colorMatchAPI('getGames');
+         console.log('getGames response', res);
+
          this.games_raw = res.data.games;
          this.games = hydrateGames(this.games_raw);
-         this.callState = {};
-      })
-      .catch((error) => {
-         console.error('/getGames error', error);
+      }
+      catch(error) {
+         console.error('getGames error', error);
          this.lastError = error;
-         this.callState = { error: error };
-      });
+      }
    }
-   requestGame(gameId) {
-      this.currentGame = null;
-      this.pendingMove = null;
-      this.callState = { pending: true };
-      axios(
-         {
-            method: 'POST',
-            headers: { Authorization: auth.user.token },
-            url: '/api/getGame',
-            data: {
-               game: gameId
-            }
-         }
-      )
-      .then((res) => {
+   async requestGame(gameId) {
+      try { 
+         this.currentGame = null;
+         this.pendingMove = null;
+
+         const res = await colorMatchAPI('getGame', { game: gameId });
          console.log('/getGame response', res);
 
          // The server's Game is a minimal data structure that stores only the set of events that have occurred,
          // with no redundancy.  Unfold this into a structure that's easier for clients to use.
          this.currentGame = hydrateGame(res.data.game);
-         this.callState = {};
-      })
-      .catch((error) => {
+      }
+      catch(error) {
          console.error('/getGame error', error);
          this.lastError = error;
-         this.callState = { error: error };
-      });
+      }
    }
-   applyPendingMove() {
-      //KAI: a whole bunch of state needs to be set up correctly for this to work, assert it or something
-      axios(
-         {
-            method: 'POST',
-            headers: { Authorization: auth.user.token },
-            url: '/api/doMove',
-            data: {
-               game: this.currentGame._id,
-               paletteIndex: this.pendingMove.paletteIndex,
-               row: this.pendingMove.dropCoords.row,
-               col: this.pendingMove.dropCoords.col
-            }
-         }
-      )
-      .then((res) => {
+   async applyPendingMove() {
+      //KAI: a whole bunch of state needs to be set up correctly for this to work, assert it as a precondition
+      try { 
+         const res = await colorMatchAPI('doMove', {
+            game: this.currentGame._id,
+            paletteIndex: this.pendingMove.paletteIndex,
+            row: this.pendingMove.dropCoords.row,
+            col: this.pendingMove.dropCoords.col
+         });
          console.log('/doMove response', res);
 
          this.pendingMove = null;
          this.currentGame = hydrateGame(res.data.game);
-      })
-      .catch((error) => {
+      }
+      catch(error) {
          console.error('/doMove error', error);
          this.lastError = error;
-      });
+      }
    }
    undoPendingMove() {
       this.pendingMove = null;
@@ -223,8 +188,7 @@ decorate(GameStore, {
    currentGame: observable,
    gameCreationState: observable,
    pendingMove: observable,
-   lastError: observable,
-   callState : observable,
+   lastError: observable
 });
 
 export default GameStore;

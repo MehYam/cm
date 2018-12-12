@@ -1,49 +1,34 @@
-import axios from 'axios';
-import auth from '../auth/auth';
-
 import { decorate, observable } from 'mobx';
+
+import { colorMatchAPI } from '../util';
 
 class BallotStore {
    ballot = [];
    lastError = null;
 
-   requestBallot() {
-      axios(
-         {
-            method: 'GET',
-            headers: { Authorization: auth.user.token },
-            url: '/api/getBallot',
-            data: {}
-         }
-      )
-      .then((res) => {
+   async requestBallot() {
+      try {
+         const res = await colorMatchAPI('getBallot');
          console.log('/getBallot response', res);
          this.ballot = res.data.ballot;
-      })
-      .catch((error) => {
+      }
+      catch(error) {
          console.error('/getBallot error', error);
          this.lastError = error;
-      });
+      }
    }
-   vote(index) {
-      this.ballot = [];
-      axios(
-         {
-            method: 'POST',
-            headers: { Authorization: auth.user.token },
-            url: '/api/doVote',
-            data: { index }
-         }
-      )
-      .then((res) => {
+   async vote(index) {
+      try {
+         this.ballot = [];
+         const res = await colorMatchAPI('doVote', { index });
          console.log('/doVote response', res);
 
          this.requestBallot();
-      })
-      .catch((error) => {
+      }
+      catch(error) {
          console.error('/doVote error', error);
          this.lastError = error;
-      });
+      }
    }
 }
 

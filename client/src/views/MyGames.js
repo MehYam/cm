@@ -42,8 +42,8 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
          //KAI: this is incorrect, it shouldn't show the loader if the user has no games
          return <PulseLoader
             sizeUnit={"px"}
-            size={150}
-            color={'#888888'}size={10}
+            color={'#888888'}
+            size={10}
             loading={true}/>;
       }
       return (
