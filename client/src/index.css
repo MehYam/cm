@@ -107,10 +107,8 @@ html, body {
 
   background-color: white; 
   color: black; 
-  border: 2px solid #222222;
+  border: 1px solid #222222;
   border-radius: 8px;
-  padding: 12px 12px;
-  width: 120px;
   text-align: center;
   text-decoration: none;
   display: inline-block;

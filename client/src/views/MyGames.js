@@ -48,7 +48,7 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
       }
       return (
          <div>
-            <div className='gamesPlaque'> <div className='gamesPlaqueLabel'>Waiting on you:</div>{renderGames(gs.games.yourTurn)} </div>
+            <div className='gamesPlaque'> <div className='gamesPlaqueLabel'>Waiting for your move:</div>{renderGames(gs.games.yourTurn)} </div>
             <div className='gamesPlaque'> <div className='gamesPlaqueLabel'>Waiting on opponent:</div>{renderGames(gs.games.theirTurn)} </div>
             <div className='gamesPlaque'> <div className='gamesPlaqueLabel'>Complete:</div>{renderGames(gs.games.completed)} </div>
          </div>

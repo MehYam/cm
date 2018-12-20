@@ -1,5 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
+import { MdPerson } from 'react-icons/md';
 
 import rootStore from '../stores/rootStore';
 import { getNewGameRedirect } from '../util';
@@ -32,8 +33,9 @@ const FriendsObserver = observer(class Friends extends React.Component {
          const style = { color: statusToColor[friend.status] };
          friends.push(
             <div key={friends.length}>
-               <button className='smallButton' onClick={this.createGame.bind(this, friend._id)}>Start Game</button>
+               <MdPerson/>
                <b>{friend.name}, <span style={style}>{ friend.status }</span></b>
+               <button className='smallButton' onClick={this.createGame.bind(this, friend._id)}>start new game</button>
             </div>
          );
       }
