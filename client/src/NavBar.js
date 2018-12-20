@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
 
+import { MdHome, MdGridOn, MdGroup, MdViewList, MdDoneAll } from 'react-icons/md';
+
 import { version } from './util';
 import rootStore from './stores/rootStore';
 
@@ -22,17 +24,15 @@ const NavBarObserver = observer(class NavBar extends Component {
       return (
          <nav className='sideNav lightUIPadding'>
             <div className='sideNavList'>
-               <Link to='/'>Color Match</Link>
+               <Link to='/'><MdHome/> Color Match</Link>
                <hr/>
-               <Link to='/home/mygames'>{myGamesBadge}</Link>
+               <Link to='/home/mygames'><MdGridOn/> {myGamesBadge}</Link>
                <hr/>
-               <Link to='/home/friends'>{friendsBadge}</Link>
+               <Link to='/home/friends'><MdGroup/> {friendsBadge}</Link>
                <hr/>
-               <Link to='/home/voting'>Voting</Link>
+               <Link to='/home/voting'><MdDoneAll/> Voting</Link>
                <hr/>
-               <Link to='/home/leaderboard'>Leaderboard</Link>
-               <hr/>
-               <Link to='/welcome/logout'>Sign Out</Link>
+               <Link to='/home/leaderboard'><MdViewList/> Leaderboard</Link>
                <hr/>
                <div className='version'>{version}</div>
                <Link className='version' to='/home/testboard'>...tests...</Link>

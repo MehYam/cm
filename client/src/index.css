@@ -38,6 +38,9 @@ html, body {
   font-weight: bold;
   color: #0787FF;
 }
+.signOutLink {
+  font: 14px "Century Gothic", Futura, sans-serif;
+}
 .bottom {
   display: flex;
   flex-direction: row;
@@ -159,6 +162,8 @@ hr {
   color: black;
   transition-duration: 0.4s;
   -webkit-transition-duration: 0.4s; /* Safari */
+
+  white-space: nowrap;
 }
 .sideNavList a {
   transition-duration: 0.4s;
@@ -260,6 +265,8 @@ hr {
   flex-flow: row wrap;
 }
 .myGamesEntry {
+  font: 14px "Century Gothic", Futura, sans-serif;
+
   background-color: #f1f1f1;
 
   border: none;

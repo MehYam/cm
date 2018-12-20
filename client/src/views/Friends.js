@@ -7,7 +7,7 @@ import { getNewGameRedirect } from '../util';
 const statusToColor = {
    offline: 'red',
    idle: 'amber',
-   online: '#22ff22'
+   online: '#22bb22'
 };
 const FriendsObserver = observer(class Friends extends React.Component {
    componentDidMount() {
