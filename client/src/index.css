@@ -39,7 +39,6 @@ html, body {
   color: #0787FF;
 }
 .signOutLink {
-  font: 14px "Century Gothic", Futura, sans-serif;
 }
 .bottom {
   display: flex;
@@ -156,6 +155,7 @@ hr {
 }
 .sideNavList a {
   display: block;
+  position: relative;
   padding: 10px;
   color: black;
   transition-duration: 0.4s;
@@ -176,6 +176,38 @@ hr {
 .sideNavList a:active {
   color: white;
   background-color: #222222;
+}
+.sideNavList a .sideNavTooltip {
+  font: 14px "Century Gothic", Futura, sans-serif;
+  position: absolute;
+  top: 2px;
+  left: 160px;
+  z-index: 1;
+
+  background-color: #555;
+  border-radius: 6px;
+  color: #fff;
+  text-align: center;
+  padding: 8px;
+
+  opacity: 0;
+  transition-duration: 1s;
+  -webkit-transition-duration: 1s; /* Safari */
+}
+.sideNavList a:hover .sideNavTooltip {
+  visibility: visible;
+  opacity: 1;
+}
+/* tooltip arrow */
+.sideNavList a .sideNavTooltip::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent #555 transparent transparent;
 }
 .sideNavListCurrentItem {
   background-color: #111111;

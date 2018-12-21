@@ -21,14 +21,17 @@ const NavBarObserver = observer(class NavBar extends Component {
 
       const onlineFriends = rootStore.friendStore.friends.reduce((total, friend) => total + Number(friend.status === 'online'), 0);
       let friendsBadge = 'Players (' + onlineFriends + ')';
+
+      const gamesTooltip = `${readyGames} waiting your turn`;
+      const friendsTooltip = `${onlineFriends} online`;
       return (
          <nav className='sideNav lightUIPadding'>
             <div className='sideNavList'>
                <Link to='/'><MdHome/> Color Match</Link>
                <hr/>
-               <Link to='/home/mygames'><MdGridOn/> {myGamesBadge}</Link>
+               <Link to='/home/mygames'><MdGridOn/> {myGamesBadge}<span className='sideNavTooltip'>{gamesTooltip}</span></Link>
                <hr/>
-               <Link to='/home/friends'><MdGroup/> {friendsBadge}</Link>
+               <Link to='/home/friends'><MdGroup/> {friendsBadge}<span className='sideNavTooltip'>{friendsTooltip}</span></Link>
                <hr/>
                <Link to='/home/voting'><MdDoneAll/> Voting</Link>
                <hr/>
