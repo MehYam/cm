@@ -27,7 +27,7 @@ const LeaderboardObserver = observer(class Leaderboard extends Component {
       }
       return (
          <div>
-            <h2>Current Leaders</h2>
+            All-Time Leaders:
             <div className='leaderboardParent'>
                {leaders}
             </div>

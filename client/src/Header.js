@@ -14,10 +14,10 @@ const HeaderObserver = observer(class Header extends Component {
       };
       return (
          <div className='menubar'>
-            <span style={style}>•</span>&nbsp;
             Signed in as: <span className='menubarNameplate'>{rootStore.loginStore.user.name},</span>
             &nbsp;&nbsp;
-            <Link className='signOutLink' to='/welcome/logout'>sign out</Link>
+            <Link to='/welcome/logout'>sign out</Link>
+            &nbsp;<span style={style}>•</span>&nbsp;
          </div>
       );
    }
