@@ -6,11 +6,19 @@ export default class LiveConnection {
 
    socket = null;
    received = 0;
-   connect(url, token) {
+   connectedCallback = null;
+   constructor(connectedCallback) {
+      this.connectedCallback = connectedCallback;
+   }
+   connect(url, token, connectedCallback) {
       this.socket = new WebSocket(url);
       this.socket.onopen = event => {
          console.log('LiveConnection.onopen');
          this.send(token);
+
+         if (this.connectedCallback) {
+            this.connectedCallback(true);
+         }
       };
       this.socket.onmessage = event => {
          ++this.received;
@@ -47,6 +55,9 @@ export default class LiveConnection {
       }
       this.socket.onclose = event => {
          console.log('LiveConnection.onclose, (msgs: %s, clean: %s, code: %s, reason: %s)', this.received, event.wasClean, event.code, event.reason);
+         if (this.connectedCallback) {
+            this.connectedCallback(false);
+         }
       }
    }
    get connected() {

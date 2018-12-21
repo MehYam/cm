@@ -12,11 +12,13 @@ class LoginStore {
    user = null;
    loginError = null;
    registrationError = null;
+   liveConnected = false;  //KAI: connecting a mobx computed property that checks this.liveConnection.connected returns null...
 
-   liveConnection = new LiveConnection();
+   liveConnection = null;
 
    constructor() {
       this.user = auth.user;
+      this.liveConnection = new LiveConnection(connected => this.liveConnected = connected);
    }
    get loggedIn() {
       return this.user !== null;
@@ -101,7 +103,8 @@ decorate(LoginStore, {
    user: observable,
    loginError: observable,
    registrationError: observable,
-   loggedIn: computed
+   loggedIn: computed,
+   liveConnected: observable
 });
 
 export default LoginStore;
