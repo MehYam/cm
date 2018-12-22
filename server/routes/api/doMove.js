@@ -7,6 +7,7 @@ const Game = mongoose.model('Game');
 const User = mongoose.model('User');
 
 const liveConnection = require('../../liveConnection');
+const ModelUtils = require('../../modelUtils');
 
 //KAI: shared code b/w client and server
 function currentPlayerIndex(game) {
@@ -82,6 +83,8 @@ router.post('/doMove', (req, res, next) => {
                res.send({ game: retval });
 
                liveConnection.onGameChange(updatedGame, thisUser);
+
+               ModelUtils.setUserActivity(thisUser, 'playing game ' + gameId);
             }
          });
       }

@@ -6,6 +6,8 @@ const router = new express.Router();
 const mongoose = require('mongoose');
 const Game = mongoose.model('Game');
 
+const ModelUtils = require('../../modelUtils');
+
 router.get('/getLeaders', async (req, res, next) => {
 
    logger.info('getLeaders');
@@ -28,11 +30,13 @@ router.get('/getLeaders', async (req, res, next) => {
             $sort: { score: -1 }
          }
       ]);
-      return res.json({ leaders });
+      res.json({ leaders });
+
+      ModelUtils.setUserActivity(user, 'browsing leaderboard');
    }
    catch(err) {
       logger.error('getLeaders failure', err);
-      return res.status(400).send(err);
+      res.status(400).send(err);
    }
 })
 

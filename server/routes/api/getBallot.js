@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 const Game = mongoose.model('Game');
 const User = mongoose.model('User');
 
+const ModelUtils = require('../../modelUtils');
+
 const BALLOTSIZE = 3;
 
 router.get('/getBallot', async (req, res, next) => {
@@ -28,6 +30,8 @@ router.get('/getBallot', async (req, res, next) => {
 
          logger.info('currentBallot length:', user.currentBallot.length);
          await user.save();
+
+         ModelUtils.setUserActivity(user, 'voting');
       }
       catch (err) {
          return res.status(400).send(err);

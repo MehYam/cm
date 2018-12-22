@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import auth from './auth/auth';
 
-const version = 'v0.01.02';
+const version = 'v0.01.03';
 
 function colorMatchAPI(call, parameters) {
    const method = parameters ? 'POST' : 'GET';

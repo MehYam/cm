@@ -17,11 +17,11 @@ router.post('/getGame', async (req, res, next) => {
       const game = await Game.findById({ _id: gameId }).lean().exec();
       res.json({game});
 
-      await ModelUtils.setUserActivity(req.user, 'browsing game');
+      await ModelUtils.setUserActivity(req.user, 'examining game ' + gameId);
    }
    catch(err) {
       logger.error('game not found', err);
-      return res.status(400).send('game not found');
+      res.status(400).send('game not found');
    }
 });
 

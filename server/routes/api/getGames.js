@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const Game = mongoose.model('Game');
 const User = mongoose.model('User');
 
+const ModelUtils = require('../../modelUtils');
+
 router.get('/getGames', (req, res, next) => {
 
    const user = req.user;
@@ -42,7 +44,7 @@ router.get('/getGames', (req, res, next) => {
       console.log(ids);
 
       // ids is the array of player _id's, resolve them into pretty names
-      User.find({_id: { $in: ids }}, {name: 1}).lean().exec((findIdsErr, users) => {
+      User.find({_id: { $in: ids }}, {name: 1}).lean().exec(async (findIdsErr, users) => {
          if (findIdsErr || !users || !users.length) {
             logger.error('error finding pretty names', findIdsErr, users);
             return res.status(401).end();
@@ -61,6 +63,8 @@ router.get('/getGames', (req, res, next) => {
          });
 
          res.json({ games });
+
+         ModelUtils.setUserActivity(req.user, 'browsing games');
       });
    });
 });
