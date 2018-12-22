@@ -24,7 +24,7 @@ module.exports = new PassportLocalStrategy({
    };
 
    // find the user by name
-   return User.findOne({ name: userData.name}, (err, user) => {
+   return User.findOne({ name: userData.name}, { password: 1 }, (err, user) => {
       if (err) {
          logger.error('User.findOne failure', err);
          return done(err);

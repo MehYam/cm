@@ -6,7 +6,7 @@ const logger = require('../logger');
 
 const userSchema = new mongoose.Schema({
    name: {type: String, required: true, index: { unique: true}},
-   password: {type: String, required: true},
+   password: {type: String, required: true, select: false},
    created: {type: Date, default: Date.now, required: true},
 
    isAdmin: {type: Boolean, default: false},
