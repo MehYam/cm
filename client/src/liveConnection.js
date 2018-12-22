@@ -27,12 +27,21 @@ export default class LiveConnection {
 
          const json = JSON.parse(event.data);
          if (json.friends) {
-            console.log('LiveConnection receiving friends');
+            // this is deprecated, the server will only send the singlely updated friend
+            console.log('LiveConnection receiving updated friends');
             rootStore.friendStore.friends = json.friends;
 
             if (json.change) {
                const change = json.change;
                toast.success(change.friend.name + ' is ' + change.friend.status);
+            }
+         }
+         else if (json.friend) {
+            console.log('LiveConnection receiving one updated friend ', json.friend);
+            rootStore.friendStore.handleUpdatedFriend(json.friend);
+
+            if (json.oldStatus) {
+               toast.success(`${json.friend.name} is ${json.friend.status}`);
             }
          }
          else if (json.updatedGame) {

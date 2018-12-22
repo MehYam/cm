@@ -17,6 +17,17 @@ class FriendStore {
          console.error('/getFriends error', error);
          this.lastError = error;
       }
+   }
+   handleUpdatedFriend(updatedFriend) {
+      const newFriends = [...this.friends];
+      const index = newFriends.findIndex(friend => friend._id === updatedFriend._id);
+
+      if (index >= 0) {
+         newFriends[index] = updatedFriend;
+
+         console.log('updatedFriend', updatedFriend);
+      }
+      this.friends = newFriends;
    }   
 }
 

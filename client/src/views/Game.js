@@ -191,7 +191,7 @@ const GameObserver = observer(class Game extends React.Component {
       }
       return (
          <div className='boardParent'>
-            <h2 className='centerText'>{statusMessage}</h2>
+            <div className='centerText'>{statusMessage}</div>
             <GameBoard game={game} pendingMove={store.pendingMove} dropzoneOptions={dropzoneOptions} tileSize={150}/>
             { this.acceptUndo() }
             <Palette enabled={paletteEnabled} palette={palette} hideOne={hideDroppedTile} tileSize={70}/>

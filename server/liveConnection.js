@@ -12,7 +12,7 @@ class LiveConnection {
       logger.debug('instantiating LiveConnection server');
       this.connections = 0;
       this.clients = new Set();
-      this.users = {};
+      this.userToClient = {};
    }
 
    //KAI: it would be better if this worked like logger or any of the other imports, which are fully constructed and
@@ -51,29 +51,35 @@ class LiveConnection {
 
    onClientUserEstablished(client) {
       logger.debug('LiveConnectionClient user established', client.user.name, client.user._id);
-      this.users[client.user._id] = client;
+      this.userToClient[client.user._id] = client;
    }
    onClientClosed(client) {
       logger.debug('LiveConnection removing client', client.id);
 
       if (client.user) {
-         delete this.users[client.user._id];
+         delete this.userToClient[client.user._id];
       }
       this.clients.delete(client);
    }
 
-   onUserStatusChange(client, oldStatus) {
-      logger.debug('LiveConnection noticed change in user %s from %s to %s', client.user.name, oldStatus, client.user.status);
-      this.broadcastUserStatusChange(client, oldStatus);
+   onUserStatusChange(user, oldStatus) {
+      logger.debug('LiveConnection handling change in user %s from %s to %s', user.name, oldStatus, user.status);
+
+      this.broadcastUserChangeToFriends(user, { friend: user, oldStatus });
    }
-   async broadcastUserStatusChange(client, oldStatus) {
+   onUserChange(user) {
+      this.broadcastUserChangeToFriends(user, { friend: user });
+   }
+   async broadcastUserChangeToFriends(user, change) {
       // when a client changes status, loop its friends and send them the updated status
-      // KAI: this is a firehose of unnecessary info, could be much more efficient.
-      const friends = await ModelUtils.findFriends(client.user);
+      const friends = await ModelUtils.findFriends(user);
       for (const friend of friends) {
 
-         const liveFriend = this.users[friend._id];
+         const liveFriend = this.userToClient[friend._id];
          if (liveFriend) {
+            /*
+            Use this to send the entire friends list.  Requires an extra call for info the client already has, so not really worth it
+
             const friendsFriends = await ModelUtils.findFriends(friend);
             liveFriend.send({ 
                friends: friendsFriends,
@@ -82,15 +88,16 @@ class LiveConnection {
                   oldStatus
                }
             });
+            */
+            liveFriend.send(change);
          }
       }
    }
-
    onGameCreate(game, user) {
       logger.debug('LiveConnection noticed new game', game._id);
       for (const player of game.players) {
          if (String(player.user) !== String(user._id)) {
-            const lccPlayer = this.users[player.user];
+            const lccPlayer = this.userToClient[player.user];
             if (lccPlayer) {
                logger.debug('sending created game');
                lccPlayer.send({ createdGame: game, createdBy: user });
@@ -106,7 +113,7 @@ class LiveConnection {
          if (String(player.user) !== String(user._id)) {
             // just send the game to the other player
             // KAI: firehosing again
-            const lccPlayer = this.users[player.user];
+            const lccPlayer = this.userToClient[player.user];
             if (lccPlayer) {
                logger.debug('sending move');
                lccPlayer.send({ updatedGame: game, updatedBy: user });
@@ -116,6 +123,7 @@ class LiveConnection {
    }
 }
 
+//KAI: not really sure this class has a purpose
 class LiveConnectionClient {
    constructor(liveConnection, websocket, id) {
       this.liveConnection = liveConnection;
@@ -129,28 +137,13 @@ class LiveConnectionClient {
 
       this.received = 0;
    }
-   async setUserStatus(status) {
-      try {
-         const oldStatus = this.user.status;
-         if (status !== oldStatus) {
-            this.user.status = status;
-            await this.user.save();
-
-            this.liveConnection.onUserStatusChange(this, oldStatus);
-         }
-      }
-      catch (err) {
-         logger.error('error in LiveConnectionClient.setUserStatus');
-      }
-   }
-   async lookupUser(token) {
+   async resolveUser(token) {
       try {
          logger.info('LiveConnectionClient looking up user', token);
          this.user = await tokenToUser(token)
          this.liveConnection.onClientUserEstablished(this);
-        
-         //KAI: setUserStatus doesn't return anything... does this still work?
-         await this.setUserStatus('online');
+   
+         await ModelUtils.setUserStatus(this.user, 'online');
 
          // send anything to the client to signal user establishment
          this.send({ welcome: 'hello' });
@@ -163,7 +156,8 @@ class LiveConnectionClient {
    onmessage(event) {
       logger.debug('LiveConnectionClient(%s).onmessage (%s) %s', this.id, ++this.received, event.data);
       if (!this.user) {
-         this.lookupUser(event.data);
+         // first message back must be client's API token, to authenticate the live connection
+         this.resolveUser(event.data);
       }
    }
    onerror(event) {
@@ -172,7 +166,10 @@ class LiveConnectionClient {
    onclose(event) {
       logger.debug('LiveConnectionClient(%s).onclose, (msgs: %s, clean: %s, code: %s, reason: %s)', this.id, this.received, event.wasClean, event.code, event.reason);
       this.liveConnection.onClientClosed(this);
-      this.setUserStatus('offline');
+
+      if (this.user) {
+         ModelUtils.setUserStatus(this.user, 'offline');
+      }
    }
    send(payload) {
       if (!this.user) {

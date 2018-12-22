@@ -31,11 +31,13 @@ const FriendsObserver = observer(class Friends extends React.Component {
       const friends = [];
       for (const friend of rootStore.friendStore.friends) {
          const style = { color: statusToColor[friend.status] };
+
+         const activity = (friend.status === 'online' && friend.lastActivity) ? (', ' + friend.lastActivity) : '';
          friends.push(
             <div key={friends.length}>
+               <button className='smallButton' onClick={this.createGame.bind(this, friend._id)}>start new game</button>&nbsp;
                <MdPerson/>&nbsp;
-               <b>{friend.name}, <span style={style}>{ friend.status }</span></b>
-               <button className='smallButton' onClick={this.createGame.bind(this, friend._id)}>start new game</button>
+               <b>{friend.name}, <span style={style}>{ friend.status }</span>{activity}</b>
             </div>
          );
       }
