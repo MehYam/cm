@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema({
    isBot: {type: Boolean, default: false},
    lastLoggedIn: {type: Date, default: Date.now},
 
-   //KAI: should we just query to get these whenever we need them?
    votesPlaced: {type: Number, default: 0},
    votesReceived: {type: Number, default: 0},
 

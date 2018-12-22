@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
 async function findFriends(user) {
-   return await User.find({ _id: { $ne: user._id } }).lean();
+   return await User.find({ _id: { $ne: user._id } }, { currentBallot: 0 }).lean();
 }
 async function setUserStatus (user, status) {
    const liveConnection = require('./liveConnection');
