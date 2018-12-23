@@ -35,9 +35,12 @@ const FriendsObserver = observer(class Friends extends React.Component {
          const activity = (friend.status === 'online' && friend.lastActivity) ? (', ' + friend.lastActivity) : '';
          friends.push(
             <div key={friends.length}>
+               <div>
+                  <MdPerson/>&nbsp;
+                  <b>{friend.name}, <span style={style}>{ friend.status }</span>{activity}</b>
+               </div>
                <button className='smallButton' onClick={this.createGame.bind(this, friend._id)}>start new game</button>&nbsp;
-               <MdPerson/>&nbsp;
-               <b>{friend.name}, <span style={style}>{ friend.status }</span>{activity}</b>
+               <hr/>
             </div>
          );
       }
