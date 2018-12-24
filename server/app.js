@@ -37,16 +37,18 @@ require('./models/all');
 const passport = require('passport');
 app.use(passport.initialize());
 
-passport.use('local-signup', require('./passport/passportRegisterStrategy'));
-passport.use('local-signin', require('./passport/passportLoginStrategy'));
+require('./passport/jwt');
+
+passport.use('local-signup', require('./passport/localRegistrationStrategy'));
+passport.use('local-signin', require('./passport/localLoginStrategy'));
 
 app.use('/auth', require('./routes/auth/register'));
 app.use('/auth', require('./routes/auth/login'));
-app.use('/api', require('./routes/auth/gatekeeper'));
 
-//app.use('/logout', require('./auth/logout'));
+// the new authenticated API gatekeeper
+app.use('/api', passport.authenticate('jwt', { session: false}));
 
-// secure api routes
+// secure api routes //////////////////////////////////////////////////
 app.use('/api', require('./routes/api/test'));
 app.use('/api', require('./routes/api/createGame'));
 app.use('/api', require('./routes/api/doMove'));
@@ -58,13 +60,8 @@ app.use('/api', require('./routes/api/getGame'));
 app.use('/api', require('./routes/api/getGames'));
 app.use('/api', require('./routes/api/getLeaders'));
 
-app.get('/api/:call', (req, res) => {
-   const response = `api GET '${req.params.call}' passed authorization, but is unimplemented`;
-   logger.warn(response);
-   res.send(response)
-});
-app.post('/api/:call', (req, res) => {
-   const response = `api POST '${req.params.call}' passed authorization, but is unimplemented`; 
+app.all('/api/:call', (req, res) => {
+   const response = `secure api '${req.params.call}' is unimplemented`;
    logger.warn(response);
    res.send(response)
 });

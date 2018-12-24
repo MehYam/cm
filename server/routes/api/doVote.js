@@ -37,8 +37,6 @@ router.post('/doVote', async (req, res, next) => {
 
       // loop the ballot, crediting wins and losses to each game
       for (let candidate of ballot ) {
-         logger.info('candidateId', candidate._id.toString());
-
          const game = await Game.findById(candidate._id);
          if (!game) throw 'game not found';
 
@@ -47,7 +45,7 @@ router.post('/doVote', async (req, res, next) => {
          if (candidate._id === winnerId) {
             ++game.votes;
          }
-         logger.info('saving game', game._id);
+         logger.info('saving game', String(game._id));
          await game.save();
       }
    }

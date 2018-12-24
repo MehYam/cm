@@ -4,6 +4,8 @@ import Interact from '../Interact';
 
 import GameBoard from '../views/board/GameBoard';
 
+import { colorMatchAPI } from '../util';
+
 import './TestGameBoard.css';
 
 function moveTo(elem, x, y, scale) {
@@ -79,6 +81,14 @@ const dropzoneOptions = {
    }
 };
 class TestGameBoard extends Component {
+   callApi() {
+      console.log('callApi');
+      colorMatchAPI('');
+   }
+   callApiTest() {
+      console.log('callApiTest');
+      colorMatchAPI('testlevel1/testlevel2');
+   }
    render() {
       const dummyGame = {
          height: 3,
@@ -87,6 +97,8 @@ class TestGameBoard extends Component {
       }
       return (
          <div>
+            <button onClick={this.callApi}>call /api</button>
+            <button onClick={this.callApiTest}>call /api/test</button>
             <h3>Tile/Gameboard test</h3>
             <GameBoard game={dummyGame} tileSize={142}/>
             <h3>Draggable/resizable test</h3>

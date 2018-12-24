@@ -25,7 +25,6 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.methods.comparePassword = function comparePassword_this(password, callback) {
-   logger.info("bcrypt.compare", this.password, password);
    return bcrypt.compare(password, this.password, callback);
 };
 
