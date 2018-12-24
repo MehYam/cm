@@ -36,18 +36,18 @@ const LoginObserver = observer(class Login extends Component {
       return (
          <form onSubmit={this.handleSubmit}>
             <div>
-               <label htmlFor='name'>Name</label>
                <input
                   type='text'
                   id='name'
+                  placeholder='player name'
                   value={this.state.name}
                   onChange={this.handleChange}
                />
                <br/>
-               <label htmlFor='password'>Password</label>
                <input
                   type='password'
                   id='password'
+                  placeholder='password'
                   value={this.state.password}
                   onChange={this.handleChange}
                />

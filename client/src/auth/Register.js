@@ -47,26 +47,26 @@ const RegisterObserver = observer(class Register extends Component {
       return (
          <form onSubmit={this.handleSubmit}>
             <div>
-               <label htmlFor='name'>Name</label>
                <input
                   type='text'
                   id='name'
+                  placeholder='player name'
                   value={this.state.name}
                   onChange={this.handleChange}
                />
                <br/>
-               <label htmlFor='password'>Password</label>
                <input
                   type='password'
                   id='password'
+                  placeholder='password'
                   value={this.state.password}
                   onChange={this.handleChange}
                />
                <br/>
-               <label htmlFor='password'>Verify Password</label>
                <input
                   type='password'
                   id='passwordVerify'
+                  placeholder='verify password'
                   value={this.state.passwordVerify}
                   onChange={this.handleChange}
                />
