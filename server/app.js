@@ -37,10 +37,10 @@ require('./models/all');
 const passport = require('passport');
 app.use(passport.initialize());
 
-require('./passport/jwt');
+require('./auth/jwt');
 
-passport.use('local-signup', require('./passport/localRegistrationStrategy'));
-passport.use('local-signin', require('./passport/localLoginStrategy'));
+passport.use('local-signup', require('./auth/localRegistrationStrategy'));
+passport.use('local-signin', require('./auth/localLoginStrategy'));
 
 app.use('/auth', require('./routes/auth/register'));
 app.use('/auth', require('./routes/auth/login'));

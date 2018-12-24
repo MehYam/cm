@@ -2,7 +2,7 @@ const ws = require('ws');
 const mongoose = require('mongoose');
 const logger = require('./logger');
 
-const tokenToUser = require('./routes/auth/tokenToUser');
+const tokenToUser = require('./auth/tokenToUser');
 const User = mongoose.model('User');
 
 const ModelUtils = require('./modelUtils');
