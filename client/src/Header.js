@@ -8,16 +8,22 @@ import rootStore from './stores/rootStore';
 const HeaderObserver = observer(class Header extends Component {
 
    render() {
-      const style = { 
-         color: (rootStore.loginStore.liveConnected ? '#22bb22' : 'red'),
-         fontSize: '24px'
+      const connected = {
+         style: { color: 'black' },
+         glyph: '✓',
+         tooltip: 'live connection active'
       };
+      const disconnected = {
+         style: { color: 'red' },
+         glyph: '⚠',
+         tooltip: 'live connection off, try refreshing page'
+      };
+      const status = rootStore.loginStore.liveConnected ? connected: disconnected;
       return (
          <div className='menubar'>
-            Signed in as: <span className='menubarNameplate'>{rootStore.loginStore.user.name},</span>
-            &nbsp;&nbsp;
-            <Link to='/welcome/logout'>sign out</Link>
-            &nbsp;<span style={style}>•</span>&nbsp;
+            Signed in as <span className='menubarNameplate'>{rootStore.loginStore.user.name}.</span>
+            &nbsp;<span style={status.style} title={status.tooltip}>{status.glyph}</span>&nbsp;
+            &nbsp;<Link to='/welcome/logout'>sign out</Link>
          </div>
       );
    }
