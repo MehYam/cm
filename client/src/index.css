@@ -135,8 +135,9 @@ input[type=text], input[type=password] {
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12)
 }
 .smallButton:hover:not([disabled]) {
-  background-color: #555555;
-  color: white;  
+  background-color: #ddd;
+  border: 1px solid #555;
+  color: black;  
 }
 .smallButton:disabled {
   border: 2px solid #aaaaaa;
