@@ -25,6 +25,17 @@ input[type=text], input[type=password] {
 
   font-size: 14px;
 }
+::placeholder {
+  color: #aaa;
+}
+.signInParent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding-top: 20px;
+}
 .loginError {
   color: red;
 }
@@ -77,11 +88,6 @@ input[type=text], input[type=password] {
 .centerText {
   text-align: center;
 }
-.vertCenterParent {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .bigButton {
   font: 14px "Century Gothic", Futura, sans-serif;
 
@@ -103,11 +109,12 @@ input[type=text], input[type=password] {
 }
 .bigButton:hover:not([disabled]) {
   background-color: #ddd;
+  border: 1px solid #555;
   color: black;  
 }
 .bigButton:disabled {
   border: 2px solid #aaaaaa;
-  color: #aaaaaa;
+  color: #ccc;
   cursor: default;
 }
 .smallButton {

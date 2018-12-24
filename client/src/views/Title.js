@@ -54,7 +54,7 @@ const TitleObserver = observer(class Title extends Component {
             <div className='centerText'>{version}</div>
           </div>
           <hr/>
-          <div className='vertCenterParent'>
+          <div className='signInParent'>
             <Route exact path='/welcome' component={rootStore.loginStore.loggedIn ? SignedInLinks : SignedOutLinks}/>
             <Route path='/welcome/register' 
               render={(props) => rootStore.loginStore.loggedIn ? (<Redirect to='/'/>) : (<Register/>) }/>
