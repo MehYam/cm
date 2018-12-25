@@ -131,10 +131,10 @@ class AcceptUndo extends React.Component {
    undo() { rootStore.gameStore.undoPendingMove(); }
    render() {
       return (
-         <div>
-            <button onClick={this.accept}>Accept</button>
-            <button onClick={this.undo}>Undo</button>
-            Accept this move?
+         <div className='acceptUndoPopup'>
+            <div>Like it?</div>
+            <button className='smallButton' onClick={this.accept}>Accept this move!</button>
+            <button className='smallButton' onClick={this.undo}>No, undo it</button>
          </div>
       );
    }
@@ -193,8 +193,8 @@ const GameObserver = observer(class Game extends React.Component {
          <div className='boardParent'>
             <div className='centerText'>{statusMessage}</div>
             <GameBoard game={game} pendingMove={store.pendingMove} dropzoneOptions={dropzoneOptions} tileSize={150}/>
-            { this.acceptUndo() }
             <Palette enabled={paletteEnabled} palette={palette} hideOne={hideDroppedTile} tileSize={70}/>
+            { this.acceptUndo() }
          </div>
       );
    }

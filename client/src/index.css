@@ -303,6 +303,17 @@ hr {
 .gamesPlaqueLabel {
   /*font: 16px "Roboto", Futura, sans-serif;*/
 }
+.acceptUndoPopup {
+  position: absolute;
+  background-color: #ffffff;
+  top: 40%;
+  margin: 10px;
+  padding: 10px;
+  z-index: 1;
+
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+  opacity: 0.8;
+}
 
 /* MyGames */
 .gamesParent {
