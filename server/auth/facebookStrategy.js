@@ -9,7 +9,7 @@ passport.use(new FacebookStrategy(
    config.facebook,
    async (accessToken, refreshToken, profile, done) => {
 
-      logger.debug('FacebookStrategy, looking up', profile.displayName);
+      logger.debug('FacebookStrategy, looking up', profile.displayName, profile.id);
 
       // either find or create a user based on this Facebook profile
       let user = null;

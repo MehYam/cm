@@ -200,6 +200,7 @@ const GameObserver = observer(class Game extends React.Component {
          )
       const paletteOrSpinner = game ?
          (<Palette enabled={paletteEnabled} palette={palette} hideOne={hideDroppedTile} tileSize={70}/>) : null;
+
       return (
          <div className='boardParent'>
             <div className='centerText'>{statusMessage}</div>

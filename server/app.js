@@ -51,12 +51,28 @@ require('./auth/facebookStrategy');
 // redirects user to facebook
 app.get('/auth/facebook/login', passport.authenticate('facebook', { session: false }));
 
-//KAI: LEFT OFF HERE, TESTING THAT REDIRECT REPLY WORKS, AND IS READY TO INSERT THE JWT
+const { userToClientAuthResponse } = require('./auth/jwtUtils');
 
 // facebook then redirects user back to here
 app.get('/auth/facebook/complete', passport.authenticate('facebook', { session: false }), async (req, res) => {
   logger.debug('facebook auth completed handler');
-  res.send('at this point we would give you a fresh JWT and send you to the games page');
+
+  if (req.user) {
+    const clientReply = userToClientAuthResponse(req.user);
+    res.send(`
+      <html><body><script>
+
+      var jsonUser = ${JSON.stringify(clientReply)};
+      localStorage.setItem('login_v_0_0', JSON.stringify(jsonUser));
+
+      window.location.href = '/';
+
+      </script></body></html>
+    `);
+  }
+  else {
+    res.send('Login failed.  Please return, refresh, and repeat.');
+  }
 });
 
 // the new authenticated API gatekeeper
