@@ -11,17 +11,20 @@ import rootStore from '../stores/rootStore';
 
 // non-ideal that we're using absolute links everywhere, but it's actually less messy than the alternative
 class SignedOutLinks extends Component {
-   render() {
-      return (
-         <div className='centerText'>
-            <LinkButton buttonClass='bigButton' to='/welcome/login' label='Continue with Facebook'/><br/>
-            <LinkButton buttonClass='bigButton' to='/welcome/login' label='Continue with Google'/><br/>
-            <hr/>
-            <LinkButton buttonClass='bigButton' to='/welcome/login' label='Sign In'/><br/>
-            <LinkButton buttonClass='bigButton' to='/welcome/register' label='Register'/>
-         </div>
-      );
-   }
+  facebookLogin() {
+    window.location.href = '/auth/facebook/login';
+  }  
+  render() {
+    return (
+       <div className='centerText'>
+          <button className='bigButton' onClick={this.facebookLogin}>Continue with Facebook</button><br/>
+          <LinkButton buttonClass='bigButton' to='/welcome/login' label='Continue with Google'/><br/>
+          <hr/>
+          <LinkButton buttonClass='bigButton' to='/welcome/login' label='Sign In'/><br/>
+          <LinkButton buttonClass='bigButton' to='/welcome/register' label='Register'/>
+       </div>
+    );
+  }
 }
 class SignedInLinks extends Component {
   render() {

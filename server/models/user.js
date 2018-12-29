@@ -5,21 +5,30 @@ const bcrypt = require('bcryptjs');
 const logger = require('../logger');
 
 const userSchema = new mongoose.Schema({
-   name: {type: String, required: true, index: { unique: true}},
-   password: {type: String, required: true, select: false},
-   created: {type: Date, default: Date.now, required: true},
+   // profile
+   displayName: {type: String, required: true},
 
+   // auth
+   facebookId: {type: String, select: false, index: { unique: true, sparse: true}},
+   googleId: {type: String, select: false, index: { unique: true, sparse: true}},
+
+   name: {type: String, select: false, index: { unique: true, sparse: true}},
+   password: {type: String, select: false},
+
+   // meta
+   created: {type: Date, default: Date.now, required: true},
    isAdmin: {type: Boolean, default: false},
    isGuest: {type: Boolean, default: false},
    isBot: {type: Boolean, default: false},
    lastLoggedIn: {type: Date, default: Date.now},
 
+   // game data
    votesPlaced: {type: Number, default: 0},
    votesReceived: {type: Number, default: 0},
 
    currentBallot: { type: Array, default: null },
 
-   // statuses useful for LiveConnection
+   // LiveConnection
    status: {type: String},
    lastActivity: {type: Object}  // e.g. {date: ..., name: 'viewGame', gameId: ...}, {date: ..., name: 'vote'}, etc
 });

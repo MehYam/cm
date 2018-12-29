@@ -45,6 +45,20 @@ passport.use('local-signin', require('./auth/localLoginStrategy'));
 app.use('/auth', require('./routes/auth/register'));
 app.use('/auth', require('./routes/auth/login'));
 
+// facebook logins
+require('./auth/facebook');
+
+// redirects user to facebook
+app.get('/auth/facebook/login', passport.authenticate('facebook', { session: false }));
+
+//KAI: LEFT OFF HERE, TESTING THAT REDIRECT REPLY WORKS, AND IS READY TO INSERT THE JWT
+
+// facebook then redirects user back to here
+app.get('/auth/facebook/complete', passport.authenticate('facebook', { session: false }), async (req, res) => {
+  logger.debug('facebook auth completed handler');
+  res.send('at this point we would give you a fresh JWT and send you to the games page');
+});
+
 // the new authenticated API gatekeeper
 app.use('/api', passport.authenticate('jwt', { session: false}));
 

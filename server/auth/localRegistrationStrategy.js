@@ -8,8 +8,11 @@ module.exports = new PassportLocalStrategy({
    session: false,
    passReqToCallback: true
 }, (req, name, password, done) => {
+
+   const trimmedName = name.trim();
    const userData = {
-      name: name.trim(),
+      name: trimmedName,
+      displayName: trimmedName,
       password: password.trim()
    };
 

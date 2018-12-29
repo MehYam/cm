@@ -21,8 +21,8 @@ const HeaderObserver = observer(class Header extends Component {
       const status = rootStore.loginStore.liveConnected ? connected: disconnected;
       return (
          <div className='menubar'>
-            Signed in as <span className='menubarNameplate'>{rootStore.loginStore.user.name}.</span>
             &nbsp;<span style={status.style} title={status.tooltip}>{status.glyph}</span>&nbsp;
+            Signed in as <span className='menubarNameplate'>{rootStore.loginStore.user.name}.</span>
             &nbsp;<Link to='/welcome/logout'>sign out</Link>
          </div>
       );

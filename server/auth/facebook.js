@@ -2,16 +2,36 @@ const logger = require('../logger');
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 
+const User = require('mongoose').model('User');
 const config = require('../config');
 
 passport.use(new FacebookStrategy(
    config.facebook,
    async (accessToken, refreshToken, profile, done) => {
 
-      logger.debug('FacebookStrategy', accessToken, refreshToken, profile);
+      logger.debug('FacebookStrategy, looking up', profile.displayName);
 
-      // find or create the user, will have to await here
+      // either find or create a user based on this Facebook profile
+      let user = null;
+      try {
+         user = await User.findOne({facebookId: profile.id});
 
-      done(null, null);
+if (user)  logger.debug('found user', user._id);
+
+         if (!user) {
+            logger.debug('facebook id not found, creating new user');
+
+            const userData = {
+               facebookId: profile.id,
+               displayName: profile.displayName
+            };
+            user = new User(userData);
+            await user.save();
+         }
+      }
+      catch (err) {
+         logger.error('error in FacebookStrategy', err);
+      }
+      done(null, user);
    }
 ));
