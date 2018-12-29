@@ -30,7 +30,7 @@ class SignedInLinks extends Component {
   render() {
     return (
       <div className='centerText'>
-        <div>Welcome back, {rootStore.loginStore.user.name}!</div>
+        <div>Welcome back, {rootStore.loginStore.user.displayName}!</div>
         <LinkButton buttonClass='bigButton' to='/home' label='Go To Games'/>
         <br/>
         <LinkButton buttonClass='bigButton' to='/welcome/logout' label='Sign Out'/>

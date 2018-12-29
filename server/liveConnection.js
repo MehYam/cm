@@ -97,7 +97,7 @@ class LiveConnection {
       logger.debug('LiveConnection noticed new game', game._id);
       for (const player of game.players) {
          if (String(player.user) !== String(user._id)) {
-            const lccPlayer = this.userToClient[player.user];
+            const lccPlayer = this.userToClient[player.userId];
             if (lccPlayer) {
                logger.debug('sending created game');
                lccPlayer.send({ createdGame: game, createdBy: user });
@@ -110,10 +110,10 @@ class LiveConnection {
       // notify the other players in this game that it's changed
       logger.debug('LiveConnection noticed a change in game', game._id);
       for (const player of game.players) {
-         if (String(player.user) !== String(user._id)) {
+         if (String(player.userId) !== String(user._id)) {
             // just send the game to the other player
             // KAI: firehosing again
-            const lccPlayer = this.userToClient[player.user];
+            const lccPlayer = this.userToClient[player.userId];
             if (lccPlayer) {
                logger.debug('sending move');
                lccPlayer.send({ updatedGame: game, updatedBy: user });

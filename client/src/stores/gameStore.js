@@ -21,7 +21,7 @@ function hydrateGame(game) {
          player.availablePalette.push({ color, used });
       });
 
-      if (player.user === auth.user.id) {
+      if (player.userId === auth.user.id) {
          game.yourPlayer = player;
       }
       else {
@@ -82,6 +82,7 @@ class GamesList {
 class GameStore {
    games_raw = []; // the response from the server.  We annotate ("hydrate") these games with extra data to make them easier to use
    games = new GamesList();
+   requestingGames = false;
 
    currentGame = null;  //KAI: maybe this should be combined with gameCreationState below into a single thing.  The two pieces of state are already coupled.
    gameCreationState = null;
@@ -110,6 +111,7 @@ class GameStore {
    }
    async requestGames() {
       try {
+         this.requestingGames = true;
          const res = await colorMatchAPI('getGames');
          console.log('getGames response', res);
 
@@ -120,6 +122,7 @@ class GameStore {
          console.error('getGames error', error);
          this.lastError = error;
       }
+      this.requestingGames = false;
    }
    async requestGame(gameId) {
       try { 
@@ -186,6 +189,7 @@ class GameStore {
 decorate(GameStore, {
    games: observable,
    currentGame: observable,
+   requestingGames: observable,
    gameCreationState: observable,
    pendingMove: observable,
    lastError: observable

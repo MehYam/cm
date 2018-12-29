@@ -14,13 +14,13 @@ router.get('/getBadges', async (req, res, next) => {
    try {
       const games = await Game.find({ 
          completed: null, 
-         players: { $elemMatch: { user: user._id } }
+         players: { $elemMatch: { userId: user._id } }
       });
       
       // loop through the games to find those on our turn
       const thisUserId = String(user._id);
       const ourTurn = games.reduce((total, game) => {
-         const playerIndex = game.players.findIndex(player => String(player.user) === thisUserId);
+         const playerIndex = game.players.findIndex(player => String(player.userId) === thisUserId);
          return Number(playerIndex == game.moves.length % game.players.length) + total;
       }, 0);
 

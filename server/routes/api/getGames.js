@@ -14,7 +14,7 @@ router.get('/getGames', (req, res, next) => {
    logger.info('getGames', String(user._id), user.displayName);
 
    // {players: { $elemMatch: { user: ObjectId(...) } } }
-   Game.find().lean().elemMatch('players', {'user': user._id}).exec((findErr, games) => {
+   Game.find().lean().elemMatch('players', {'userId': user._id}).exec((findErr, games) => {
 
       logger.info('elemMatch returns', games && games.length);
       if (findErr || !games) {
@@ -33,9 +33,9 @@ router.get('/getGames', (req, res, next) => {
       const idsToNames = {};
       let debug_playerCount = 0;
       games.forEach((game) => {
-         game.players.forEach((player) => {
+         game.players.forEach(player => {
             // just add an entry for now
-            idsToNames[player.user] = null;
+            idsToNames[player.userId] = null;
          });
       });
 
@@ -55,7 +55,7 @@ router.get('/getGames', (req, res, next) => {
          //console.log(idsToNames);
 
          games.forEach(game => {
-            game.players.forEach(player => { player.displayName = idsToNames[player.user._id.toString()]; });
+            game.players.forEach(player => { player.displayName = idsToNames[String(player.userId)]; });
          });
 
          res.json({ games });

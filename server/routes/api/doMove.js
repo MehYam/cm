@@ -35,7 +35,7 @@ router.post('/doMove', (req, res, next) => {
          }
 
          const thisUserId = String(thisUser._id);
-         const playerIndex = game.players.findIndex(player => String(player.user) === thisUserId);
+         const playerIndex = game.players.findIndex(player => String(player.userId) === thisUserId);
          if (playerIndex < 0) {
             throw 'player not in this game';
          }
@@ -78,7 +78,7 @@ router.post('/doMove', (req, res, next) => {
             else {
                const retval = updatedGame.toObject();
                // retval.players.forEach((player) => {
-               //    player.you = String(player.user) == String(thisUser._id);
+               //    player.you = String(player.userId) == String(thisUser._id);
                // })               
                res.send({ game: retval });
 

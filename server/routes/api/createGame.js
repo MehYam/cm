@@ -70,7 +70,7 @@ function createGame(players, settings) {
    const colorsUsed = [];
    function addPlayer(p) {
       const player = {
-         user: p._id,
+         userId: p._id,
          displayName: p.displayName,
          palette: []
       };

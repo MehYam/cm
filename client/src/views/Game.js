@@ -161,7 +161,7 @@ const GameObserver = observer(class Game extends React.Component {
       const players = [];
       if (game && game.players) {
          game.players.forEach(player => {
-            players.push(<h5 key={player.user}>player {players.length + 1}: {player.displayName}</h5>);
+            players.push(<h5 key={player.userId}>player {players.length + 1}: {player.displayName}</h5>);
          });
       }
 

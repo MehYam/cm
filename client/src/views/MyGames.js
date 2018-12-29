@@ -39,12 +39,14 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
          if (games.length) {
             return gamesList(games);
          }
-         //KAI: this is incorrect, it shouldn't show the loader if the user has no games
-         return <PulseLoader
-            sizeUnit={"px"}
-            color={'#888888'}
-            size={10}
-            loading={true}/>;
+         if (rootStore.gameStore.requestingGames) {
+            return <PulseLoader
+               sizeUnit={"px"}
+               color={'#888888'}
+               size={10}
+               loading={true}/>;
+         }
+         return <div>No games found.</div>
       }
       return (
          <div>
