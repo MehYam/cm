@@ -1,5 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
+import { PulseLoader } from 'react-spinners';
 
 import Interact from '../Interact';
 import GameBoard from './board/GameBoard';
@@ -189,11 +190,21 @@ const GameObserver = observer(class Game extends React.Component {
             statusMessage = `Waiting for ${game.currentPlayer.displayName} to place a color`;
          }
       }
+      const gameOrSpinner = game ?
+         (<GameBoard game={game} pendingMove={store.pendingMove} dropzoneOptions={dropzoneOptions} tileSize={150}/>) :
+         (<PulseLoader
+            sizeUnit={"px"}
+            color={'#888888'}
+            size={10}
+            loading={true}/>            
+         )
+      const paletteOrSpinner = game ?
+         (<Palette enabled={paletteEnabled} palette={palette} hideOne={hideDroppedTile} tileSize={70}/>) : null;
       return (
          <div className='boardParent'>
             <div className='centerText'>{statusMessage}</div>
-            <GameBoard game={game} pendingMove={store.pendingMove} dropzoneOptions={dropzoneOptions} tileSize={150}/>
-            <Palette enabled={paletteEnabled} palette={palette} hideOne={hideDroppedTile} tileSize={70}/>
+            {gameOrSpinner}
+            {paletteOrSpinner}
             { this.acceptUndo() }
          </div>
       );
