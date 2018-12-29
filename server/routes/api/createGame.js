@@ -71,7 +71,7 @@ function createGame(players, settings) {
    function addPlayer(p) {
       const player = {
          user: p._id,
-         name: p.name,
+         displayName: p.displayName,
          palette: []
       };
       for (let i = 0; i < settings.playerPaletteSize; ++i) {
@@ -98,7 +98,7 @@ function createGame(players, settings) {
 
 router.post('/createGame', (req, res, next) => {
 
-   logger.info('createGame', req.url, 'user', req.user.name);
+   logger.info('createGame', req.url, 'creator', req.user.displayName);
 
    // find an opponent - look in the request first
    chooseOpponent(req.user, req.body, (opponent, chooseOpponentError) =>{

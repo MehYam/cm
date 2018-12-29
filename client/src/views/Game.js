@@ -161,7 +161,7 @@ const GameObserver = observer(class Game extends React.Component {
       const players = [];
       if (game && game.players) {
          game.players.forEach(player => {
-            players.push(<h5 key={player.user}>player {players.length + 1}: {player.name}</h5>);
+            players.push(<h5 key={player.user}>player {players.length + 1}: {player.displayName}</h5>);
          });
       }
 
@@ -180,13 +180,13 @@ const GameObserver = observer(class Game extends React.Component {
       var statusMessage;
       if (game) {
          if (game.completed) {
-            statusMessage = `Game with ${game.theirPlayer.name} finished ${prettifyJsonDateTime(game.completed)}`;
+            statusMessage = `Game with ${game.theirPlayer.displayName} finished ${prettifyJsonDateTime(game.completed)}`;
          }
          else if (yourTurn) {
             statusMessage = 'Your turn to place a color';
          }
          else {
-            statusMessage = `Waiting for ${game.currentPlayer.name} to place a color`;
+            statusMessage = `Waiting for ${game.currentPlayer.displayName} to place a color`;
          }
       }
       return (

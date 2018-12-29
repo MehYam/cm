@@ -11,7 +11,7 @@ const ModelUtils = require('../../modelUtils');
 router.get('/getGames', (req, res, next) => {
 
    const user = req.user;
-   logger.info('getGames', user.name);
+   logger.info('getGames', String(user._id), user.displayName);
 
    // {players: { $elemMatch: { user: ObjectId(...) } } }
    Game.find().lean().elemMatch('players', {'user': user._id}).exec((findErr, games) => {
@@ -44,22 +44,18 @@ router.get('/getGames', (req, res, next) => {
       console.log(ids);
 
       // ids is the array of player _id's, resolve them into pretty names
-      User.find({_id: { $in: ids }}, {name: 1}).lean().exec(async (findIdsErr, users) => {
+      User.find({_id: { $in: ids }}, {displayName: 1}).lean().exec(async (findIdsErr, users) => {
          if (findIdsErr || !users || !users.length) {
             logger.error('error finding pretty names', findIdsErr, users);
             return res.status(401).end();
          }
 
-         users.forEach((user) => {
-            idsToNames[user._id] = user.name;
-         });
+         users.forEach(user => { idsToNames[user._id] = user.displayName; });
 
          //console.log(idsToNames);
 
-         games.forEach((game) => {
-            game.players.forEach((player) => {
-               player.name = idsToNames[player.user._id.toString()];
-            });
+         games.forEach(game => {
+            game.players.forEach(player => { player.displayName = idsToNames[player.user._id.toString()]; });
          });
 
          res.json({ games });

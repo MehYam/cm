@@ -37,7 +37,7 @@ const FriendsObserver = observer(class Friends extends React.Component {
             <div key={friends.length}>
                <div>
                   <MdPerson/>&nbsp;
-                  <b>{friend.name}, <span style={style}>{ friend.status }</span>{activity}</b>
+                  <b>{friend.displayName}, <span style={style}>{ friend.status }</span>{activity}</b>
                </div>
                <button className='smallButton' onClick={this.createGame.bind(this, friend._id)}>start new game</button>&nbsp;
                <hr/>

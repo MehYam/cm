@@ -41,7 +41,7 @@ userSchema.methods.comparePassword = function comparePassword_this(password, cal
 userSchema.pre('save', function(next) {
 
    const user = this;
-   logger.info('saving user', user.name, user.ballot && user.ballot.length);
+   logger.info('saving user', user.displayName, user.ballot && user.ballot.length);
 
    if (!user.isModified('password')) { 
       return next(); 

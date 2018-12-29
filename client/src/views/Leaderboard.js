@@ -19,7 +19,7 @@ const LeaderboardObserver = observer(class Leaderboard extends Component {
                <GameBoard game={game} tileSize={50}/>
                <div className='leaderboardEntryInfo'>
                   <div>Score: <span className='leaderboardEntryField'>{ (game.score * 100).toFixed(2) + ' (' + game.votes + ' / ' + game.ballots + ' votes)' }</span></div>
-                  <div>Players: <span className='leaderboardEntryField'>{game.players[0].name}, {game.players[1].name}</span></div>
+                  <div>Players: <span className='leaderboardEntryField'>{game.players[0].displayName}, {game.players[1].displayName}</span></div>
                   <div>Created: <span className='leaderboardEntryField'>{prettifyJsonDateTime(game.created)}</span></div>
                   <div>Completed: <span className='leaderboardEntryField'>{prettifyJsonDateTime(game.completed)}</span></div>
                </div>
@@ -28,9 +28,7 @@ const LeaderboardObserver = observer(class Leaderboard extends Component {
       return (
          <div>
             All-Time Leaders:
-            <div className='leaderboardParent'>
-               {leaders}
-            </div>
+            <div className='leaderboardParent'>{leaders}</div>
          </div>
       );
    }

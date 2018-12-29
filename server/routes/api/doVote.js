@@ -15,7 +15,7 @@ router.post('/doVote', async (req, res, next) => {
    const ballot = user.currentBallot;
 
    if (!ballot || !ballot.length) {
-      logger.error('user attempting to vote without ballot', user.name);
+      logger.error('user attempting to vote without ballot', String(user._id), user.displayName);
       return res.status(400).send('voting without ballot');
    }
    try {
@@ -23,7 +23,7 @@ router.post('/doVote', async (req, res, next) => {
       // critical-section the voting record, but for now we're not building Fort Knox here.
 
       // remove the current user's ballot
-      logger.info('removing user ballot and saving', user.name);
+      logger.info('removing user ballot and saving', String(user._id), user.displayName);
       user.currentBallot = null;
       await user.save();
 

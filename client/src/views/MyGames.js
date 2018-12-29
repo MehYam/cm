@@ -28,7 +28,7 @@ const ExistingGamesObserver = observer(class ExistingGames extends React.Compone
             retval.push(
                <Link to={url} key={nthGame}>
                   <button className='myGamesEntry'>
-                     <GameBoard game={game} tileSize={30}/><div>{nthGame}. {game.players[0].name}, {game.players[1].name}</div>
+                     <GameBoard game={game} tileSize={30}/><div>{nthGame}. {game.players[0].displayName}, {game.players[1].displayName}</div>
                   </button>
                </Link>
             );

@@ -19,7 +19,7 @@ router.post('/doMove', (req, res, next) => {
    const thisUser = req.user;
    const gameId = req.body.game;
 
-   logger.info('/doMove', thisUser.name, 'gameId:', gameId, 'body', req.body);
+   logger.info('/doMove', thisUser.displayName, 'gameId:', gameId, 'body', req.body);
 
    // look up the game
    Game.findById({ _id: gameId }).exec((findErr, game) => {

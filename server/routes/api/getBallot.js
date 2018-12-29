@@ -20,7 +20,7 @@ router.get('/getBallot', async (req, res, next) => {
    // create a ballot for this player unless they've got one saved
    if (!user.currentBallot || !user.currentBallot.length) {
 
-      logger.info('generating ballot for', user.name);
+      logger.info('generating ballot for', user.displayName);
 
       // create a ballot from BALLOTSIZE completed games
       try {

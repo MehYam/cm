@@ -50,7 +50,7 @@ class LiveConnection {
    }
 
    onClientUserEstablished(client) {
-      logger.debug('LiveConnectionClient user established', client.user.name, client.user._id);
+      logger.debug('LiveConnectionClient user established', client.user.displayName, client.user._id);
       this.userToClient[client.user._id] = client;
    }
    onClientClosed(client) {

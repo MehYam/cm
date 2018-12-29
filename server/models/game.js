@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const playerSchema = new Schema ({
    user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
-   name: {type: String, required: true},
+   displayName: {type: String, required: true},
    palette: [Number]
 });
 

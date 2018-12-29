@@ -18,7 +18,7 @@ passport.use(new passportJwt.Strategy(options, async(decoded, done) => {
 
    const user = await User.findById(decoded.sub);
    if (user) {
-      logger.info('JWT user authed:', user.name);
+      logger.info('JWT user authed:', user.displayName);
       return done(null, user, decoded);
    }
    logger.error('JWT user not found');

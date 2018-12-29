@@ -33,7 +33,7 @@ export default class LiveConnection {
 
             if (json.change) {
                const change = json.change;
-               toast.success(change.friend.name + ' is ' + change.friend.status);
+               toast.success(change.friend.displayName + ' is ' + change.friend.status);
             }
          }
          else if (json.friend) {
@@ -41,7 +41,7 @@ export default class LiveConnection {
             rootStore.friendStore.handleUpdatedFriend(json.friend);
 
             if (json.oldStatus) {
-               toast.success(`${json.friend.name} is ${json.friend.status}`);
+               toast.success(`${json.friend.displayName} is ${json.friend.status}`);
             }
          }
          else if (json.updatedGame) {
@@ -51,13 +51,13 @@ export default class LiveConnection {
                //KAI: bad
                const completed = json.updatedGame.moves.length === (json.updatedGame.width * json.updatedGame.height);
                const status = completed ? ' has completed a game' : ' has played a turn';
-               toast.success(json.updatedBy.name + status);
+               toast.success(json.updatedBy.displayName + status);
             }
             rootStore.gameStore.handleUpdatedGame(json.updatedGame);
          }
          else if (json.createdGame) {
             console.log('LiveConnection receiving new game');
-            toast.success(json.createdBy.name + ' has started a new game with you');
+            toast.success(json.createdBy.displayName + ' has started a new game with you');
 
             rootStore.gameStore.handleUpdatedGame(json.createdGame);
          }
