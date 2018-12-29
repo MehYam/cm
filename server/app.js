@@ -37,7 +37,7 @@ require('./models/all');
 const passport = require('passport');
 app.use(passport.initialize());
 
-require('./auth/jwt');
+require('./auth/jwtStrategy');
 
 passport.use('local-signup', require('./auth/localRegistrationStrategy'));
 passport.use('local-signin', require('./auth/localLoginStrategy'));
@@ -46,7 +46,7 @@ app.use('/auth', require('./routes/auth/register'));
 app.use('/auth', require('./routes/auth/login'));
 
 // facebook logins
-require('./auth/facebook');
+require('./auth/facebookStrategy');
 
 // redirects user to facebook
 app.get('/auth/facebook/login', passport.authenticate('facebook', { session: false }));

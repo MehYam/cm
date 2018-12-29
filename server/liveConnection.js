@@ -2,7 +2,7 @@ const ws = require('ws');
 const mongoose = require('mongoose');
 const logger = require('./logger');
 
-const tokenToUser = require('./auth/tokenToUser');
+const { jwtToUser } = require('./auth/jwtUtils');
 const User = mongoose.model('User');
 
 const ModelUtils = require('./modelUtils');
@@ -140,7 +140,7 @@ class LiveConnectionClient {
    async resolveUser(token) {
       try {
          logger.info('LiveConnectionClient looking up user', token);
-         this.user = await tokenToUser(token)
+         this.user = await jwtToUser(token)
          this.liveConnection.onClientUserEstablished(this);
    
          await ModelUtils.setUserStatus(this.user, 'online');

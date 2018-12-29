@@ -1,8 +1,7 @@
-const jwt = require('jsonwebtoken');
 const User = require('mongoose').model('User');
 const PassportLocalStrategy = require('passport-local').Strategy;
 const logger = require('../logger');
-const config = require('../config');
+const { userToClientAuthResponse } = require('./jwtUtils');
 
 function failedLoginError() {
    const error = new Error('Incorrect name or password');
@@ -46,14 +45,8 @@ module.exports = new PassportLocalStrategy({
             return done(failedLoginError());
          }
 
-         const payload = { sub: user._id };
-         const token = jwt.sign(payload, config.auth.secret);
-         const data = { displayName: user.displayName, id: user._id, isAdmin: false, isGuest: false };
-
-         //KAI: token's not showing up in the client's response header for axios reasons.  Hack it into the response body for now
-         data.token = token;
-
-         return done(null, token, data);
+         const response = userToClientAuthResponse(user);
+         return done(null, response.token, response);
       });
    });
 });
