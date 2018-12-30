@@ -13,12 +13,15 @@ import rootStore from '../stores/rootStore';
 class SignedOutLinks extends Component {
   facebookLogin() {
     window.location.href = '/auth/facebook/login';
-  }  
+  }
+  googleLogin() {
+    window.location.href = '/auth/google/login';
+  }
   render() {
     return (
        <div className='centerText'>
           <button className='bigButton' onClick={this.facebookLogin}>Continue with Facebook</button><br/>
-          <LinkButton buttonClass='bigButton' to='/welcome/login' label='Continue with Google'/><br/>
+          <button className='bigButton' onClick={this.googleLogin}>Continue with Google</button><br/>
           <hr/>
           <LinkButton buttonClass='bigButton' to='/welcome/login' label='Sign In'/><br/>
           <LinkButton buttonClass='bigButton' to='/welcome/register' label='Register'/>

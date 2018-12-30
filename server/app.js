@@ -45,18 +45,10 @@ passport.use('local-signin', require('./auth/localLoginStrategy'));
 app.use('/auth', require('./routes/auth/register'));
 app.use('/auth', require('./routes/auth/login'));
 
-// facebook logins
-require('./auth/facebookStrategy');
-
-// redirects user to facebook
-app.get('/auth/facebook/login', passport.authenticate('facebook', { session: false }));
-
+// third-party logins
 const { userToClientAuthResponse } = require('./auth/jwtUtils');
 
-// facebook then redirects user back to here
-app.get('/auth/facebook/complete', passport.authenticate('facebook', { session: false }), async (req, res) => {
-  logger.debug('facebook auth completed handler');
-
+function establishThirdPartyAuth(req, res) {
   if (req.user) {
     const clientReply = userToClientAuthResponse(req.user);
     res.send(`
@@ -71,14 +63,36 @@ app.get('/auth/facebook/complete', passport.authenticate('facebook', { session: 
     `);
   }
   else {
+    logger.error('no user established');
     res.send('Login failed.  Please return, refresh, and repeat.');
   }
+}
+
+require('./auth/facebookStrategy');
+
+// redirects user to facebook
+app.get('/auth/facebook/login', passport.authenticate('facebook', { session: false }));
+app.get('/auth/facebook/complete', passport.authenticate('facebook', { session: false }), (req, res) => {
+  logger.debug('facebook auth completed handler');
+  establishThirdPartyAuth(req, res);
 });
 
-// the new authenticated API gatekeeper
+// google logins
+require('./auth/googleStrategy');
+
+// google login redirect
+app.get('/auth/google/login', passport.authenticate('google', { session: false,  scope: ['https://www.googleapis.com/auth/plus.login']  }));
+app.get('/auth/google/complete', passport.authenticate('google', { session: false }), (req, res) => {
+  logger.debug('google auth completed handler');
+  debugger;
+  establishThirdPartyAuth(req, res);
+});
+
+
+// the new authenticated API jwt gatekeeper
 app.use('/api', passport.authenticate('jwt', { session: false}));
 
-// secure api routes //////////////////////////////////////////////////
+// jwt-secured api routes //////////////////////////////////////////////////
 app.use('/api', require('./routes/api/test'));
 app.use('/api', require('./routes/api/createGame'));
 app.use('/api', require('./routes/api/doMove'));

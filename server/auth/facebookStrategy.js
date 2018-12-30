@@ -15,9 +15,6 @@ passport.use(new FacebookStrategy(
       let user = null;
       try {
          user = await User.findOne({facebookId: profile.id});
-
-if (user)  logger.debug('found facebook user', user._id);
-
          if (!user) {
             logger.debug('facebook id not found, creating new user');
 
@@ -35,3 +32,5 @@ if (user)  logger.debug('found facebook user', user._id);
       done(null, user);
    }
 ));
+
+logger.info('passport using facebook strategy');
