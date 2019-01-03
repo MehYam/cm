@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { observer } from 'mobx-react';
+import { FaFacebook } from 'react-icons/fa';
 
 import Login from '../auth/Login';
 import Register from '../auth/Register';
@@ -20,9 +21,18 @@ class SignedOutLinks extends Component {
   render() {
     return (
        <div className='centerText'>
-          <button className='bigButton' onClick={this.facebookLogin}>Continue with Facebook</button><br/>
-          <button className='bigButton' onClick={this.googleLogin}>Continue with Google</button><br/>
-          <hr/>
+          <button className='bigFbButton' onClick={this.facebookLogin}>
+            <div className='fbButtonContent'>
+              <FaFacebook size='24' className='fbIcon'/>
+              <span className='fbButtonLabel'>Continue with Facebook</span>
+            </div>
+          </button><br/>
+          <button className='bigButton' onClick={this.googleLogin}>
+            <div className='fbButtonContent'>
+              <img width='22' height='22' src='Google__G__Logo.svg'/>
+              <span className='fbButtonLabel'>Continue with Google</span>
+            </div>
+          </button><br/>
           <LinkButton buttonClass='bigButton' to='/welcome/login' label='Sign In'/><br/>
           <LinkButton buttonClass='bigButton' to='/welcome/register' label='Register'/>
        </div>
