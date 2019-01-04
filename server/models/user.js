@@ -7,6 +7,7 @@ const logger = require('../logger');
 const userSchema = new mongoose.Schema({
    // profile
    displayName: {type: String, required: true},
+   photoUrl: {type: String},
 
    // auth
    facebookId: {type: String, select: false, index: { unique: true, sparse: true}},

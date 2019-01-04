@@ -5,11 +5,16 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const User = require('mongoose').model('User');
 const config = require('../config');
 
+const fbConfig = { ...config.facebook };
+fbConfig.profileFields = [ 'id', 'displayName', 'name', 'picture' ];
+
 passport.use(new FacebookStrategy(
-   config.facebook,
+   fbConfig,
    async (accessToken, refreshToken, profile, done) => {
 
       logger.debug('FacebookStrategy, looking up', profile.displayName, profile.id);
+
+      const photoUrl = profile.photos && profile.photos.length ? profile.photos[0].value : null;
 
       // either find or create a user based on this Facebook profile
       let user = null;
@@ -23,6 +28,10 @@ passport.use(new FacebookStrategy(
                displayName: profile.displayName
             };
             user = new User(userData);
+            await user.save();
+         }
+         else if (photoUrl && photoUrl != user.photoUrl) {
+            user.photoUrl = photoUrl;
             await user.save();
          }
       }

@@ -23,6 +23,7 @@ function userToClientAuthResponse(user) {
    const token = userToJwt(user);
    const response = {
       displayName: user.displayName,
+      photoUrl: user.photoUrl,
       id: user._id,
       isAdmin: false,
       isGuest: false,

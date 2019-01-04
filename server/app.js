@@ -84,7 +84,6 @@ require('./auth/googleStrategy');
 app.get('/auth/google/login', passport.authenticate('google', { session: false,  scope: ['https://www.googleapis.com/auth/plus.login']  }));
 app.get('/auth/google/complete', passport.authenticate('google', { session: false }), (req, res) => {
   logger.debug('google auth completed handler');
-  debugger;
   establishThirdPartyAuth(req, res);
 });
 

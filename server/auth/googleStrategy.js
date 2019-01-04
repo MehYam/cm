@@ -11,6 +11,8 @@ passport.use(new GoogleStrategy(
 
       logger.debug('GoogleStrategy, looking up', profile.displayName, profile.id);
 
+debugger;
+
       // find or create a user based on this profile
       // COPY/PASTA here with the facebook approach, not really worth consolidation though
       let user = null;
