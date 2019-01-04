@@ -11,7 +11,7 @@ const HeaderObserver = observer(class Header extends Component {
       const connected = {
          style: { color: 'black' },
          glyph: '✓',
-         tooltip: 'live connection active'
+         tooltip: 'connected live'
       };
       const disconnected = {
          style: { color: 'red' },

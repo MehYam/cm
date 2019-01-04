@@ -24,6 +24,7 @@ const NavBarObserver = observer(class NavBar extends Component {
 
       const gamesTooltip = `${readyGames} waiting your turn`;
       const friendsTooltip = `${onlineFriends} online`;
+// <Link className='version' to='/home/testboard'>...tests...</Link>
       return (
          <nav className='sideNav lightUIPadding'>
             <div className='sideNavList'>
@@ -38,7 +39,6 @@ const NavBarObserver = observer(class NavBar extends Component {
                <Link to='/home/leaderboard'><MdViewList/> Leaderboard</Link>
                <hr/>
                <div className='version'>{version}</div>
-               <Link className='version' to='/home/testboard'>...tests...</Link>
             </div>
          </nav>
       );

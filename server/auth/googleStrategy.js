@@ -11,10 +11,10 @@ passport.use(new GoogleStrategy(
 
       logger.debug('GoogleStrategy, looking up', profile.displayName, profile.id);
 
-debugger;
-
       // find or create a user based on this profile
       // COPY/PASTA here with the facebook approach, not really worth consolidation though
+      const photoUrl = profile.photos && profile.photos.length ? profile.photos[0].value : null;
+
       let user = null;
       try {
          user = await User.findOne({googleId: profile.id});
@@ -26,6 +26,10 @@ debugger;
                displayName: profile.displayName
             };
             user = new User(userData);
+            await user.save();
+         }
+         else if (photoUrl && photoUrl != user.photoUrl) {
+            user.photoUrl = photoUrl;
             await user.save();
          }
       }
