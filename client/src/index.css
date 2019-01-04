@@ -100,6 +100,11 @@ input[type=text], input[type=password] {
   height: 20px;
   margin: 3px;
 }
+.thumbnailMedium {
+  width: 24px;
+  height: 24px;
+  margin: 3px;
+}
 .menubar a {
   transition-duration: 0.4s;
   -webkit-transition-duration: 0.4s; /* Safari */
@@ -420,4 +425,12 @@ hr {
 }
 .leaderboardEntryField {
   font-weight: bold;
+}
+
+/* Friends/Players */
+.playerNameplate
+{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }

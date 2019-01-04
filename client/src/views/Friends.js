@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { MdPerson } from 'react-icons/md';
+import { FaUser } from 'react-icons/fa';
 
 import rootStore from '../stores/rootStore';
 import { getNewGameRedirect } from '../util';
@@ -33,10 +33,13 @@ const FriendsObserver = observer(class Friends extends React.Component {
          const style = { color: statusToColor[friend.status] };
 
          const activity = (friend.status === 'online' && friend.lastActivity) ? (', ' + friend.lastActivity) : '';
+         const thumbnail = friend.photoUrl ?
+            (<img className='thumbnailMedium' src={friend.photoUrl}/>) :
+            (<FaUser size='24px'/>);
          friends.push(
             <div key={friends.length}>
-               <div>
-                  <MdPerson/>&nbsp;
+               <div className='playerNameplate'>
+                  {thumbnail}&nbsp;
                   <b>{friend.displayName}, <span style={style}>{ friend.status }</span>{activity}</b>
                </div>
                <button className='smallButton' onClick={this.createGame.bind(this, friend._id)}>start new game</button>&nbsp;

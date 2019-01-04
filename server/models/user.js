@@ -24,10 +24,11 @@ const userSchema = new mongoose.Schema({
    lastLoggedIn: {type: Date, default: Date.now},
 
    // game data
+   currentBallot: { type: Array, default: null },
    votesPlaced: {type: Number, default: 0},
    votesReceived: {type: Number, default: 0},
-
-   currentBallot: { type: Array, default: null },
+   gamesCreated: {type: Number, default: 0},
+   gamesCompleted: {type: Number, default:0},
 
    // LiveConnection
    status: {type: String},
