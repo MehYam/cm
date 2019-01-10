@@ -5,12 +5,6 @@ import { Link } from 'react-router-dom';
 import { getGameUrl } from './util';
 import rootStore from './stores/rootStore';
 
-const ToastLink = ({ closeToast }) => (
-   <div>
-      <Link to='/welcome'>this is a link</Link>
-   </div>
-);
-
 export default class LiveConnection {
    socket = null;
    received = 0;

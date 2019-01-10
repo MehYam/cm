@@ -20,7 +20,7 @@ const HeaderObserver = observer(class Header extends Component {
       };
       const status = rootStore.loginStore.liveConnected ? connected: disconnected;
       let thumbnail = rootStore.loginStore.user.photoUrl ?
-         (<img className='thumbnailSmall' src={rootStore.loginStore.user.photoUrl}/>) : null;
+         (<img className='thumbnailSmall' alt='profile' src={rootStore.loginStore.user.photoUrl}/>) : null;
 
       return (
          <div className='menubar'>

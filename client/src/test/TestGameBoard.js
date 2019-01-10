@@ -83,12 +83,6 @@ const dropzoneOptions = {
    }
 };
 
-const CustomToast = ({ closeToast }) => (
-   <div>
-      <div>raise a toast to a test toast</div>
-      <Link to='/welcome'>this is a link</Link>
-   </div>
-);
 const CustomToast2 = () => (
    <div>
       <div>test toast 2</div>

@@ -29,7 +29,7 @@ class SignedOutLinks extends Component {
           </button><br/>
           <button className='bigButton' onClick={this.googleLogin}>
             <div className='fbButtonContent'>
-              <img width='22' height='22' src='Google__G__Logo.svg'/>
+              <img width='22' height='22' alt='google signin' src='Google__G__Logo.svg'/>
               <span className='fbButtonLabel'>Continue with Google</span>
             </div>
           </button><br/>

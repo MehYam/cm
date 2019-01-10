@@ -34,7 +34,7 @@ const FriendsObserver = observer(class Friends extends React.Component {
 
          const activity = (friend.status === 'online' && friend.lastActivity) ? (', ' + friend.lastActivity) : '';
          const thumbnail = friend.photoUrl ?
-            (<img className='thumbnailMedium' src={friend.photoUrl}/>) :
+            (<img className='thumbnailMedium' alt='' src={friend.photoUrl}/>) :
             (<FaUser size='24px'/>);
          friends.push(
             <div key={friends.length}>
