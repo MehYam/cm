@@ -96,7 +96,7 @@ class LiveConnection {
    onGameCreate(game, user) {
       logger.debug('LiveConnection noticed new game', game._id);
       for (const player of game.players) {
-         if (String(player.user) !== String(user._id)) {
+         if (String(player.userId) !== String(user._id)) {
             const lccPlayer = this.userToClient[player.userId];
             if (lccPlayer) {
                logger.debug('sending created game');
