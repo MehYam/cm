@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import Interact from '../Interact';
 
@@ -80,6 +82,20 @@ const dropzoneOptions = {
       console.log('ondrop', event);
    }
 };
+
+const CustomToast = ({ closeToast }) => (
+   <div>
+      <div>raise a toast to a test toast</div>
+      <Link to='/welcome'>this is a link</Link>
+   </div>
+);
+const CustomToast2 = () => (
+   <div>
+      <div>test toast 2</div>
+      <Link to='/welcome'>this is a link</Link>
+   </div>
+);
+
 class TestGameBoard extends Component {
    callApi() {
       console.log('callApi');
@@ -88,6 +104,9 @@ class TestGameBoard extends Component {
    callApiTest() {
       console.log('callApiTest');
       colorMatchAPI('testlevel1/testlevel2');
+   }
+   toast() {
+      toast(<CustomToast2/>);
    }
    render() {
       const dummyGame = {
@@ -99,8 +118,9 @@ class TestGameBoard extends Component {
          <div>
             <button onClick={this.callApi}>call /api</button>
             <button onClick={this.callApiTest}>call /api/test</button>
+            <button onClick={this.toast}>toast!</button>
             <h3>Tile/Gameboard test</h3>
-            <GameBoard game={dummyGame} tileSize={142}/>
+            <GameBoard game={dummyGame} tileSize={70}/>
             <h3>Draggable/resizable test</h3>
             <div className='resize-container'>
                <Interact draggableOptions={draggableOptions} resizableOptions={resizableOptions}>

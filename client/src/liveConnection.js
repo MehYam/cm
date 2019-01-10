@@ -1,9 +1,17 @@
+import React from 'react';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
+import { getGameUrl } from './util';
 import rootStore from './stores/rootStore';
 
-export default class LiveConnection {
+const ToastLink = ({ closeToast }) => (
+   <div>
+      <Link to='/welcome'>this is a link</Link>
+   </div>
+);
 
+export default class LiveConnection {
    socket = null;
    received = 0;
    connectedCallback = null;
@@ -33,7 +41,7 @@ export default class LiveConnection {
 
             if (json.change) {
                const change = json.change;
-               toast.success(change.friend.displayName + ' is ' + change.friend.status);
+               toast(change.friend.displayName + ' is ' + change.friend.status);
             }
          }
          else if (json.friend) {
@@ -41,23 +49,25 @@ export default class LiveConnection {
             rootStore.friendStore.handleUpdatedFriend(json.friend);
 
             if (json.oldStatus) {
-               toast.success(`${json.friend.displayName} is ${json.friend.status}`);
+               toast(`${json.friend.displayName} is ${json.friend.status}`);
             }
          }
          else if (json.updatedGame) {
             console.log('LiveConnection receiving game update');
 
             if (json.updatedBy) {
-               //KAI: bad
+               const gameUrl = getGameUrl(json.updatedGame._id);
                const completed = json.updatedGame.moves.length === (json.updatedGame.width * json.updatedGame.height);
-               const status = completed ? ' has completed a game' : ' has played a turn';
-               toast.success(json.updatedBy.displayName + status);
+               const activity = completed ? ' completed a game' : ' played a turn';
+
+               toast(() => <div>{json.updatedBy.displayName} has <Link to={gameUrl}>{activity}</Link></div>);
             }
             rootStore.gameStore.handleUpdatedGame(json.updatedGame);
          }
          else if (json.createdGame) {
             console.log('LiveConnection receiving new game');
-            toast.success(json.createdBy.displayName + ' has started a new game with you');
+            const gameUrl = getGameUrl(json.createdGame._id);
+            toast(() => <div>{json.createdBy.displayName} has started a <Link to={gameUrl}>new game with you</Link></div>);
 
             rootStore.gameStore.handleUpdatedGame(json.createdGame);
          }

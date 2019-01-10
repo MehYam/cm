@@ -26,6 +26,7 @@ class App extends Component {
                <Redirect from='/' to='/welcome'/>
             </Switch>
             <ToastContainer 
+               toastClassName='toast'
                position="bottom-right"
                autoClose={5000}
                hideProgressBar={false}

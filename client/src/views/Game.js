@@ -147,6 +147,18 @@ const GameObserver = observer(class Game extends React.Component {
       if (rootStore.gameStore.gameCreationState) {
          rootStore.gameStore.gameCreationState = null;
       }
+      this.requestGame();
+   }
+   componentDidUpdate(prevProps, prevState) {
+      // if the gameId changes while this Game has already mounted, it won't re-mount and hence will not
+      // request the new game.  So we check here for this very case.  componentDidUpdate is not called
+      // on first render
+      if (this.props.match.params.gameId !== prevProps.match.params.gameId) {
+         console.log('forcing re-render in Game for new gameId')
+         this.requestGame();
+      }
+   }
+   requestGame() {
       rootStore.gameStore.requestGame(this.props.match.params.gameId);
    }
    acceptUndo() {
